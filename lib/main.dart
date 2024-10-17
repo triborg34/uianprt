@@ -13,16 +13,16 @@ import 'package:uianprt/screens/mainPage.dart';
 import 'package:uianprt/testscreens/dbpage.dart';
 import 'package:uianprt/testscreens/testfield.dart';
 import 'package:uianprt/widgets/tempcamra.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if(kIsWeb){
-    Hive.initFlutter();
-  }else{
+
+   
+
 final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
-  }
+  
 
   
   Hive.registerAdapter(RegistredDbAdapter());

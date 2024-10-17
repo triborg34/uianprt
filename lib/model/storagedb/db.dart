@@ -1,7 +1,6 @@
 // ignore_for_file: unused_import
 
 import 'dart:async';
-
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart'; // For desktop support
 import "../model.dart"; // Import your class
