@@ -1,0 +1,85 @@
+import 'dart:async';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart'; // For desktop support
+
+class DatabaseHelper {
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  factory DatabaseHelper() => _instance;
+
+  DatabaseHelper._internal();  // Default constructor
+
+  Database? _database;
+  late final String dbPath;  // Using late ensures it will be initialized before usage
+
+  // Constructor to receive the database path
+  DatabaseHelper.withPath(String path) {
+    dbPath = path;  // Initialize dbPath
+    _initializeDatabaseFactory();  // Initialize the factory for desktop platforms
+  }
+
+  void _initializeDatabaseFactory() {
+    // For desktop platforms, initialize the SQLite FFI
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
+
+  // Initialize or open the database
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
+  }
+
+  Future<Database> _initDatabase() async {
+    // Open the existing database using the path
+    return await openDatabase(dbPath);
+  }
+
+  // Function to read data from the database
+  Future<List<Map<String, dynamic>>> getEntries() async {
+    final db = await database;
+    return await db.query('entries'); // Query entries table
+  }
+
+  // Insert a new entry record
+  Future<void> insertEntry({
+    required int platePercent,
+    required int charPercent,
+    required String eDate,
+    required String eTime,
+    required String plateNum,
+    required int status,
+  }) async {
+    final db = await database;
+    await db.insert(
+      'entries',  // Replace with your actual table name
+      {
+        'platePercent': platePercent,
+        'charPercent': charPercent,
+        'eDate': eDate,
+        'eTime': eTime,
+        'plateNum': plateNum,
+        'status': status,
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    // Emit new data after insertion
+    queryAndEmitEntries();
+  }
+
+  // Emit data changes (live updates)
+  final _controller = StreamController<List<Map<String, dynamic>>>.broadcast();
+  Stream<List<Map<String, dynamic>>> get entryStream => _controller.stream;
+
+  Future<void> queryAndEmitEntries() async {
+    final db = await database;
+    final entries = await db.query('entries'); // Query 'entries' table
+    _controller.sink.add(entries);  // Emit the data to the stream
+  }
+
+  // Close the stream controller
+  void dispose() {
+    _controller.close();
+  }
+}
