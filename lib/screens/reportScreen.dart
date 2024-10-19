@@ -24,6 +24,7 @@ class ReportScreen extends StatelessWidget {
     Get.find<ReportController>().lastdate = null;
     Get.find<ReportController>().persianalhpabet.value = '';
     Get.find<ReportController>().platePicker = null;
+    Get.find<ReportController>().selectedModel.clear();
 
     return Container(
         height: MediaQuery.of(context).size.height,
@@ -63,8 +64,10 @@ class ReportScreen extends StatelessWidget {
                             height: 40,
                             width: 180,
                             child: ElevatedButton(
-                              onPressed: () {
-                                searchfuncion(rcontroller);
+                              onPressed: () async {
+                                await rcontroller.getData();
+                                await searchfuncion(rcontroller);
+                                rcontroller.update([2]);
                               },
                               //Here is on tab
                               child:
@@ -480,61 +483,175 @@ class ReportScreen extends StatelessWidget {
                 ),
                 header2(),
                 Container(
-                  color: Colors.red,
-                  width: Get.width,
-                  height: 300,
-                  child: ListView.builder(
-                    itemCount:
-                        Get.find<ReportController>().selectedModel.length,
-                    itemBuilder: (context, index) {
-                      return GetBuilder<ReportController>(
-                        builder: (rcontroller) {
-                          return Container(
-                            width: Get.width,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                border:
-                                    Border(bottom: BorderSide(color: purpule))),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
+                    color: Colors.transparent,
+                    width: Get.width,
+                    height: 300,
+                    child: GetBuilder<ReportController>(
+                      id: 2,
+                      builder: (rcontroller) {
+                        return ListView.builder(
+                          itemCount: rcontroller.selectedModel
+                              .length, //todo
+                          itemBuilder: (context, index) {
+                            return Container(
+                              width: Get.width,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(color: purpule))),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                      padding: EdgeInsets.all(3.0),
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              left:
+                                                  BorderSide(color: purpule))),
+                                      width: 205,
+                                      child: Center(
+                                        child: Text(
+                                          rcontroller
+                                              .selectedModel[index].eTime!,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                      )),
+                                  Container(
+                                      padding: EdgeInsets.all(3.0),
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              left:
+                                                  BorderSide(color: purpule))),
+                                      width: 205,
+                                      child: Center(
+                                        child: Text(
+                                          rcontroller
+                                              .selectedModel[index].eDate!
+                                              .toPersianDate(),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                      )),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            left: BorderSide(color: purpule))),
+                                    width: 205,
+                                    height: 50,
+                                    child: Center(
+                                      child: Text(
+                                        Get.find<Boxes>()
+                                                .regBox
+                                                .where(
+                                                  (element) =>
+                                                      element.plateNumber ==
+                                                      rcontroller
+                                                          .selectedModel[index]
+                                                          .plateNum,
+                                                )
+                                                .isEmpty
+                                            ? "-"
+                                            : Get.find<Boxes>()
+                                                .regBox[Get.find<Boxes>()
+                                                    .regBox
+                                                    .indexWhere(
+                                                      (element) =>
+                                                          element.plateNumber ==
+                                                          rcontroller
+                                                              .selectedModel[
+                                                                  index]
+                                                              .plateNum,
+                                                    )]
+                                                .carName!,
+                                        textDirection: TextDirection.rtl,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            left: BorderSide(color: purpule))),
+                                    width: 205,
+                                    height: 50,
+                                    child: Center(
+                                      child: Text(
+                                        Get.find<Boxes>()
+                                                .regBox
+                                                .where(
+                                                  (element) =>
+                                                      element.plateNumber ==
+                                                      rcontroller
+                                                          .selectedModel[index]
+                                                          .plateNum,
+                                                )
+                                                .isEmpty
+                                            ? "-"
+                                            : Get.find<Boxes>()
+                                                .regBox[Get.find<Boxes>()
+                                                    .regBox
+                                                    .indexWhere(
+                                                      (element) =>
+                                                          element.plateNumber ==
+                                                          rcontroller
+                                                              .selectedModel[
+                                                                  index]
+                                                              .plateNum,
+                                                    )]
+                                                .name!,
+                                        textDirection: TextDirection.rtl,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(3.0),
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              left:
+                                                  BorderSide(color: purpule))),
+                                      width: 205,
+                                      child: Center(
+                                        child: Image.asset(rcontroller
+                                            .selectedModel[index].imgpath!
+                                            .replaceFirst(
+                                                'D:/Programins/Codes/uianprt/',
+                                                '')),
+                                      )),
+                                  Container(
                                     height: 50,
                                     width: 200,
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                          right: BorderSide(color: purpule) ,
+                                            left: BorderSide(color: purpule))),
                                     child: Center(
-                                      child: Image.asset(rcontroller
-                                          .selectedModel[index].imgpath!
-                                          .replaceFirst(
-                                              'D:/Programins/Codes/uianprt/',
-                                              '')),
-                                    )),
-                                Container(
-                                  height: 50,
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          left: BorderSide(color: purpule))),
-                                  child: Center(
-                                      child: LicanceNumber(
-                                          entry: rcontroller
-                                              .selectedModel[index])),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        id: 2,
-                      );
-                    },
-                  ),
-                )
+                                        child: LicanceNumber(
+                                            entry: rcontroller
+                                                .selectedModel[index])),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ))
               ],
             ),
           ),
         ));
   }
 
-  void searchfuncion(var rcontroller) {
+  bool searchfuncion(var rcontroller) {
     if (rcontroller.selectedItem != null &&
         rcontroller.firstdate != null &&
         rcontroller.firstime != null) {
@@ -547,7 +664,7 @@ class ReportScreen extends StatelessWidget {
           : rcontroller.firstime = rcontroller.firstime;
 
       rcontroller.selectedModel = rcontroller.pModel.where(
-        (element) {
+        (plateModel element) {
           DateTime fd = DateTime.parse(rcontroller.firstdate!);
           DateTime ld = DateTime.parse(rcontroller.lastdate!);
           DateTime ed = DateTime.parse(element.eDate!);
@@ -583,7 +700,7 @@ class ReportScreen extends StatelessWidget {
           ? rcontroller.lastTime = rcontroller.firstime!
           : rcontroller.firstime = rcontroller.firstime;
       rcontroller.selectedModel = rcontroller.pModel.where(
-        (element) {
+        (plateModel element) {
           DateTime fd = DateTime.parse(rcontroller.firstdate!);
           DateTime ld = DateTime.parse(rcontroller.lastdate!);
           DateTime ed = DateTime.parse(element.eDate!);
@@ -619,7 +736,7 @@ class ReportScreen extends StatelessWidget {
           ? rcontroller.lastTime = rcontroller.firstime!
           : rcontroller.firstime = rcontroller.firstime;
       rcontroller.selectedModel = rcontroller.pModel.where(
-        (element) {
+        (plateModel element) {
           TimeOfDay ft = TimeOfDay(
               hour: int.parse(rcontroller.firstime!.split(':')[0]),
               minute: int.parse(rcontroller.firstime!.split(':')[1]));
@@ -649,7 +766,7 @@ class ReportScreen extends StatelessWidget {
           ? rcontroller.lastdate = rcontroller.firstdate!
           : rcontroller.lastdate = rcontroller.lastdate;
       rcontroller.selectedModel = rcontroller.pModel.where(
-        (element) {
+        (plateModel element) {
           DateTime fd = DateTime.parse(rcontroller.firstdate!);
           DateTime ld = DateTime.parse(rcontroller.lastdate!);
           DateTime ed = DateTime.parse(element.eDate!);
@@ -669,7 +786,7 @@ class ReportScreen extends StatelessWidget {
           ? rcontroller.lastdate = rcontroller.firstdate!
           : rcontroller.lastdate = rcontroller.lastdate;
       rcontroller.selectedModel = rcontroller.pModel.where(
-        (element) {
+        (plateModel element) {
           DateTime fd = DateTime.parse(rcontroller.firstdate!);
           DateTime ld = DateTime.parse(rcontroller.lastdate!);
           DateTime ed = DateTime.parse(element.eDate!);
@@ -697,17 +814,23 @@ class ReportScreen extends StatelessWidget {
         rcontroller.firstdate == null &&
         rcontroller.firstime == null &&
         rcontroller.platePicker != null) {
+           print("::::"+rcontroller.platePicker!);
       //plate picker is not null
+    
       rcontroller.selectedModel = rcontroller.pModel.where(
-        (element) {
-          return element.plateNum!.contains(rcontroller.platePicker!);
+        (plateModel element) {
+          
+         
+          return element.plateNum!.contains(rcontroller.platePicker! );
         },
       ).toList();
     } else {
       // all is null
+      
       rcontroller.selectedModel = rcontroller.pModel;
     }
     print(rcontroller.selectedModel.length);
+    return true; 
   }
 
   DropdownButtonHideUnderline DropFunc(ReportController rcontroller) {
