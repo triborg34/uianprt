@@ -85,7 +85,13 @@ class ReportController extends GetxController{
   String? platePicker;
   @override
   void onInit() async {
-   await databaseHelper.getEntriesAsList().then(
+   await getData();
+    super.onInit();
+  }
+
+  getData() async {
+    pModel.clear();
+     await databaseHelper.getEntriesAsList().then(
       (value) {
         for (var json in value) {
           pModel.add(plateModel(
@@ -98,7 +104,6 @@ class ReportController extends GetxController{
               status: json.status));
         }});
         print(pModel[0].plateNum);
-    super.onInit();
   }
   
 }
