@@ -53,6 +53,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   
   persian_datetime_picker: ^2.7.0
+  sidebarx: ^0.17.1
 
 
   

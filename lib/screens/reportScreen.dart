@@ -42,13 +42,18 @@ class ReportScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: purpule, borderRadius: BorderRadius.circular(15)),
                   width: Get.width,
-                  child: Text(
-                    "صفحه گزارش",
-                    textDirection: TextDirection.rtl,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(onPressed: (){}, child: Text("جستجوی پیشرفته",style: TextStyle(color: Colors.white70,fontWeight: FontWeight.bold,fontSize: 14),)),
+                      Text(
+                        "صفحه گزارش",
+                        textDirection: TextDirection.rtl,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -490,6 +495,8 @@ class ReportScreen extends StatelessWidget {
                       id: 2,
                       builder: (rcontroller) {
                         return ListView.builder(
+                          controller: ScrollController(initialScrollOffset:0,debugLabel: "Controller"),
+                          reverse: false,
                           itemCount: rcontroller.selectedModel
                               .length, //todo
                           itemBuilder: (context, index) {

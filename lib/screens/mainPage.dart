@@ -8,6 +8,7 @@ import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/storagedb/db.dart';
 import 'package:uianprt/screens/homeScreen.dart';
 import 'package:uianprt/screens/reportScreen.dart';
+import 'package:uianprt/screens/settingScreen.dart';
 import 'package:uianprt/widgets/appbar.dart';
 
 class MainView extends StatefulWidget {
@@ -20,7 +21,9 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   late DatabaseHelper _databaseHelper;
   Timer? _pollingTimer;
-  int index2 =3;
+  int navIndex = Get.find<navController>().navIndex;
+
+  
   @override
   void initState() {
     _databaseHelper = DatabaseHelper.withPath(widget.dbPath);
@@ -31,10 +34,9 @@ class _MainViewState extends State<MainView> {
     });
     Get.find<videoController>()
         .player
-        .open(Media("rtsp://192.168.1.18:554/1/h264major"));
+        .open(Media("rtsp://admin:admin@192.168.1.88:554/stream"));
     //rtsp://admin:admin@192.168.1.88:554/stream
-    
-
+    Get.find<navController>().body=HomeScreen(databaseHelper: _databaseHelper,);
 
     super.initState();
   }
@@ -53,7 +55,7 @@ class _MainViewState extends State<MainView> {
       bottomNavigationBar: ResponsiveNavigationBar(
         inactiveIconColor: Colors.white38,
         backgroundColor: Colors.transparent,
-        selectedIndex: index2,
+        selectedIndex: navIndex,
         showActiveButtonText: false,
         navigationBarButtons: [
           NavigationBarButton(
@@ -65,14 +67,40 @@ class _MainViewState extends State<MainView> {
           NavigationBarButton(backgroundColor: Colors.purple, icon: Icons.home),
         ],
         onTabChange: (index) {
-          index2 = index;
-          print(index2);
-          setState(() {});
+          switch (index) {
+            case 0:
+              navIndex = index;
+               Get.find<navController>().body=HomeScreen(databaseHelper: _databaseHelper,);
+              setState(() {});
+
+              break;
+              case 1:
+                 navIndex = index;
+                  Get.find<navController>().body=Settingscreen();
+              setState(() {});
+              break;
+              case 2:
+                 navIndex = index;
+                  Get.find<navController>().body=ReportScreen();
+              setState(() {});
+              break;
+               case 3:
+               
+                 navIndex = index;
+                  Get.find<navController>().body=HomeScreen(databaseHelper: _databaseHelper);
+              setState(() {});
+              break;
+
+            default:
+                   navIndex = 3;
+                      Get.find<navController>().body=HomeScreen(databaseHelper: _databaseHelper);
+              setState(() {});
+          }
         },
       ),
       appBar: MyAppBar(),
       backgroundColor: Colors.black,
-      body: index2==2?ReportScreen() : HomeScreen(databaseHelper: _databaseHelper),
+      body: Get.find<navController>().body
     );
   }
 }

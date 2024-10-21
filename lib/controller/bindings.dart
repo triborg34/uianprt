@@ -9,6 +9,7 @@ class MyBinding extends Bindings{
     Get.lazyPut(()=>feildController());
     Get.put(Boxes());
     Get.put(ReportController());
+    Get.put(navController());
   }
 
 }
