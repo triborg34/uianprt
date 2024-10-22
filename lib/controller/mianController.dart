@@ -7,7 +7,7 @@ import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
 import 'package:uianprt/model/storagedb/db.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
-import 'package:uianprt/screens/homeScreen.dart';
+
 
 class videoController extends GetxController {
   late final player = Player();
