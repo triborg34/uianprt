@@ -54,6 +54,7 @@ dependencies:
   
   persian_datetime_picker: ^2.7.0
   side_bar_custom: ^1.0.3
+  font_awesome_flutter: ^10.7.0
 
 
   

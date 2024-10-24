@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:side_bar_custom/side_bar_custom.dart';
 import 'package:uianprt/model/consts.dart';
 
@@ -15,19 +16,32 @@ class Settingscreen extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: SideBar( items: [
            SideBarItem(
-             text: "داشبورد",
-             icon: Icons.home,
-             tooltipText: "Dashboard page",
+             text: "عمومی",
+             icon: FontAwesomeIcons.gears,
+    
            ),
            SideBarItem(
-             text: "Add User",
-             icon: Icons.add,
+             text: "دوربین",
+             icon: Icons.camera_indoor,
            ),
-         ], children: const [
-            Center(
+             SideBarItem(
+             text: "کاربران",
+             icon: FontAwesomeIcons.usersGear,
+           ), SideBarItem(
+             text: "شبکه",
+             icon: FontAwesomeIcons.networkWired,
+           ),
+         ], children:  [
+            Container(
               child: Text("Dashboard",style: TextStyle(color: Colors.white),),
             ),
             Center(
+              child: Text("Add User",style: TextStyle(color: Colors.white),),
+            ),
+              Center(
+              child: Text("Add User",style: TextStyle(color: Colors.white),),
+            ),
+                 Center(
               child: Text("Add User",style: TextStyle(color: Colors.white),),
             ),
           ],config: SideBarConfig(
@@ -44,7 +58,7 @@ class Settingscreen extends StatelessWidget {
             unselectedIconColor: Colors.white54,
             selectedTextStyle: TextStyle(color: Colors.white),
             unselectedTextStyle: TextStyle(color: Colors.white54),
-            
+
 
 
         

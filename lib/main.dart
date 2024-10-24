@@ -38,8 +38,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      
         initialBinding: MyBinding(),
-        theme: ThemeData(fontFamily: 'byekan'),
+        theme: ThemeData(fontFamily: 'byekan',useMaterial3: true),
         debugShowCheckedModeBanner: false,
         title: 'AmnAfarin',
         onReady: () {

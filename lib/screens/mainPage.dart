@@ -59,12 +59,12 @@ class _MainViewState extends State<MainView> {
         showActiveButtonText: false,
         navigationBarButtons: [
           NavigationBarButton(
-              backgroundColor: Colors.purple, icon: Icons.arrow_left),
+              backgroundColor: Colors.deepPurple, icon: Icons.arrow_left),
           NavigationBarButton(
-              backgroundColor: Colors.purple, icon: Icons.settings),
+              backgroundColor: Colors.deepPurple, icon: Icons.settings),
           NavigationBarButton(
-              backgroundColor: Colors.purple, icon: Icons.car_repair_outlined),
-          NavigationBarButton(backgroundColor: Colors.purple, icon: Icons.home),
+              backgroundColor: Colors.deepPurple, icon: Icons.car_repair_outlined),
+          NavigationBarButton(backgroundColor: Colors.deepPurple, icon: Icons.home),
         ],
         onTabChange: (index) {
           switch (index) {
