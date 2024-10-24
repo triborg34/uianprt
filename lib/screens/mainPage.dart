@@ -7,6 +7,7 @@ import 'package:responsive_navigation_bar/responsive_navigation_bar.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/storagedb/db.dart';
 import 'package:uianprt/screens/homeScreen.dart';
+import 'package:uianprt/screens/infoScreen.dart';
 import 'package:uianprt/screens/reportScreen.dart';
 import 'package:uianprt/screens/settingScreen.dart';
 import 'package:uianprt/widgets/appbar.dart';
@@ -59,18 +60,18 @@ class _MainViewState extends State<MainView> {
         showActiveButtonText: false,
         navigationBarButtons: [
           NavigationBarButton(
-              backgroundColor: Colors.deepPurple, icon: Icons.arrow_left),
+              backgroundColor: Colors.deepPurple, icon: Icons.info),
           NavigationBarButton(
               backgroundColor: Colors.deepPurple, icon: Icons.settings),
           NavigationBarButton(
               backgroundColor: Colors.deepPurple, icon: Icons.car_repair_outlined),
-          NavigationBarButton(backgroundColor: Colors.deepPurple, icon: Icons.home),
+          NavigationBarButton(backgroundColor: const Color.fromARGB(255, 21, 19, 24), icon: Icons.home),
         ],
         onTabChange: (index) {
           switch (index) {
             case 0:
               navIndex = index;
-               Get.find<navController>().body=HomeScreen(databaseHelper: _databaseHelper,);
+               Get.find<navController>().body=Infoscreen();
               setState(() {});
 
               break;
