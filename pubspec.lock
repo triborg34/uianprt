@@ -821,14 +821,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-  sidebarx:
+  side_bar_custom:
     dependency: "direct main"
     description:
-      name: sidebarx
-      sha256: abe39d6db237fb8e25c600e8039ffab80fa7fe71acab03e9c378c31f912d2766
+      name: side_bar_custom
+      sha256: "1a6e74c58737d8057a59658d104f435425c0aa5054ed1e304f758f234f5ea20c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.17.1"
+    version: "1.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
