@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:side_bar_custom/side_bar_custom.dart';
 import 'package:uianprt/model/consts.dart';
 
@@ -33,7 +32,20 @@ class Settingscreen extends StatelessWidget {
             ),
           ],config: SideBarConfig(
             backgroundColor: purpule,
+            enableFloating: false,
+            iconSize: 28,
+            fontSize: 16,
+            dividerColor: Colors.deepPurpleAccent,
+            bottomIconColor: Colors.deepPurpleAccent,
+            borderRadius: BorderRadius.all(Radius.circular(35)),
+            selectedBoxColor:Colors.deepPurple,
+            unselectedBoxColor: purpule,
+            selectedIconColor: Colors.white,
+            unselectedIconColor: Colors.white54,
+            selectedTextStyle: TextStyle(color: Colors.white),
+            unselectedTextStyle: TextStyle(color: Colors.white54),
             
+
 
         
         
