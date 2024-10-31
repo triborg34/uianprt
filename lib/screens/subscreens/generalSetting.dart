@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uianprt/model/consts.dart';
+
 
 class Generalsetting extends StatelessWidget {
   const Generalsetting({super.key});
@@ -28,10 +28,101 @@ class Generalsetting extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   fontSize: 16),
             )),
+          ),
+          Row(
+            children: [
+              Expanded(
+                  child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                height: 165,
+                color: Colors.transparent,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FutursOfSystemRow(lable: "آستانه تشخیص پلاک:",),
+                    SizedBox(height: 15,),
+                    FutursOfSystemRow(lable: "آستانه تشخیص حروف:",),
+                    SizedBox(height: 15,),
+                    FutursOfSystemRow(lable: "کیفیت تصویر نظارت",),
+                    SizedBox(height: 15,),
+                               FutursOfSystemRow(lable: "خروج خودکار بعد از:",),
+
+                    
+                  ],
+                ),
+              )),
+              Expanded(
+                  child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                height: 165,
+                color: Colors.transparent,
+                child: Column(
+                  children: [
+                        FutursOfSystemRow(lable: "تشخیص پلاک مجدد بعد از:",),
+                    SizedBox(height: 15,),
+                    FutursOfSystemRow(lable: "بررسی برای بهترین پلاک:",),
+                    SizedBox(height: 15,),
+                    FutursOfSystemRow(lable: "رد کردن فریم",),
+                    SizedBox(height: 15,),
+                              FutursOfSystemRow(lable: "سخت افزار مورد استفاده ",),
+                  ],
+                ),
+              )),
+              
+            ],
           )
-          Te
         ],
       ),
+    );
+  }
+}
+
+class FutursOfSystemRow extends StatelessWidget {
+  String lable="";
+    TextEditingController controller=TextEditingController();
+    FutursOfSystemRow({  required this.lable });
+  @override
+  Widget build(BuildContext context) {
+  
+    return Row(
+      textDirection: TextDirection.rtl,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          lable,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        Container(
+          padding: EdgeInsets.only(bottom: 10),
+          decoration: BoxDecoration(
+              color: purpule,
+              borderRadius: BorderRadius.circular(5)),
+          alignment: Alignment.center,
+          height: 30,
+          width: 200,
+          child: TextField(
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700),
+              showCursor: true,
+              textAlignVertical: TextAlignVertical.center,
+              textAlign: TextAlign.start,
+              cursorColor: Colors.white,
+              cursorHeight: 15,
+              textDirection: TextDirection.ltr,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide.none)),
+              controller: controller),
+        )
+      ],
     );
   }
 }
