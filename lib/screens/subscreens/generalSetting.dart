@@ -34,7 +34,7 @@ class Generalsetting extends StatelessWidget {
               Expanded(
                   child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                height: 165,
+                height: 120,
                 color: Colors.transparent,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,8 +44,6 @@ class Generalsetting extends StatelessWidget {
                     FutursOfSystemRow(lable: "آستانه تشخیص حروف:",),
                     SizedBox(height: 15,),
                     FutursOfSystemRow(lable: "کیفیت تصویر نظارت",),
-                    SizedBox(height: 15,),
-                               FutursOfSystemRow(lable: "خروج خودکار بعد از:",),
 
                     
                   ],
@@ -54,7 +52,7 @@ class Generalsetting extends StatelessWidget {
               Expanded(
                   child: Container(
                       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                height: 165,
+                height: 120,
                 color: Colors.transparent,
                 child: Column(
                   children: [
@@ -63,12 +61,24 @@ class Generalsetting extends StatelessWidget {
                     FutursOfSystemRow(lable: "بررسی برای بهترین پلاک:",),
                     SizedBox(height: 15,),
                     FutursOfSystemRow(lable: "رد کردن فریم",),
-                    SizedBox(height: 15,),
-                              FutursOfSystemRow(lable: "سخت افزار مورد استفاده ",),
                   ],
                 ),
               )),
-              
+                            Expanded(
+                  child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                height: 120,
+                color: Colors.transparent,
+                child: Column(
+                  children: [
+                        FutursOfSystemRow(lable: "سخت افزار مورد استفاده ",),
+                    SizedBox(height: 15,),
+                    FutursOfSystemRow(lable: "خروج خودکار بعد از:",),
+                    SizedBox(height: 15,),
+                    FutursOfSystemRow(lable: "بیشینه مجاز همزمان مجاز",),
+                  ],
+                ),
+              ))
             ],
           )
         ],
@@ -78,18 +88,21 @@ class Generalsetting extends StatelessWidget {
 }
 
 class FutursOfSystemRow extends StatelessWidget {
-  String lable="";
+  String lable;
     TextEditingController controller=TextEditingController();
     FutursOfSystemRow({  required this.lable });
   @override
   Widget build(BuildContext context) {
-  
+    int templeng=23-(lable.length+1);
+    
+    String  space="*"*templeng;
     return Row(
       textDirection: TextDirection.rtl,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
-          lable,
+          lable.length<23 ? "${space}${lable}" : lable
+         ,
           style: TextStyle(
             color: Colors.white,
             fontSize: 16,
