@@ -4,7 +4,7 @@ class plateModel {
   String? eTime;
   String? plateNum;
   int? platePercent;
-  int? status;
+  String? status;
   String? imgpath;
 
   plateModel(

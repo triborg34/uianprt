@@ -17,12 +17,15 @@ class TableTitle extends StatelessWidget {
           textDirection: TextDirection.rtl,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              "شماره پلاک",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700),
+            Padding(
+              padding: const EdgeInsets.only(left: 13),
+              child: Text(
+                "شماره پلاک",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700),
+              ),
             ),
             VerticalDivider(
               color: Colors.black,

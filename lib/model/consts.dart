@@ -264,7 +264,7 @@ String convertToPersianString(String input, Map<String, String> dictionary) {
   return persianres;
 }
 
-String path = 'D:/Programins/Codes/Anprv5/licancaep/database/entrieses.db';
+String path = 'C:/areffile/anprv7/engine/database/entrieses.db';
 
 Color purpule = Color.fromARGB(255, 56, 2, 109);
 Color selecetpurpule=const Color.fromARGB(255, 109, 20, 125);

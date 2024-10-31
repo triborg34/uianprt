@@ -13,7 +13,7 @@ class LicanceNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 180,
+      width: 185,
       margin: EdgeInsets.only(right: 3),
       height: 40,
       decoration: BoxDecoration(
@@ -64,7 +64,7 @@ class LicanceNumber extends StatelessWidget {
             height: 40,
             child: Container(
                 padding: EdgeInsets.only(
-                    left: 9),
+                    left: 5),
                 color: Colors.white,
                 child: Center(
                   child: Text(

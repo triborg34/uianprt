@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uianprt/controller/mianController.dart';
@@ -66,7 +68,7 @@ class DbContant extends StatelessWidget {
                                 child: ClipRRect(
                               borderRadius: BorderRadius.circular(5),
                               child: 
-                              Image.asset(entry.imgpath!.replaceFirst('D:/Programins/Codes/uianprt/', '')),
+                              Image.file(File("C:/areffile/anprv7/engine/${entry.imgpath}"),fit: BoxFit.fill,width: 210,height: 48,),
                             )
                             ),
                           ),

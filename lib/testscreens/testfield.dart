@@ -44,7 +44,7 @@ class _TestFieldState extends State<TestField> {
             return Center(child: CircularProgressIndicator());
           } else {
             var entry = snapshot.data!;
-            var datas=entry.where((element) => element.status!>2,).toList();
+            var datas=entry.where((element) => element.status=='Active',).toList();
         
             print(datas[0].plateNum);
             

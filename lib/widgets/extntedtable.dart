@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uianprt/controller/mianController.dart';
@@ -31,15 +33,20 @@ Container contant() {
                     child: LicanceNumber(entry: tcontroller.selectedmodel)),
             tcontroller.selectedIndex == -1
                 ? headerOftable('-')
-                : Container(
-                    decoration: BoxDecoration(
-                        border: Border(left: BorderSide(color: purpule))),
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    width: 205,
-                    child: Center(
-                      child: Image.asset(tcontroller.selectedmodel.imgpath!.replaceFirst('D:/Programins/Codes/uianprt/', '')),
+                : InkWell(
+                  onTap: () {
+                    //TODO : Going to some page for details
+                  },
+                  child: Container(
+                      decoration: BoxDecoration(
+                          border: Border(left: BorderSide(color: purpule))),
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      width: 205,
+                      child: Center(
+                        child: Image.file(File("C:/areffile/anprv7/engine/${tcontroller.selectedmodel.imgpath}"),fit: BoxFit.fill,width: 210,height: 48,),
+                      ),
                     ),
-                  ),
+                ),
             contactOfTable(Get.find<Boxes>()
                     .regBox
                     .where(

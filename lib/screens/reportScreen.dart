@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -516,7 +518,7 @@ class ReportScreen extends StatelessWidget {
                                           border: Border(
                                               left:
                                                   BorderSide(color: purpule))),
-                                      width: 205,
+                                      width: 204,
                                       child: Center(
                                         child: Text(
                                           rcontroller
@@ -627,11 +629,9 @@ class ReportScreen extends StatelessWidget {
                                                   BorderSide(color: purpule))),
                                       width: 205,
                                       child: Center(
-                                        child: Image.asset(rcontroller
-                                            .selectedModel[index].imgpath!
-                                            .replaceFirst(
-                                                'D:/Programins/Codes/uianprt/',
-                                                '')),
+                                        child: InkWell(onTap: () {
+                                          // TODO : Go to Detail Screen
+                                        },child: Image.file(File("C:/areffile/anprv7/engine/${rcontroller.selectedModel[index].imgpath}"),fit: BoxFit.fill,width: 150,height: 48,)),
                                       )),
                                   Container(
                                     height: 50,
