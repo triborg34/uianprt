@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:side_bar_custom/side_bar_custom.dart';
 import 'package:uianprt/model/consts.dart';
+import 'package:uianprt/screens/subscreens/generalSetting.dart';
 
 class Settingscreen extends StatelessWidget {
   const Settingscreen({super.key});
@@ -32,9 +33,7 @@ class Settingscreen extends StatelessWidget {
              icon: FontAwesomeIcons.networkWired,
            ),
          ], children:  [
-            Container(
-              child: Text("Dashboard",style: TextStyle(color: Colors.white),),
-            ),
+            Generalsetting(),
             Center(
               child: Text("Add User",style: TextStyle(color: Colors.white),),
             ),
