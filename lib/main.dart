@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
       
         initialBinding: MyBinding(),
         theme: ThemeData(fontFamily: 'byekan',useMaterial3: true),
+       
         debugShowCheckedModeBanner: false,
         title: 'AmnAfarin',
         onReady: () {

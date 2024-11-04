@@ -269,4 +269,3 @@ String path = 'C:/areffile/anprv7/engine/database/entrieses.db';
 Color purpule = Color.fromARGB(255, 56, 2, 109);
 Color selecetpurpule=const Color.fromARGB(255, 109, 20, 125);
 
-

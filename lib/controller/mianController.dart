@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
 import 'package:uianprt/model/storagedb/db.dart';
@@ -112,4 +115,24 @@ class ReportController extends GetxController{
 class navController extends GetxController{
   int navIndex=3;
   Widget? body;
+
+}
+
+class settingController extends GetxController{
+  var psliderValue=0.4.obs;
+  var csliderValue=0.4.obs;
+  var hardWareValue='opencl';
+
+
+
+
+  
+
+
+
+
+
+
+
+  
 }
