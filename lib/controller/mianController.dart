@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -12,12 +12,14 @@ import 'package:uianprt/model/storagedb/db.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
 
 
+
 class videoController extends GetxController {
   late final player = Player();
   late final vController;
 
   @override
   void onInit() {
+
     WidgetsFlutterBinding.ensureInitialized();
     // Necessary initialization for package:media_kit.
     MediaKit.ensureInitialized();
@@ -48,7 +50,7 @@ class feildController extends GetxController {
 class Boxes extends GetxController {
   Box<RegistredDb> hivebox = Hive.box<RegistredDb>('regbox');
   List<RegistredDb> regBox = <RegistredDb>[];
-
+  late List<String> allTimeZones=getAllTimeZones() ;
   void getregData() {
     regBox.clear();
     for (var values in hivebox.values) {
@@ -69,6 +71,11 @@ class Boxes extends GetxController {
   void onClose() {
     Hive.close();
     super.onClose();
+  }
+
+    List<String> getAllTimeZones() {
+
+    return tz.timeZoneDatabase.locations.keys.toList();
   }
 }
 
@@ -123,6 +130,12 @@ class settingController extends GetxController{
   var csliderValue=0.4.obs;
   var hardWareValue='opencl';
 
+  String timezoneseleted="Asia/Tehran";
+  
+
+
+
+  
 
 
 
@@ -136,3 +149,4 @@ class settingController extends GetxController{
 
   
 }
+

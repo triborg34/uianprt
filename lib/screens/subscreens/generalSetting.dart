@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 
+import 'package:timezone_utc_offset/timezone_utc_offset.dart';
+
 class Generalsetting extends StatelessWidget {
   const Generalsetting({super.key});
 
+  // Get a list of available timezones
+
+
   @override
   Widget build(BuildContext context) {
+  
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -159,18 +166,19 @@ class Generalsetting extends StatelessWidget {
                           lable: "سخت افزار مورد استفاده ",
                         ),
                         DropdownMenu(
-                            initialSelection: Get.find<settingController>().hardWareValue,
+                            initialSelection:
+                                Get.find<settingController>().hardWareValue,
                             enableSearch: false,
                             enableFilter: false,
                             width: 150,
                             enabled: true,
                             textAlign: TextAlign.center,
                             onSelected: (value) {
-                              Get.find<settingController>().hardWareValue=value!;
+                              Get.find<settingController>().hardWareValue =
+                                  value!;
                             },
-                            
-                        
-                            textStyle: TextStyle(color: Colors.white,fontSize: 14),
+                            textStyle:
+                                TextStyle(color: Colors.white, fontSize: 14),
                             dropdownMenuEntries: [
                               DropdownMenuEntry(value: 'cuda', label: "CUDA"),
                               DropdownMenuEntry(
@@ -184,7 +192,7 @@ class Generalsetting extends StatelessWidget {
               )),
             ],
           ),
-            Container(
+          Container(
             height: 30,
             margin: EdgeInsets.symmetric(horizontal: 10),
             width: Get.width,
@@ -199,12 +207,24 @@ class Generalsetting extends StatelessWidget {
                   fontSize: 16),
             )),
           ),
-     
+          DropdownMenu(
+              initialSelection: Get.find<settingController>().timezoneseleted,
+              textStyle: TextStyle(color: Colors.white, fontFamily: 'arial'),
+             
+              dropdownMenuEntries: [
+                for (var timezone in Get.find<Boxes>().allTimeZones)
+                  DropdownMenuEntry(
+                      style: ButtonStyle(
+                          textStyle: WidgetStatePropertyAll(
+                              TextStyle(fontFamily: 'arial'))),
+                      value: timezone,
+                      label:
+                          "${timezone} : ${getTimezoneUTCOffset(timezone).toString().contains('-') ? '' : "+"}${(getTimezoneUTCOffset(timezone)!.inMinutes / 60).toString().replaceFirst('.', ':')}")
+              ])
         ],
       ),
     );
   }
-
 }
 
 class FutursOfSystemRow extends StatelessWidget {

@@ -30,12 +30,12 @@ class _MainViewState extends State<MainView> {
     _databaseHelper = DatabaseHelper.withPath(widget.dbPath);
 
     _databaseHelper.queryAndEmitEntries();
-    _pollingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _pollingTimer = Timer.periodic(Duration(seconds: 10), (timer) {
       _databaseHelper.queryAndEmitEntries();
     });
     Get.find<videoController>()
         .player
-        .open(Media("rtsp://admin:admin@192.168.1.88:554/stream"));
+        .open(Media("rtsp://admin:admin@192.168.1.89:554/stream"));
     //rtsp://admin:admin@192.168.1.88:554/stream
     Get.find<navController>().body=HomeScreen(databaseHelper: _databaseHelper,);
 

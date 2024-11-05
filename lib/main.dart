@@ -13,11 +13,12 @@ import 'package:uianprt/screens/mainPage.dart';
 import 'package:uianprt/testscreens/dbpage.dart';
 import 'package:uianprt/testscreens/testfield.dart';
 import 'package:uianprt/widgets/tempcamra.dart';
-
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  tz.initializeTimeZones();
    
 
 final appDocumentDirectory = await getApplicationDocumentsDirectory();
