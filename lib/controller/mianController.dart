@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timezone/timezone.dart' as tz;
+
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -50,7 +50,7 @@ class feildController extends GetxController {
 class Boxes extends GetxController {
   Box<RegistredDb> hivebox = Hive.box<RegistredDb>('regbox');
   List<RegistredDb> regBox = <RegistredDb>[];
-  late List<String> allTimeZones=getAllTimeZones() ;
+
   void getregData() {
     regBox.clear();
     for (var values in hivebox.values) {
@@ -73,10 +73,7 @@ class Boxes extends GetxController {
     super.onClose();
   }
 
-    List<String> getAllTimeZones() {
 
-    return tz.timeZoneDatabase.locations.keys.toList();
-  }
 }
 
 class ReportController extends GetxController{
