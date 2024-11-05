@@ -207,20 +207,32 @@ class Generalsetting extends StatelessWidget {
                   fontSize: 16),
             )),
           ),
-          DropdownMenu(
-              initialSelection: Get.find<settingController>().timezoneseleted,
-              textStyle: TextStyle(color: Colors.white, fontFamily: 'arial'),
-             
-              dropdownMenuEntries: [
-                for (var timezone in Get.find<Boxes>().allTimeZones)
-                  DropdownMenuEntry(
-                      style: ButtonStyle(
-                          textStyle: WidgetStatePropertyAll(
-                              TextStyle(fontFamily: 'arial'))),
-                      value: timezone,
-                      label:
-                          "${timezone} : ${getTimezoneUTCOffset(timezone).toString().contains('-') ? '' : "+"}${(getTimezoneUTCOffset(timezone)!.inMinutes / 60).toString().replaceFirst('.', ':')}")
-              ])
+          Padding(
+            padding:  EdgeInsets.all(10),
+            child: Row(
+              children: [
+                FutursOfSystemRow(lable: "منطقه زمانی : "),
+                DropdownMenu(
+                  width: 210,
+                    initialSelection: Get.find<settingController>().timezoneseleted,
+                    textStyle: TextStyle(color: Colors.white, fontFamily: 'arial'),
+                   
+                    dropdownMenuEntries: [
+                      for (var timezone in Get.find<Boxes>().allTimeZones)
+                        DropdownMenuEntry(
+                            style: ButtonStyle(
+                                textStyle: WidgetStatePropertyAll(
+                                    TextStyle(fontFamily: 'arial'))),
+                            value: timezone,
+                            label:
+                                "${timezone.split('/')[1]} : UTC(${getTimezoneUTCOffset(timezone).toString().contains('-') ? '' : "+"}${(getTimezoneUTCOffset(timezone)!.inMinutes / 60).toString().replaceFirst('.', ':')})")
+                    ]),
+                    SizedBox(width: 220,),
+                    FutursOfSystemRow(lable: "نوع قالب"),
+                    DropdownMenu(initialSelection: 24,enableSearch: false,enableFilter: false,textStyle: TextStyle(color: Colors.white),dropdownMenuEntries: [DropdownMenuEntry(value: 24, label: "24 ساعت"),DropdownMenuEntry(value: 12, label: "12 ساعت")])
+              ],
+            ),
+          )
         ],
       ),
     );
