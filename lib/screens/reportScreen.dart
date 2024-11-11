@@ -502,150 +502,155 @@ class ReportScreen extends StatelessWidget {
                           itemCount: rcontroller.selectedModel
                               .length, //todo
                           itemBuilder: (context, index) {
-                            return Container(
-                              width: Get.width,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(color: purpule))),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                      padding: EdgeInsets.all(3.0),
-                                      height: 50,
+                            return Visibility(
+                              visible: convertToPersian(
+                    rcontroller.selectedModel[index].plateNum!,
+                    alphabetP2)[0]!='-',
+                              child: Container(
+                                width: Get.width,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(color: purpule))),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                        padding: EdgeInsets.all(3.0),
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                left:
+                                                    BorderSide(color: purpule))),
+                                        width: 204,
+                                        child: Center(
+                                          child: Text(
+                                            rcontroller
+                                                .selectedModel[index].eTime!,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
+                                        )),
+                                    Container(
+                                        padding: EdgeInsets.all(3.0),
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                left:
+                                                    BorderSide(color: purpule))),
+                                        width: 205,
+                                        child: Center(
+                                          child: Text(
+                                            rcontroller
+                                                .selectedModel[index].eDate!
+                                                .toPersianDate(),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
+                                        )),
+                                    Container(
                                       decoration: BoxDecoration(
                                           border: Border(
-                                              left:
-                                                  BorderSide(color: purpule))),
-                                      width: 204,
+                                              left: BorderSide(color: purpule))),
+                                      width: 205,
+                                      height: 50,
                                       child: Center(
                                         child: Text(
-                                          rcontroller
-                                              .selectedModel[index].eTime!,
+                                          Get.find<Boxes>()
+                                                  .regBox
+                                                  .where(
+                                                    (element) =>
+                                                        element.plateNumber ==
+                                                        rcontroller
+                                                            .selectedModel[index]
+                                                            .plateNum,
+                                                  )
+                                                  .isEmpty
+                                              ? "-"
+                                              : Get.find<Boxes>()
+                                                  .regBox[Get.find<Boxes>()
+                                                      .regBox
+                                                      .indexWhere(
+                                                        (element) =>
+                                                            element.plateNumber ==
+                                                            rcontroller
+                                                                .selectedModel[
+                                                                    index]
+                                                                .plateNum,
+                                                      )]
+                                                  .carName!,
+                                          textDirection: TextDirection.rtl,
                                           style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18),
+                                              color: Colors.white, fontSize: 18),
                                         ),
-                                      )),
-                                  Container(
-                                      padding: EdgeInsets.all(3.0),
-                                      height: 50,
+                                      ),
+                                    ),
+                                    Container(
                                       decoration: BoxDecoration(
                                           border: Border(
-                                              left:
-                                                  BorderSide(color: purpule))),
+                                              left: BorderSide(color: purpule))),
                                       width: 205,
+                                      height: 50,
                                       child: Center(
                                         child: Text(
-                                          rcontroller
-                                              .selectedModel[index].eDate!
-                                              .toPersianDate(),
+                                          Get.find<Boxes>()
+                                                  .regBox
+                                                  .where(
+                                                    (element) =>
+                                                        element.plateNumber ==
+                                                        rcontroller
+                                                            .selectedModel[index]
+                                                            .plateNum,
+                                                  )
+                                                  .isEmpty
+                                              ? "-"
+                                              : Get.find<Boxes>()
+                                                  .regBox[Get.find<Boxes>()
+                                                      .regBox
+                                                      .indexWhere(
+                                                        (element) =>
+                                                            element.plateNumber ==
+                                                            rcontroller
+                                                                .selectedModel[
+                                                                    index]
+                                                                .plateNum,
+                                                      )]
+                                                  .name!,
+                                          textDirection: TextDirection.rtl,
                                           style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18),
+                                              color: Colors.white, fontSize: 18),
                                         ),
-                                      )),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            left: BorderSide(color: purpule))),
-                                    width: 205,
-                                    height: 50,
-                                    child: Center(
-                                      child: Text(
-                                        Get.find<Boxes>()
-                                                .regBox
-                                                .where(
-                                                  (element) =>
-                                                      element.plateNumber ==
-                                                      rcontroller
-                                                          .selectedModel[index]
-                                                          .plateNum,
-                                                )
-                                                .isEmpty
-                                            ? "-"
-                                            : Get.find<Boxes>()
-                                                .regBox[Get.find<Boxes>()
-                                                    .regBox
-                                                    .indexWhere(
-                                                      (element) =>
-                                                          element.plateNumber ==
-                                                          rcontroller
-                                                              .selectedModel[
-                                                                  index]
-                                                              .plateNum,
-                                                    )]
-                                                .carName!,
-                                        textDirection: TextDirection.rtl,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            left: BorderSide(color: purpule))),
-                                    width: 205,
-                                    height: 50,
-                                    child: Center(
-                                      child: Text(
-                                        Get.find<Boxes>()
-                                                .regBox
-                                                .where(
-                                                  (element) =>
-                                                      element.plateNumber ==
-                                                      rcontroller
-                                                          .selectedModel[index]
-                                                          .plateNum,
-                                                )
-                                                .isEmpty
-                                            ? "-"
-                                            : Get.find<Boxes>()
-                                                .regBox[Get.find<Boxes>()
-                                                    .regBox
-                                                    .indexWhere(
-                                                      (element) =>
-                                                          element.plateNumber ==
-                                                          rcontroller
-                                                              .selectedModel[
-                                                                  index]
-                                                              .plateNum,
-                                                    )]
-                                                .name!,
-                                        textDirection: TextDirection.rtl,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                      padding: EdgeInsets.all(3.0),
+                                    Container(
+                                        padding: EdgeInsets.all(3.0),
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                left:
+                                                    BorderSide(color: purpule))),
+                                        width: 205,
+                                        child: Center(
+                                          child: InkWell(onTap: () {
+                                            // TODO : Go to Detail Screen
+                                          },child: Image.file(File("C:/areffile/anprv7/engine/${rcontroller.selectedModel[index].imgpath}"),fit: BoxFit.fill,width: 150,height: 48,)),
+                                        )),
+                                    Container(
                                       height: 50,
+                                      width: 200,
                                       decoration: BoxDecoration(
                                           border: Border(
-                                              left:
-                                                  BorderSide(color: purpule))),
-                                      width: 205,
+                                            right: BorderSide(color: purpule) ,
+                                              left: BorderSide(color: purpule))),
                                       child: Center(
-                                        child: InkWell(onTap: () {
-                                          // TODO : Go to Detail Screen
-                                        },child: Image.file(File("C:/areffile/anprv7/engine/${rcontroller.selectedModel[index].imgpath}"),fit: BoxFit.fill,width: 150,height: 48,)),
-                                      )),
-                                  Container(
-                                    height: 50,
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                          right: BorderSide(color: purpule) ,
-                                            left: BorderSide(color: purpule))),
-                                    child: Center(
-                                        child: LicanceNumber(
-                                            entry: rcontroller
-                                                .selectedModel[index])),
-                                  ),
-                                ],
+                                          child: LicanceNumber(
+                                              entry: rcontroller
+                                                  .selectedModel[index])),
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           },

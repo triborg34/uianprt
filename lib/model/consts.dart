@@ -228,12 +228,19 @@ List convertToPersian(String input, Map<String, String> dictionary) {
     }
   }
 
+try{
   var persianres = [
     "${result[3]}${result[4]}${result[5]} ${result[2]} ${result[0]}${result[1]}",
     "${result[6]}${result[7]}"
   ];
-
   return persianres;
+}catch(e){
+
+  return ["-","-"];
+}
+  
+
+  
 }
 
 String convertToPersianString(String input, Map<String, String> dictionary) {
@@ -258,10 +265,15 @@ String convertToPersianString(String input, Map<String, String> dictionary) {
     }
   }
 
+try{
   var persianres =
       "${result[3]}${result[4]}${result[5]}/${result[6]}${result[7]} ${result[2]} ${result[0]}${result[1]}";
 
   return persianres;
+}catch(e){
+  print(e);
+  return "-";
+}
 }
 
 String path = 'C:/areffile/anprv7/engine/database/entrieses.db';
