@@ -57,6 +57,7 @@ dependencies:
   side_bar_custom: ^1.0.3
   font_awesome_flutter: ^10.7.0
   timezone_utc_offset: ^1.1.0
+  desktop_window: ^0.4.2
 
 
 

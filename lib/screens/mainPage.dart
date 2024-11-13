@@ -30,7 +30,7 @@ class _MainViewState extends State<MainView> {
     _databaseHelper = DatabaseHelper.withPath(widget.dbPath);
 
     _databaseHelper.queryAndEmitEntries();
-    _pollingTimer = Timer.periodic(Duration(seconds: 10), (timer) {
+    _pollingTimer = Timer.periodic(Duration(seconds: 3), (timer) {
       _databaseHelper.queryAndEmitEntries();
     });
     Get.find<videoController>()

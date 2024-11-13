@@ -63,6 +63,7 @@ class Boxes extends GetxController {
     getregData();
     for(var val in regBox){
       print(val.carName);
+    
     }
     super.onReady();
   }
@@ -108,6 +109,7 @@ class ReportController extends GetxController{
               charPercent: json.charPercent,
               eDate: json.eDate,
               eTime: json.eTime,
+              scrnPath: json.scrnPath,
               platePercent: json.platePercent,
               status: json.status));
         }});

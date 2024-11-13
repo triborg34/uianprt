@@ -45,7 +45,7 @@ class DatabaseHelper {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('entry'); // Fetch all entries
     for(var data in maps){
-       platemode.add(plateModel(charPercent: data['charPercent'],eDate: data['eDate'],eTime: data["eTime"],plateNum: data["plateNum"],platePercent: data["platePercent"],status: data["status"],imgpath: data["imgpath"]));
+       platemode.add(plateModel(charPercent: data['charPercent'],eDate: data['eDate'],eTime: data["eTime"],plateNum: data["plateNum"],platePercent: data["platePercent"],status: data["status"],imgpath: data["imgpath"],scrnPath: data["scrnpath"]));
     }
     // Convert each row into an 'as' class instance
     return List.generate(maps.length, (i) {
@@ -57,6 +57,7 @@ class DatabaseHelper {
         platePercent: maps[i]['platePercent'],
         status: maps[i]['status'],
         imgpath: maps[i]['imgpath'],
+        scrnPath:maps[i]['scrnpath']
       );
     });
     
@@ -70,7 +71,8 @@ class DatabaseHelper {
     required String eTime,
     required String plateNum,
     required int status,
-    required String imgpath
+    required String imgpath,
+    required String scrnpath
   }) async {
     final db = await database;
     await db.insert(
@@ -82,7 +84,8 @@ class DatabaseHelper {
         'eTime': eTime,
         'plateNum': plateNum,
         'status': status,
-        'imgpath':imgpath
+        'imgpath':imgpath,
+        'scrnpath':scrnpath
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -107,7 +110,8 @@ class DatabaseHelper {
         plateNum: entries[i]['plateNum'],
         platePercent: entries[i]['platePercent'],
         status: entries[i]['status'],
-        imgpath: entries[i]['imgpath']
+        imgpath: entries[i]['imgpath'],
+        scrnPath:entries[i]['scrnpath']
       );
     });
     _controller.sink.add(entryList); // Emit the data to the stream

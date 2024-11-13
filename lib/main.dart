@@ -1,4 +1,5 @@
 // ignore_for_file: unused_import
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ final appDocumentDirectory = await getApplicationDocumentsDirectory();
   
   Hive.registerAdapter(RegistredDbAdapter());
   await Hive.openBox<RegistredDb>('regbox');
-
+ await DesktopWindow.setWindowSize(Size(1820, 810));
   runApp(const MyApp());
 }
 

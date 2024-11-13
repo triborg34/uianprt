@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
+import 'package:uianprt/screens/detailedScreen.dart';
 import 'package:uianprt/widgets/licancenumber.dart';
 import  'package:persian_number_utility/persian_number_utility.dart';
 
@@ -14,7 +15,7 @@ Container contant() {
       alignment: Alignment.center,
       child: GetBuilder<tableController>(
         builder: (tcontroller) => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         
           textDirection: TextDirection.rtl,
           children: [
             // contactOfTable(tcontroller.selectedIndex == -1
@@ -35,15 +36,19 @@ Container contant() {
                 ? headerOftable('-')
                 : InkWell(
                   onTap: () {
-                    //TODO : Going to some page for details
+                    Get.to(()=>Detailedscreen(selectedModel: tcontroller.selectedmodel, index: tcontroller.selectedIndex));
                   },
                   child: Container(
+
+                    height: 48,
+                    alignment: Alignment.center,
                       decoration: BoxDecoration(
+                        color: Colors.transparent,
                           border: Border(left: BorderSide(color: purpule))),
-                      padding: EdgeInsets.symmetric(horizontal: 5),
-                      width: 205,
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      width: 223,
                       child: Center(
-                        child: Image.file(File("C:/areffile/anprv7/engine/${tcontroller.selectedmodel.imgpath}"),fit: BoxFit.fill,width: 210,height: 48,),
+                        child: Hero(tag: 'heroTag${tcontroller.selectedIndex}',child: Image.file(File("C:/areffile/anprv7/engine/${tcontroller.selectedmodel.imgpath}"),fit: BoxFit.fill,width: 205,),),
                       ),
                     ),
                 ),
@@ -81,7 +86,14 @@ Container contant() {
                     .carName!),
             contactOfTable(tcontroller.selectedIndex == -1
                 ? "-"
+                : tcontroller.selectedmodel.platePercent!.toString()+"%"),
+                   contactOfTable(tcontroller.selectedIndex == -1
+                ? "-"
+                : tcontroller.selectedmodel.charPercent.toString()+"%"),
+                   contactOfTable(tcontroller.selectedIndex == -1
+                ? "-"
                 : tcontroller.selectedmodel.eDate!.toPersianDate()),
+                
             contactOfTable(tcontroller.selectedIndex == -1
                 ? "-"
                 : tcontroller.selectedmodel.eTime!)
@@ -104,6 +116,8 @@ Container header() {
         headerOftable("عکس پلاک"),
         headerOftable(" نام و نام خانوادگی"),
         headerOftable("نوع ماشین"),
+        headerOftable("دقت تشخیص پلاک"),
+        headerOftable("دقت تشخیص حروف"),
         headerOftable("تاریخ ورود"),
         headerOftable("ساعت ورود")
       ],
@@ -129,7 +143,7 @@ Container contactOfTable(String title) {
       decoration:
           BoxDecoration(border: Border(left: BorderSide(color: purpule))),
       height: 98,
-      width: 205,
+      width: 222.5,
       child: Center(
           child: Text(
         title,

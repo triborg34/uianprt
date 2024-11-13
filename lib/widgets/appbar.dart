@@ -3,6 +3,7 @@ import 'package:uianprt/model/consts.dart';
 
 AppBar MyAppBar() {
     return AppBar(
+      foregroundColor: Colors.white,
       centerTitle: true,
       title: Text(
         "AmnAfarin®",

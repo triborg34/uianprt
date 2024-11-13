@@ -52,7 +52,7 @@ class _VideoStreamState extends State<VideoStream> {
                           stream: _socket.stream,
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
-                              return const CircularProgressIndicator();
+                              return Center(child: const CircularProgressIndicator());
                             }
           
                             if (snapshot.connectionState == ConnectionState.done) {
@@ -68,6 +68,7 @@ class _VideoStreamState extends State<VideoStream> {
                                 ),
                               ),
                               gaplessPlayback: true,
+                              fit:BoxFit.fill,
                               excludeFromSemantics: true,
                             );
                           },

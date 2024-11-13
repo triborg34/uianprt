@@ -238,7 +238,8 @@ class DbContant extends StatelessWidget {
                                                                   eDate:
                                                                       entry.eDate,
                                                                   eTime: entry
-                                                                      .eTime);
+                                                                      .eTime,
+                                                                      screenImg: entry.scrnPath);
                                                           Get.find<Boxes>()
                                                               .hivebox
                                                               .add(registredDb);

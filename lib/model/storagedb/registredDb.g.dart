@@ -24,13 +24,14 @@ class RegistredDbAdapter extends TypeAdapter<RegistredDb> {
       eDate: fields[4] as String?,
       eTime: fields[5] as String?,
       status: fields[6] as bool?,
+      screenImg: fields[7] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, RegistredDb obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.plateNumber)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class RegistredDbAdapter extends TypeAdapter<RegistredDb> {
       ..writeByte(5)
       ..write(obj.eTime)
       ..writeByte(6)
-      ..write(obj.status);
+      ..write(obj.status)
+      ..writeByte(7)
+      ..write(obj.screenImg);
   }
 
   @override

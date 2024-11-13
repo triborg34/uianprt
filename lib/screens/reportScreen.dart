@@ -10,6 +10,7 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
+import 'package:uianprt/screens/detailedScreen.dart';
 import 'package:uianprt/widgets/alphabetselector.dart';
 import 'package:uianprt/widgets/licancenumber.dart';
 
@@ -492,7 +493,7 @@ class ReportScreen extends StatelessWidget {
                 Container(
                     color: Colors.transparent,
                     width: Get.width,
-                    height: 300,
+                    height: 500,
                     child: GetBuilder<ReportController>(
                       id: 2,
                       builder: (rcontroller) {
@@ -522,7 +523,7 @@ class ReportScreen extends StatelessWidget {
                                             border: Border(
                                                 left:
                                                     BorderSide(color: purpule))),
-                                        width: 204,
+                                        width: 221,
                                         child: Center(
                                           child: Text(
                                             rcontroller
@@ -539,7 +540,7 @@ class ReportScreen extends StatelessWidget {
                                             border: Border(
                                                 left:
                                                     BorderSide(color: purpule))),
-                                        width: 205,
+                                        width: 221,
                                         child: Center(
                                           child: Text(
                                             rcontroller
@@ -550,11 +551,45 @@ class ReportScreen extends StatelessWidget {
                                                 fontSize: 18),
                                           ),
                                         )),
+                                            Container(
+                                        padding: EdgeInsets.all(3.0),
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                left:
+                                                    BorderSide(color: purpule))),
+                                        width: 221,
+                                        child: Center(
+                                          child: Text(
+                                            rcontroller
+                                                .selectedModel[index].charPercent.toString()+"%",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
+                                        )),
+                                            Container(
+                                        padding: EdgeInsets.all(3.0),
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                left:
+                                                    BorderSide(color: purpule))),
+                                        width: 221,
+                                        child: Center(
+                                          child: Text(
+                                            rcontroller
+                                                .selectedModel[index].platePercent.toString()+"%",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
+                                        )),
                                     Container(
                                       decoration: BoxDecoration(
                                           border: Border(
                                               left: BorderSide(color: purpule))),
-                                      width: 205,
+                                      width: 221,
                                       height: 50,
                                       child: Center(
                                         child: Text(
@@ -591,7 +626,7 @@ class ReportScreen extends StatelessWidget {
                                       decoration: BoxDecoration(
                                           border: Border(
                                               left: BorderSide(color: purpule))),
-                                      width: 205,
+                                      width: 221,
                                       height: 50,
                                       child: Center(
                                         child: Text(
@@ -625,30 +660,34 @@ class ReportScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Container(
-                                        padding: EdgeInsets.all(3.0),
+                                        
                                         height: 50,
                                         decoration: BoxDecoration(
                                             border: Border(
                                                 left:
                                                     BorderSide(color: purpule))),
-                                        width: 205,
+                                        width: 210,
                                         child: Center(
                                           child: InkWell(onTap: () {
-                                            // TODO : Go to Detail Screen
-                                          },child: Image.file(File("C:/areffile/anprv7/engine/${rcontroller.selectedModel[index].imgpath}"),fit: BoxFit.fill,width: 150,height: 48,)),
+                                            
+                                           Get.to(()=>Detailedscreen(selectedModel: rcontroller.selectedModel[index],index: index,));
+                                          },child: Hero(tag: "heroTag${index}",child: Image.file(File("C:/areffile/anprv7/engine/${rcontroller.selectedModel[index].imgpath}"),fit: BoxFit.fill,width: 221,height: 48,))),
                                         )),
                                     Container(
+                                      padding: EdgeInsets.all(1.0),
                                       height: 50,
-                                      width: 200,
+                                      width: 209,
                                       decoration: BoxDecoration(
                                           border: Border(
                                             right: BorderSide(color: purpule) ,
                                               left: BorderSide(color: purpule))),
-                                      child: Center(
-                                          child: LicanceNumber(
-                                              entry: rcontroller
-                                                  .selectedModel[index])),
-                                    ),
+                                      
+                                          child: Center(
+                                            child: LicanceNumber(
+                                                entry: rcontroller
+                                                    .selectedModel[index]),
+                                          )),
+                                    
                                   ],
                                 ),
                               ),
@@ -960,6 +999,8 @@ Container header2() {
         headerOftable2("عکس پلاک"),
         headerOftable2(" نام و نام خانوادگی"),
         headerOftable2("نوع ماشین"),
+        headerOftable2("درصد تشخیص پلاک"),
+        headerOftable2("درصد تشخیص حروف"),
         headerOftable2("تاریخ ورود"),
         headerOftable2("ساعت ورود")
       ],

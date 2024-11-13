@@ -6,6 +6,7 @@ class plateModel {
   int? platePercent;
   String? status;
   String? imgpath;
+  String? scrnPath;
 
   plateModel(
       {this.charPercent,
@@ -13,7 +14,7 @@ class plateModel {
       this.eTime,
       this.plateNum,
       this.platePercent,
-      this.status,this.imgpath});
+      this.status,this.imgpath,this.scrnPath});
 
   plateModel.fromJson(Map<String, dynamic> json) {
     charPercent = json['charPercent'];
@@ -23,6 +24,7 @@ class plateModel {
     platePercent = json['platePercent'];
     status = json['status'];
     imgpath = json['imgpath'];
+    scrnPath = json['scrnPath'];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,6 +36,7 @@ class plateModel {
     data['platePercent'] = this.platePercent;
     data['status'] = this.status;
     data['imgpath'] = this.imgpath;
+    data['scrnPath'] = this.scrnPath;
     return data;
   }
 }
