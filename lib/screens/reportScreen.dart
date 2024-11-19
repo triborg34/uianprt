@@ -671,7 +671,7 @@ class ReportScreen extends StatelessWidget {
                                           child: InkWell(onTap: () {
                                             
                                            Get.to(()=>Detailedscreen(selectedModel: rcontroller.selectedModel[index],index: index,));
-                                          },child: Hero(tag: "heroTag${index}",child: Image.file(File("C:/areffile/anprv7/engine/${rcontroller.selectedModel[index].imgpath}"),fit: BoxFit.fill,width: 221,height: 48,))),
+                                          },child: Hero(tag: "heroTag${index}",child: Image.file(File("${imagesPath}${rcontroller.selectedModel[index].imgpath}"),fit: BoxFit.fill,width: 221,height: 48,))),
                                         )),
                                     Container(
                                       padding: EdgeInsets.all(1.0),
@@ -899,6 +899,7 @@ class ReportScreen extends StatelessWidget {
               left: 8,
             ),
             child: TextFormField(
+              style: TextStyle(color: Colors.white),
               textDirection: TextDirection.ltr,
               expands: true,
               maxLines: null,

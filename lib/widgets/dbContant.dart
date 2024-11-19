@@ -74,7 +74,7 @@ class DbContant extends StatelessWidget {
                                   child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: 
-                                Image.file(File("C:/areffile/anprv7/engine/${entry.imgpath}"),fit: BoxFit.fill,width: 210,height: 48,),
+                                Image.file(File("${imagesPath}${entry.imgpath}"),fit: BoxFit.fill,width: 210,height: 48,),
                               )
                               ),
                             ),

@@ -1,9 +1,9 @@
 class plateModel {
-  int? charPercent;
+  double? charPercent;
   String? eDate;
   String? eTime;
   String? plateNum;
-  int? platePercent;
+  double? platePercent;
   String? status;
   String? imgpath;
   String? scrnPath;

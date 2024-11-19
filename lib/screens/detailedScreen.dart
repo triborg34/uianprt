@@ -44,7 +44,7 @@ class Detailedscreen extends StatelessWidget {
                   child: Image.file(
                       fit: BoxFit.contain,
                       File(
-                        "C:/areffile/anprv7/engine/${selectedModel.scrnPath}",
+                        "${imagesPath}${selectedModel.scrnPath}",
                       )),
                 ),
               ),
@@ -88,7 +88,7 @@ class Detailedscreen extends StatelessWidget {
                           tag: "heroTag${index}",
                           child: Image.file(
                             File(
-                                "C:/areffile/anprv7/engine/${selectedModel.imgpath}"),
+                                "${imagesPath}${selectedModel.imgpath}"),
                             fit: BoxFit.fill,
                             width: 210,
                             height: 48,

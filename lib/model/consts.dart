@@ -276,7 +276,8 @@ try{
 }
 }
 
-String path = 'C:/areffile/anprv7/engine/database/entrieses.db';
+String path = '../../../../anprv7/engine/database/entrieses.db';
+String imagesPath="../anprv7/engine/";
 
 Color purpule = Color.fromARGB(255, 56, 2, 109);
 Color selecetpurpule=const Color.fromARGB(255, 109, 20, 125);
