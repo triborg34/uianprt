@@ -6,7 +6,6 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
-import 'package:uianprt/screens/reportScreen.dart';
 import 'package:uianprt/widgets/appbar.dart';
 import 'package:uianprt/widgets/licancenumber.dart';
 
