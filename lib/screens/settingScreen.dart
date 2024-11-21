@@ -4,6 +4,7 @@ import 'package:side_bar_custom/side_bar_custom.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/screens/subscreens/cameraSetting.dart';
 import 'package:uianprt/screens/subscreens/generalSetting.dart';
+import 'package:uianprt/screens/subscreens/userSetting.dart';
 
 class Settingscreen extends StatelessWidget {
   const Settingscreen({super.key});
@@ -36,9 +37,7 @@ class Settingscreen extends StatelessWidget {
          ], children:  [
             Generalsetting(),
             CameraSetting(),
-              Center(
-              child: Text("Add User",style: TextStyle(color: Colors.white),),
-            ),
+            UserSetting(),
                  Center(
               child: Text("Add User",style: TextStyle(color: Colors.white),),
             ),
