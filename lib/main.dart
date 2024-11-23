@@ -17,6 +17,7 @@ import 'package:uianprt/widgets/tempcamra.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
@@ -39,15 +40,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print("${MediaQuery.of(context).size.width},${MediaQuery.of(context).size.height}");
     return GetMaterialApp(
       
         initialBinding: MyBinding(),
         theme: ThemeData(fontFamily: 'byekan',useMaterial3: true),
-       
+ 
         debugShowCheckedModeBanner: false,
         title: 'AmnAfarin',
         onReady: () {
-          print(Get.find<videoController>().initialized);
+        
         },
         home: MainView(path));
   }

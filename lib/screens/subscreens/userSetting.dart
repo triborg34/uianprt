@@ -214,14 +214,37 @@ class UserSetting extends StatelessWidget {
                           ),
 
                           IconButton(onPressed: (){}, icon: IconButton(onPressed: (){}, icon: Icon(Icons.edit))),SizedBox(width: 5,),
-                           IconButton(onPressed: (){}, icon: IconButton(onPressed: (){}, icon: Icon(Icons.delete)))
+                           IconButton(onPressed: (){}, icon: IconButton(onPressed: (){}, icon: Icon(Icons.delete,color: Colors.red,)))
                         ],
                       ),
                     );
                   },
                   separatorBuilder: (context, index) => SizedBox(),
                   itemCount: Get.find<Boxes>().regBox.length),
+
             ),
+             Container(
+                child: Row(
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                    //TODO:Addtinal Screen or popup screen for registrainon 
+                    },
+                    child: Row(
+                      children: [Text("اضافه کردن")],
+                    )),
+                SizedBox(
+                  width: 15,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      //TODO:we can handle saving prosess here or in the add button here is better 
+                    },
+                    child: Row(
+                      children: [Text("ذخیره")],
+                    ))
+              ],
+            )),
           ],
         ));
   }
@@ -238,7 +261,7 @@ class UserRows extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 240,
+        width: 200,
         child: Center(
           child: Text(
             title.toString(),

@@ -193,10 +193,11 @@ class CameraSettingRows extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width:  240 ,
+        width:  200 ,
         child: Center(
           child: Text(
             title.toString(),
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700),
           ),

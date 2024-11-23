@@ -125,9 +125,9 @@ class navController extends GetxController{
 }
 
 class settingController extends GetxController{
-  var psliderValue=0.4.obs;
-  var csliderValue=0.4.obs;
-  var hardWareValue='opencl';
+  var psliderValue=0.7.obs;
+  var csliderValue=0.75.obs;
+  var hardWareValue='cuda';
 
   String timezoneseleted="Asia/Tehran";
   

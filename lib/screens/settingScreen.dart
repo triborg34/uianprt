@@ -29,18 +29,18 @@ class Settingscreen extends StatelessWidget {
            ),
              SideBarItem(
              text: "کاربران",
-             icon: FontAwesomeIcons.usersGear,
-           ), SideBarItem(
-             text: "شبکه",
-             icon: FontAwesomeIcons.networkWired,
-           ),
+             icon: FontAwesomeIcons.usersGear,)
+          //  ), SideBarItem(
+          //    text: "شبکه",
+          //    icon: FontAwesomeIcons.networkWired,
+          //  ),
          ], children:  [
             Generalsetting(),
             CameraSetting(),
             UserSetting(),
-                 Center(
-              child: Text("Add User",style: TextStyle(color: Colors.white),),
-            ),
+            //      Center(
+            //   child: Text("Add User",style: TextStyle(color: Colors.white),),
+            // ),
           ],config: SideBarConfig(
             backgroundColor: purpule,
             enableFloating: false,

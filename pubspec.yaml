@@ -58,6 +58,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   timezone_utc_offset: ^1.1.0
   desktop_window: ^0.4.2
+  responsive_framework: ^1.5.1
 
 
 
