@@ -225,7 +225,7 @@ class DbContant extends StatelessWidget {
                                                               registredDb =
                                                               RegistredDb(
                                                                   plateImagePath:
-                                                                      '',
+                                                                      entry.imgpath,
                                                                   plateNumber: entry
                                                                       .plateNum,
                                                                   carName: Get.find<

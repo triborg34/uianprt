@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
+
 
 class UserSetting extends StatelessWidget {
   UserSetting({super.key});
@@ -84,7 +89,6 @@ class UserSetting extends StatelessWidget {
                           VerticalDivider(
                             color: purpule,
                           ),
-                    
                           IconButton(
                             onPressed: () {},
                             icon: Icon(Icons.edit),
@@ -113,52 +117,111 @@ class UserSetting extends StatelessWidget {
                 child: Row(
               children: [
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      print("${Get.find<Boxes>().regBox[0].plateImagePath}");
+                    },
                     child: Row(
                       children: [Text("اضافه کردن")],
-                    )),SizedBox(width: 15,),
-                       ElevatedButton(
+                    )),
+                SizedBox(
+                  width: 15,
+                ),
+                ElevatedButton(
                     onPressed: () {},
                     child: Row(
                       children: [Text("ذخیره")],
                     ))
               ],
-            )),SizedBox(height: 25,),
+            )),
+            SizedBox(
+              height: 25,
+            ),
             Container(
-              width: Get.width,
-              height: 50,
-              decoration: BoxDecoration(
-                  color: purpule, borderRadius: BorderRadius.circular(5)),
-              child: Center(
-                  child: Text(
-                "افراد ثبت شده",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20),
-            ))),SizedBox(height: 15,),
-            Container(height: 150,child: ListView.separated(itemBuilder: (context, index) {
-              return Container(
-                 height: 50,
+                width: Get.width,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: purpule, borderRadius: BorderRadius.circular(5)),
+                child: Center(
+                    child: Text(
+                  "افراد ثبت شده",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20),
+                ))),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              height: 150,
+              child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: 50,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           border: Border.all(color: purpule),
                           borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            textDirection: TextDirection.rtl,
-                            children: [ UserRows(title: convertToPersianString(Get.find<Boxes>().regBox[index].plateNumber!, alphabetP2)),
+                      child: Row(
+                        textDirection: TextDirection.rtl,
+                        children: [
+                          UserRows(
+                              title: convertToPersianString(
+                                  Get.find<Boxes>().regBox[index].plateNumber!,
+                                  alphabetP2)),
                           VerticalDivider(
                             color: purpule,
                           ),
-                               UserRows(title: Get.find<Boxes>().regBox[index].name),
+                          Container(
+                            width: 240,
+                            child: Center(
+                              child: Image.file(
+                                File(
+                                    "${imagesPath}${Get.find<Boxes>().regBox[index].plateImagePath}"),
+                                width: 240,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
                           VerticalDivider(
                             color: purpule,
                           ),
-                            ],
+                          UserRows(title: Get.find<Boxes>().regBox[index].name),
+                          VerticalDivider(
+                            color: purpule,
                           ),
-              );
-            }, separatorBuilder: (context, index) => SizedBox(), itemCount: Get.find<Boxes>().regBox.length),),
+                          UserRows(
+                              title: Get.find<Boxes>().regBox[index].carName),
+                          VerticalDivider(
+                            color: purpule,
+                          ),
+                          UserRows(
+                              title: Get.find<Boxes>()
+                                  .regBox[index]
+                                  .eDate!
+                                  .toPersianDate()),
+                          VerticalDivider(
+                            color: purpule,
+                          ),
+                          UserRows(
+                              title: Get.find<Boxes>().regBox[index].eTime!),
+                          VerticalDivider(
+                            color: purpule,
+                          ),
+                          Get.find<Boxes>().regBox[index].status! ? Icon(Icons.check_box,color: Colors.lightGreenAccent,) :Icon(Icons.block,color: Colors.red,),
+                            VerticalDivider(
+                            color: purpule,
+                          ),
 
+                          IconButton(onPressed: (){}, icon: IconButton(onPressed: (){}, icon: Icon(Icons.edit))),SizedBox(width: 5,),
+                           IconButton(onPressed: (){}, icon: IconButton(onPressed: (){}, icon: Icon(Icons.delete)))
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => SizedBox(),
+                  itemCount: Get.find<Boxes>().regBox.length),
+            ),
           ],
         ));
   }
