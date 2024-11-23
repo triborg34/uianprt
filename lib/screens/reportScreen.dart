@@ -885,7 +885,8 @@ class ReportScreen extends StatelessWidget {
   }
 
   DropdownButtonHideUnderline DropFunc(ReportController rcontroller) {
-    return DropdownButtonHideUnderline(
+    return
+     DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         dropdownSearchData: DropdownSearchData(
           searchController: searchController,
@@ -958,7 +959,7 @@ class ReportScreen extends StatelessWidget {
                   ),
                 ))
             .toList(),
-        value: rcontroller.selectedItem,
+        value:  rcontroller.selectedItem,
         onChanged: (String? value) {
           rcontroller.selectedItem = value;
           rcontroller.update([1]);
@@ -1079,6 +1080,12 @@ class ReportTextField extends StatelessWidget {
   }
 }
 
-//TODO:قسمت جستسجو
-//TODO:قسمت ویرایش
-//TODO:تنظیمات
+
+_somthing(var rcontroller){
+  try{
+    return rcontroller.selectedItem;
+  }
+  catch(e){
+    return null;
+  }
+}

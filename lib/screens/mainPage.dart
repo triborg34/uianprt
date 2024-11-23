@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:media_kit/media_kit.dart';
+
 import 'package:responsive_navigation_bar/responsive_navigation_bar.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/storagedb/db.dart';
@@ -33,9 +33,9 @@ class _MainViewState extends State<MainView> {
     _pollingTimer = Timer.periodic(Duration(seconds: 3), (timer) {
       _databaseHelper.queryAndEmitEntries();
     });
-    Get.find<videoController>()
-        .player
-        .open(Media("rtsp://admin:admin@192.168.1.89:554/stream"));
+    // Get.find<videoController>()
+    //     .player
+    //     .open(Media("rtsp://admin:admin@192.168.1.89:554/stream"));
     //rtsp://admin:admin@192.168.1.88:554/stream
     Get.find<navController>().body=HomeScreen(databaseHelper: _databaseHelper,);
 

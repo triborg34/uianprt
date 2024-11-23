@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:uianprt/model/consts.dart';
-import 'package:uianprt/screens/detailedScreen.dart';
+
 
 class Infoscreen extends StatelessWidget {
   const Infoscreen({super.key});
