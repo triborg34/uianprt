@@ -9,7 +9,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uianprt/controller/bindings.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
+import 'package:uianprt/model/storagedb/cameras.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
+import 'package:uianprt/model/storagedb/users.dart';
 import 'package:uianprt/screens/mainPage.dart';
 import 'package:uianprt/testscreens/dbpage.dart';
 import 'package:uianprt/testscreens/testfield.dart';
@@ -28,8 +30,13 @@ final appDocumentDirectory = await getApplicationDocumentsDirectory();
   
 
   
-  Hive.registerAdapter(RegistredDbAdapter());
+  Hive.registerAdapter(UsersAdapter());
+    await Hive.openBox<Users>('userbox');
+   Hive.registerAdapter(RegistredDbAdapter());
   await Hive.openBox<RegistredDb>('regbox');
+  Hive.registerAdapter(CamerasAdapter());
+  await Hive.openBox<Cameras>('camerabox');
+
  await DesktopWindow.setWindowSize(Size(1820, 810));
   runApp(const MyApp());
 }
@@ -49,6 +56,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'AmnAfarin',
         onReady: () {
+       
         
         },
         home: MainView(path));

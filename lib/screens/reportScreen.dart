@@ -1,11 +1,16 @@
 import 'dart:io';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
+
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+
+import 'package:path_provider/path_provider.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' as Excel;
 
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
@@ -45,9 +50,18 @@ class ReportScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: purpule, borderRadius: BorderRadius.circular(15)),
                   width: Get.width,
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextButton(onPressed: (){}, child: Text("جستجوی پیشرفته",style: TextStyle(color: Colors.white70,fontWeight: FontWeight.bold,fontSize: 14),)),
+                      TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "جستجوی پیشرفته",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          )),
                       Text(
                         "صفحه گزارش",
                         textDirection: TextDirection.rtl,
@@ -68,6 +82,105 @@ class ReportScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        IconButton(
+                            tooltip: "ذخیره",
+                            onPressed: () async {
+                              if(rcontroller.selectedModel.isNotEmpty){
+                               final List<Map<String, dynamic>> data =
+                                  await List.generate(
+                                rcontroller.selectedModel.length,
+                                (index) {
+                                  return {
+                                    "Plate Number": convertToPersianString(
+                                        rcontroller
+                                            .selectedModel[index].plateNum!,
+                                        alphabetP2),
+                                    "Name": Get.find<Boxes>()
+                                            .regBox
+                                            .where(
+                                              (element) =>
+                                                  element.plateNumber ==
+                                                  rcontroller
+                                                      .selectedModel[index]
+                                                      .plateNum,
+                                            )
+                                            .isEmpty
+                                        ? "-"
+                                        : Get.find<Boxes>()
+                                            .regBox[Get.find<Boxes>()
+                                                .regBox
+                                                .indexWhere(
+                                                  (element) =>
+                                                      element.plateNumber ==
+                                                      rcontroller
+                                                          .selectedModel[index]
+                                                          .plateNum,
+                                                )]
+                                            .name!,
+                                    "Car name": Get.find<Boxes>()
+                                            .regBox
+                                            .where(
+                                              (element) =>
+                                                  element.plateNumber ==
+                                                  rcontroller
+                                                      .selectedModel[index]
+                                                      .plateNum,
+                                            )
+                                            .isEmpty
+                                        ? '-'
+                                        : Get.find<Boxes>()
+                                            .regBox[Get.find<Boxes>()
+                                                .regBox
+                                                .indexWhere(
+                                                  (element) =>
+                                                      element.plateNumber ==
+                                                      rcontroller
+                                                          .selectedModel[index]
+                                                          .plateNum,
+                                                )]
+                                            .carName!,
+                                    "Image Path":
+                                        "${imagesPath}${rcontroller.selectedModel[index].imgpath}",
+                                    "ScreenShot Path":
+                                        "${imagesPath}${rcontroller.selectedModel[index].scrnPath}",
+                                    "Plate Percsent": rcontroller
+                                        .selectedModel[index].platePercent,
+                                    "Char Percent": rcontroller
+                                        .selectedModel[index].charPercent,
+                                    "Date": rcontroller
+                                        .selectedModel[index].eDate!
+                                        .toPersianDate(),
+                                    "Time": rcontroller
+                                        .selectedModel[index].eTime!
+                                        .toPersianDigit(),
+                                    "Status": rcontroller
+                                                .selectedModel[index].status ==
+                                            "Active"
+                                        ? "White List"
+                                        : "Black List"
+                                  };
+                                },
+                              );
+                              await saveToExel(data);
+                          
+                              Get.snackbar("ذخیره شد", rcontroller.savePath!,
+                                  backgroundColor: purpule,
+                                  colorText: Colors.white,
+                                  snackStyle: SnackStyle.FLOATING,
+                                  snackPosition: SnackPosition.BOTTOM);
+                              }
+                              else{
+                                Get.snackbar("", "خطا گزارشی یافت نشد",colorText: Colors.white);
+                              }
+                            },
+                            icon: Icon(
+                              Icons.save_alt,
+                              color: Colors.white,
+                              size: 30,
+                            )),
+                        SizedBox(
+                          width: 50,
+                        ),
                         SizedBox(
                             height: 40,
                             width: 180,
@@ -498,15 +611,17 @@ class ReportScreen extends StatelessWidget {
                       id: 2,
                       builder: (rcontroller) {
                         return ListView.builder(
-                          controller: ScrollController(initialScrollOffset:0,debugLabel: "Controller"),
+                          controller: ScrollController(
+                              initialScrollOffset: 0, debugLabel: "Controller"),
                           reverse: false,
-                          itemCount: rcontroller.selectedModel
-                              .length, //todo
+                          itemCount: rcontroller.selectedModel.length, //todo
                           itemBuilder: (context, index) {
                             return Visibility(
                               visible: convertToPersian(
-                    rcontroller.selectedModel[index].plateNum!,
-                    alphabetP2)[0]!='-',
+                                      rcontroller
+                                          .selectedModel[index].plateNum!,
+                                      alphabetP2)[0] !=
+                                  '-',
                               child: Container(
                                 width: Get.width,
                                 height: 50,
@@ -521,8 +636,8 @@ class ReportScreen extends StatelessWidget {
                                         height: 50,
                                         decoration: BoxDecoration(
                                             border: Border(
-                                                left:
-                                                    BorderSide(color: purpule))),
+                                                left: BorderSide(
+                                                    color: purpule))),
                                         width: 221,
                                         child: Center(
                                           child: Text(
@@ -538,8 +653,8 @@ class ReportScreen extends StatelessWidget {
                                         height: 50,
                                         decoration: BoxDecoration(
                                             border: Border(
-                                                left:
-                                                    BorderSide(color: purpule))),
+                                                left: BorderSide(
+                                                    color: purpule))),
                                         width: 221,
                                         child: Center(
                                           child: Text(
@@ -551,35 +666,39 @@ class ReportScreen extends StatelessWidget {
                                                 fontSize: 18),
                                           ),
                                         )),
-                                            Container(
+                                    Container(
                                         padding: EdgeInsets.all(3.0),
                                         height: 50,
                                         decoration: BoxDecoration(
                                             border: Border(
-                                                left:
-                                                    BorderSide(color: purpule))),
+                                                left: BorderSide(
+                                                    color: purpule))),
                                         width: 221,
                                         child: Center(
                                           child: Text(
-                                            rcontroller
-                                                .selectedModel[index].charPercent.toString()+"%",
+                                            rcontroller.selectedModel[index]
+                                                    .charPercent
+                                                    .toString() +
+                                                "%",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 18),
                                           ),
                                         )),
-                                            Container(
+                                    Container(
                                         padding: EdgeInsets.all(3.0),
                                         height: 50,
                                         decoration: BoxDecoration(
                                             border: Border(
-                                                left:
-                                                    BorderSide(color: purpule))),
+                                                left: BorderSide(
+                                                    color: purpule))),
                                         width: 221,
                                         child: Center(
                                           child: Text(
-                                            rcontroller
-                                                .selectedModel[index].platePercent.toString()+"%",
+                                            rcontroller.selectedModel[index]
+                                                    .platePercent
+                                                    .toString() +
+                                                "%",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 18),
@@ -588,7 +707,8 @@ class ReportScreen extends StatelessWidget {
                                     Container(
                                       decoration: BoxDecoration(
                                           border: Border(
-                                              left: BorderSide(color: purpule))),
+                                              left:
+                                                  BorderSide(color: purpule))),
                                       width: 221,
                                       height: 50,
                                       child: Center(
@@ -599,7 +719,8 @@ class ReportScreen extends StatelessWidget {
                                                     (element) =>
                                                         element.plateNumber ==
                                                         rcontroller
-                                                            .selectedModel[index]
+                                                            .selectedModel[
+                                                                index]
                                                             .plateNum,
                                                   )
                                                   .isEmpty
@@ -609,7 +730,8 @@ class ReportScreen extends StatelessWidget {
                                                       .regBox
                                                       .indexWhere(
                                                         (element) =>
-                                                            element.plateNumber ==
+                                                            element
+                                                                .plateNumber ==
                                                             rcontroller
                                                                 .selectedModel[
                                                                     index]
@@ -618,14 +740,16 @@ class ReportScreen extends StatelessWidget {
                                                   .carName!,
                                           textDirection: TextDirection.rtl,
                                           style: TextStyle(
-                                              color: Colors.white, fontSize: 18),
+                                              color: Colors.white,
+                                              fontSize: 18),
                                         ),
                                       ),
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
                                           border: Border(
-                                              left: BorderSide(color: purpule))),
+                                              left:
+                                                  BorderSide(color: purpule))),
                                       width: 221,
                                       height: 50,
                                       child: Center(
@@ -636,7 +760,8 @@ class ReportScreen extends StatelessWidget {
                                                     (element) =>
                                                         element.plateNumber ==
                                                         rcontroller
-                                                            .selectedModel[index]
+                                                            .selectedModel[
+                                                                index]
                                                             .plateNum,
                                                   )
                                                   .isEmpty
@@ -646,7 +771,8 @@ class ReportScreen extends StatelessWidget {
                                                       .regBox
                                                       .indexWhere(
                                                         (element) =>
-                                                            element.plateNumber ==
+                                                            element
+                                                                .plateNumber ==
                                                             rcontroller
                                                                 .selectedModel[
                                                                     index]
@@ -655,39 +781,52 @@ class ReportScreen extends StatelessWidget {
                                                   .name!,
                                           textDirection: TextDirection.rtl,
                                           style: TextStyle(
-                                              color: Colors.white, fontSize: 18),
+                                              color: Colors.white,
+                                              fontSize: 18),
                                         ),
                                       ),
                                     ),
                                     Container(
-                                        
                                         height: 50,
                                         decoration: BoxDecoration(
                                             border: Border(
-                                                left:
-                                                    BorderSide(color: purpule))),
+                                                left: BorderSide(
+                                                    color: purpule))),
                                         width: 210,
                                         child: Center(
-                                          child: InkWell(onTap: () {
-                                            
-                                           Get.to(()=>Detailedscreen(selectedModel: rcontroller.selectedModel[index],index: index,));
-                                          },child: Hero(tag: "heroTag${index}",child: Image.file(File("${imagesPath}${rcontroller.selectedModel[index].imgpath}"),fit: BoxFit.fill,width: 221,height: 48,))),
+                                          child: InkWell(
+                                              onTap: () {
+                                                Get.to(() => Detailedscreen(
+                                                      selectedModel: rcontroller
+                                                          .selectedModel[index],
+                                                      index: index,
+                                                    ));
+                                              },
+                                              child: Hero(
+                                                  tag: "heroTag${index}",
+                                                  child: Image.file(
+                                                    File(
+                                                        "${imagesPath}${rcontroller.selectedModel[index].imgpath}"),
+                                                    fit: BoxFit.fill,
+                                                    width: 221,
+                                                    height: 48,
+                                                  ))),
                                         )),
                                     Container(
-                                      padding: EdgeInsets.all(1.0),
-                                      height: 50,
-                                      width: 209,
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                            right: BorderSide(color: purpule) ,
-                                              left: BorderSide(color: purpule))),
-                                      
-                                          child: Center(
-                                            child: LicanceNumber(
-                                                entry: rcontroller
-                                                    .selectedModel[index]),
-                                          )),
-                                    
+                                        padding: EdgeInsets.all(1.0),
+                                        height: 50,
+                                        width: 209,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                right:
+                                                    BorderSide(color: purpule),
+                                                left: BorderSide(
+                                                    color: purpule))),
+                                        child: Center(
+                                          child: LicanceNumber(
+                                              entry: rcontroller
+                                                  .selectedModel[index]),
+                                        )),
                                   ],
                                 ),
                               ),
@@ -865,28 +1004,25 @@ class ReportScreen extends StatelessWidget {
         rcontroller.firstdate == null &&
         rcontroller.firstime == null &&
         rcontroller.platePicker != null) {
-           print("::::"+rcontroller.platePicker!);
+      print("::::" + rcontroller.platePicker!);
       //plate picker is not null
-    
+
       rcontroller.selectedModel = rcontroller.pModel.where(
         (plateModel element) {
-          
-         
-          return element.plateNum!.contains(rcontroller.platePicker! );
+          return element.plateNum!.contains(rcontroller.platePicker!);
         },
       ).toList();
     } else {
       // all is null
-      
+
       rcontroller.selectedModel = rcontroller.pModel;
     }
     print(rcontroller.selectedModel.length);
-    return true; 
+    return true;
   }
 
   DropdownButtonHideUnderline DropFunc(ReportController rcontroller) {
-    return
-     DropdownButtonHideUnderline(
+    return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         dropdownSearchData: DropdownSearchData(
           searchController: searchController,
@@ -959,7 +1095,7 @@ class ReportScreen extends StatelessWidget {
                   ),
                 ))
             .toList(),
-        value:  rcontroller.selectedItem,
+        value: rcontroller.selectedItem,
         onChanged: (String? value) {
           rcontroller.selectedItem = value;
           rcontroller.update([1]);
@@ -1080,12 +1216,76 @@ class ReportTextField extends StatelessWidget {
   }
 }
 
+// void saveToExel(List<Map<String, dynamic>> data) {
+//   if (data.isNotEmpty) {
+//     final simplexlsx = SimpleXLSX();
+//     simplexlsx.sheetName = 'sheet';
 
-_somthing(var rcontroller){
-  try{
-    return rcontroller.selectedItem;
+//     //adiciona os dados
+//     var idx = 0;
+//     data.forEach((item) {
+//       if (idx == 0) {
+//         //adiciona os titulos
+//         simplexlsx.addRow(item.keys.toList());
+//       }
+//       {
+//         //adiciona os valores
+//         simplexlsx.addRow(item.values.map((i) => i.toString()).toList());
+//       }
+//       idx++;
+//     });
+
+//     final bytes = simplexlsx.build();
+
+//     File('teste.xlsx').writeAsBytesSync(bytes);
+//   }
+// }
+
+Future<void> saveToExel(List<Map<String, dynamic>> data) async {
+  // Create a new Excel workbook
+  final Excel.Workbook workbook = Excel.Workbook();
+
+  // Access the first worksheet
+  final Excel.Worksheet sheet = workbook.worksheets[0];
+  Excel.Style globalStyle = workbook.styles.add('style');
+  // Set the worksheet direction to RTL
+  sheet.isRightToLeft = true;
+
+  globalStyle.bold = true;
+  globalStyle.backColor = '#37D8E9';
+  // Add headers to the first row
+  final headers = data.first.keys.toList();
+  for (int i = 0; i < headers.length; i++) {
+    sheet.getRangeByIndex(1, i + 1).setText(headers[i]);
   }
-  catch(e){
-    return null;
+
+  // Populate data starting from the second row
+  for (int row = 0; row < data.length; row++) {
+    final rowData = data[row];
+    for (int col = 0; col < headers.length; col++) {
+      final cellValue = rowData[headers[col]];
+      sheet
+          .getRangeByIndex(row + 2, col + 1)
+          .setText(cellValue?.toString() ?? '');
+    }
   }
+
+  // Save the workbook as a stream
+  final List<int> bytes = workbook.saveAsStream();
+  try {
+    workbook.dispose();
+  } catch (e) {
+    print(e);
+  }
+
+  // Get the path to save the file
+  final directory = await getApplicationDocumentsDirectory();
+
+  Get.find<ReportController>().savePath= '${directory.path}/Report.${DateTime.now().month}.${DateTime.now().day} - ${DateTime.now().hour}:${DateTime.now().minute}.xlsx';
+
+  // Write the file
+  final File file = File(Get.find<ReportController>().savePath!);
+  await file.writeAsBytes(bytes, flush: true);
+
+  print('Excel file saved as RTL at: ${Get.find<ReportController>().savePath}');
 }

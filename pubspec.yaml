@@ -60,6 +60,10 @@ dependencies:
   desktop_window: ^0.4.2
   responsive_framework: ^1.5.1
 
+  syncfusion_flutter_xlsio: ^21.2.3
+
+  dio: ^5.7.0
+
 
 
 

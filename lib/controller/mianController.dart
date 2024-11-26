@@ -8,8 +8,10 @@ import 'package:media_kit_video/media_kit_video.dart';
 
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
+import 'package:uianprt/model/storagedb/cameras.dart';
 import 'package:uianprt/model/storagedb/db.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
+import 'package:uianprt/model/storagedb/users.dart';
 
 
 
@@ -48,8 +50,16 @@ class feildController extends GetxController {
 }
 
 class Boxes extends GetxController {
+  //
   Box<RegistredDb> hivebox = Hive.box<RegistredDb>('regbox');
   List<RegistredDb> regBox = <RegistredDb>[];
+  //
+  Box<Users> userbox=Hive.box<Users>('userbox');
+
+  //
+  Box<Cameras> camerabox=Hive.box<Cameras>('camerabox');
+
+  //
 
   void getregData() {
     regBox.clear();
@@ -92,6 +102,7 @@ class ReportController extends GetxController{
   TextEditingController threedigits=TextEditingController();
   TextEditingController lastTwoDigits=TextEditingController();
   String? platePicker;
+  String? savePath;
   @override
   void onInit() async {
    await getData();
@@ -131,18 +142,6 @@ class settingController extends GetxController{
 
   String timezoneseleted="Asia/Tehran";
   
-
-
-
-  
-
-
-
-  
-
-
-
-
 
 
 
