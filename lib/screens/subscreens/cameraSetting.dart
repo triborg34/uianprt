@@ -390,6 +390,8 @@ class CameraSetting extends StatelessWidget {
                           TextEditingController();
                       final TextEditingController ipController =
                           TextEditingController();
+                      final TextEditingController username=TextEditingController();
+                      final TextEditingController password=TextEditingController();
                       String cameraType = 'entrance'; // Default value
 
                       return AlertDialog(
@@ -427,7 +429,29 @@ class CameraSetting extends StatelessWidget {
                                     keyboardType: TextInputType.text,
                                   ),
                                   const SizedBox(height: 16),
-                                  // Using DropdownButton instead of Radio for better Windows experience
+                                    TextFormField(
+                                    style: TextStyle(fontFamily: 'arial'),
+                                    controller: username,
+                                    decoration: InputDecoration(
+                                      labelText: 'نام کاربری',
+                                      hintText: 'e.g:admin',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    // Enable keyboard handling for Windows
+                                    keyboardType: TextInputType.text,
+                                  ),const SizedBox(height: 16),
+                                    TextFormField(
+                                    style: TextStyle(fontFamily: 'arial'),
+                                    controller: password,
+                                    decoration: InputDecoration(
+                                      labelText: 'کلمه عبور',
+                                      hintText: 'e.g:admin',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    // Enable keyboard handling for Windows
+                                    keyboardType: TextInputType.text,
+                                  ),const SizedBox(height: 16),
+                                  // Using DropdownButton instead of Radio for better Windows experience,
                                   DropdownButtonFormField<String>(
                                     value: cameraType,
                                     decoration: const InputDecoration(
@@ -470,10 +494,14 @@ class CameraSetting extends StatelessWidget {
                                 'name': nameController.text,
                                 'ip': ipController.text,
                                 'type': cameraType,
+                                'username':username.text,
+                                'password':password.text
                               };
 
                               nameController.dispose();
                               ipController.dispose();
+                              username.dispose();
+                              password.dispose();
                               Navigator.of(context).pop(cameraData);
                             },
                             child: const Text('ثبت'),
@@ -491,8 +519,8 @@ class CameraSetting extends StatelessWidget {
                           ip: value['ip'],
                           nameCamera: value['name'],
                           status: true,
-                          username: "",
-                          password: "",
+                          username: value['username'],
+                          password: value['password'],
                           licance: generateRandomString(100)));
                     }
                     Get.find<Boxes>().update([5]);
@@ -517,9 +545,14 @@ class CameraSetting extends StatelessWidget {
                   //TODO:Save is Completed , Delete ?? chtgpt
                   print(Get.find<Boxes>().camerabox.values.first.ip);
                   var res = dio.post('http://127.0.0.1:8000/cameras', data: {
-                    "ip": "${Get.find<Boxes>().camerabox.values.first.ip}"
+                    "ip": "${Get.find<Boxes>().camerabox.values.first.ip}",
+                    "username":"${Get.find<Boxes>().camerabox.values.first.username}",
+                    "password":"${Get.find<Boxes>().camerabox.values.first.password}"
+                    
                   }).then(
                     (value) {
+                      print({   "username":"${Get.find<Boxes>().camerabox.values.first.username}",
+                    "password":"${Get.find<Boxes>().camerabox.values.first.password}"});
                       if (value.statusCode == 200) {
                         Get.snackbar(
                           "",

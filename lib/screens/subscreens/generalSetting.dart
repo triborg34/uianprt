@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -189,15 +190,52 @@ class Generalsetting extends StatelessWidget {
                   ),
                 )),
               ],
-              
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(child: Text("ذخیره"),onPressed: (){},),SizedBox(width: 10,),
-                 ElevatedButton(child: Text("پیش فرض"),onPressed: (){},),
+                ElevatedButton(
+                  child: Text("ذخیره"),
+                  onPressed: () async {
+                    Dio dio = Dio();
+                    var res =
+                        await dio.post('http://127.0.0.1:8000/config', data: {
+                      "section": "DEFAULT",
+                      "key": "character_confidence",
+                      "value": Get.find<settingController>().csliderValue.value.toStringAsFixed(2)
+                    });
+                    if (res.statusCode == 200) {
+                      await dio.post("http://127.0.0.1:8000/config", data: {
+                        "section": "DEFAULT",
+                        "key": "plate_confidence",
+                        "value":
+                            (Get.find<settingController>().psliderValue.value*100).toInt().toString()
+                      });
+                    await dio.post("http://127.0.0.1:8000/config", data: {
+                        "section": "DEFAULT",
+                        "key": "device",
+                        "value":
+                            Get.find<settingController>().hardWareValue.toString()
+                      }).then((value) {
+                        if(value.statusCode==200){
+                        Get.snackbar("", "");
+                        }
+                      },);
+                    }
+                  },
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  child: Text("پیش فرض"),
+                  onPressed: () {},
+                ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Container(
               height: 30,
               margin: EdgeInsets.symmetric(horizontal: 10),
@@ -221,14 +259,15 @@ class Generalsetting extends StatelessWidget {
                   DropdownMenu(
                       width: 250,
                       onSelected: (value) {
-                          Get.find<settingController>().timezoneseleted=value!;
+                        Get.find<settingController>().timezoneseleted = value!;
                       },
                       initialSelection:
                           Get.find<settingController>().timezoneseleted,
                       textStyle:
                           TextStyle(color: Colors.white, fontFamily: 'arial'),
                       dropdownMenuEntries: [
-                        for (var timezone in tz.timeZoneDatabase.locations.keys.toList())
+                        for (var timezone
+                            in tz.timeZoneDatabase.locations.keys.toList())
                           DropdownMenuEntry(
                               style: ButtonStyle(
                                   textStyle: WidgetStatePropertyAll(
@@ -237,30 +276,42 @@ class Generalsetting extends StatelessWidget {
                               label:
                                   "${timezone.split('/')[1]} : UTC(${getTimezoneUTCOffset(timezone).toString().contains('-') ? '' : "+"}${(getTimezoneUTCOffset(timezone)!.inMinutes / 60).toString().replaceFirst('.', ':')})")
                       ]),
-                
-                 
                 ],
               ),
             ),
-             Padding(
-               padding: const EdgeInsets.all(10),
-               child: Row(children: [
-                FutursOfSystemRow(lable: "نوع قالب"),
-                      DropdownMenu(
-                          initialSelection: 24,
-                          enableSearch: false,
-                          enableFilter: false,
-                          textStyle: TextStyle(color: Colors.white),
-                          dropdownMenuEntries: [
-                            DropdownMenuEntry(value: 24, label: "24 ساعت"),
-                            DropdownMenuEntry(value: 12, label: "12 ساعت")
-                          ]),
-               ],),
-             ),    Row(mainAxisAlignment: MainAxisAlignment.center,
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  FutursOfSystemRow(lable: "نوع قالب"),
+                  DropdownMenu(
+                      initialSelection: 24,
+                      enableSearch: false,
+                      enableFilter: false,
+                      textStyle: TextStyle(color: Colors.white),
+                      dropdownMenuEntries: [
+                        DropdownMenuEntry(value: 24, label: "24 ساعت"),
+                        DropdownMenuEntry(value: 12, label: "12 ساعت")
+                      ]),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(child: Text("ذخیره"),onPressed: (){},),SizedBox(width: 10,),
-                 ElevatedButton(child: Text("پیش فرض"),onPressed: (){},),
-              ],),
+                ElevatedButton(
+                  child: Text("ذخیره"),
+                  onPressed: () {},
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  child: Text("پیش فرض"),
+                  onPressed: () {},
+                ),
+              ],
+            ),
             SizedBox(
               height: 15,
             ),
@@ -286,7 +337,11 @@ class Generalsetting extends StatelessWidget {
                   Row(
                     children: [
                       FutursOfSystemRow(lable: "نسخه نرم افزار:"),
-                      Text("0.0.1",style: TextStyle(color: Colors.white,fontFamily: 'aial'),)
+                      Text(
+                        "0.0.1",
+                        style:
+                            TextStyle(color: Colors.white, fontFamily: 'aial'),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -295,7 +350,11 @@ class Generalsetting extends StatelessWidget {
                   Row(
                     children: [
                       FutursOfSystemRow(lable: "نوع مجوز:"),
-                       Text("پلاک خوان",style: TextStyle(color: Colors.white,fontFamily: 'aial'),)
+                      Text(
+                        "پلاک خوان",
+                        style:
+                            TextStyle(color: Colors.white, fontFamily: 'aial'),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -304,7 +363,11 @@ class Generalsetting extends StatelessWidget {
                   Row(
                     children: [
                       FutursOfSystemRow(lable: "تعداد کاربران مجاز:"),
-                       Text("1",style: TextStyle(color: Colors.white,fontFamily: 'aial'),)
+                      Text(
+                        "1",
+                        style:
+                            TextStyle(color: Colors.white, fontFamily: 'aial'),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -313,7 +376,11 @@ class Generalsetting extends StatelessWidget {
                   Row(
                     children: [
                       FutursOfSystemRow(lable: "نوع سیستم عامل:"),
-                       Text("Microsoft Windows",style: TextStyle(color: Colors.white,fontFamily: 'aial'),)
+                      Text(
+                        "Microsoft Windows",
+                        style:
+                            TextStyle(color: Colors.white, fontFamily: 'aial'),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -322,7 +389,11 @@ class Generalsetting extends StatelessWidget {
                   Row(
                     children: [
                       FutursOfSystemRow(lable: "تاریخ انتشار:"),
-                       Text("1403/08/15",style: TextStyle(color: Colors.white,fontFamily: 'aial'),)
+                      Text(
+                        "1403/08/15",
+                        style:
+                            TextStyle(color: Colors.white, fontFamily: 'aial'),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -331,7 +402,11 @@ class Generalsetting extends StatelessWidget {
                   Row(
                     children: [
                       FutursOfSystemRow(lable: "ساخته شده توسط:"),
-                       Text("امن آفرینان دانش پژوه",style: TextStyle(color: Colors.white,fontFamily: 'aial'),)
+                      Text(
+                        "امن آفرینان دانش پژوه",
+                        style:
+                            TextStyle(color: Colors.white, fontFamily: 'aial'),
+                      )
                     ],
                   )
                 ],

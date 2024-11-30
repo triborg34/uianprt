@@ -139,7 +139,7 @@ class settingController extends GetxController{
   var psliderValue=0.7.obs;
   var csliderValue=0.75.obs;
   var hardWareValue='cuda';
-//TODO:Save ina
+
   String timezoneseleted="Asia/Tehran";
   
 

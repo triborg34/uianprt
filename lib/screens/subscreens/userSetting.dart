@@ -222,7 +222,7 @@ class UserSetting extends StatelessWidget {
                   separatorBuilder: (context, index) => SizedBox(),
                   itemCount: Get.find<Boxes>().regBox.length),
 
-            ),
+            ),SizedBox(height: 15,),
              Container(
                 child: Row(
               children: [

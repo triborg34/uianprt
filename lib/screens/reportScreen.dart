@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -25,6 +24,7 @@ class ReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO:SEARCH FOR PESEFIC PATTERN
     Get.find<ReportController>().selectedItem = null;
     Get.find<ReportController>().firstime = null;
     Get.find<ReportController>().lastTime = null;
@@ -53,15 +53,18 @@ class ReportScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "جستجوی پیشرفته",
-                            style: TextStyle(
-                                color: Colors.white70,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
-                          )),
+                      Visibility(
+                        visible: false,
+                        child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              "جستجوی پیشرفته",
+                              style: TextStyle(
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14),
+                            )),
+                      ),
                       Text(
                         "صفحه گزارش",
                         textDirection: TextDirection.rtl,
@@ -85,92 +88,94 @@ class ReportScreen extends StatelessWidget {
                         IconButton(
                             tooltip: "ذخیره",
                             onPressed: () async {
-                              if(rcontroller.selectedModel.isNotEmpty){
-                               final List<Map<String, dynamic>> data =
-                                  await List.generate(
-                                rcontroller.selectedModel.length,
-                                (index) {
-                                  return {
-                                    "Plate Number": convertToPersianString(
-                                        rcontroller
-                                            .selectedModel[index].plateNum!,
-                                        alphabetP2),
-                                    "Name": Get.find<Boxes>()
-                                            .regBox
-                                            .where(
-                                              (element) =>
-                                                  element.plateNumber ==
-                                                  rcontroller
-                                                      .selectedModel[index]
-                                                      .plateNum,
-                                            )
-                                            .isEmpty
-                                        ? "-"
-                                        : Get.find<Boxes>()
-                                            .regBox[Get.find<Boxes>()
-                                                .regBox
-                                                .indexWhere(
-                                                  (element) =>
-                                                      element.plateNumber ==
-                                                      rcontroller
-                                                          .selectedModel[index]
-                                                          .plateNum,
-                                                )]
-                                            .name!,
-                                    "Car name": Get.find<Boxes>()
-                                            .regBox
-                                            .where(
-                                              (element) =>
-                                                  element.plateNumber ==
-                                                  rcontroller
-                                                      .selectedModel[index]
-                                                      .plateNum,
-                                            )
-                                            .isEmpty
-                                        ? '-'
-                                        : Get.find<Boxes>()
-                                            .regBox[Get.find<Boxes>()
-                                                .regBox
-                                                .indexWhere(
-                                                  (element) =>
-                                                      element.plateNumber ==
-                                                      rcontroller
-                                                          .selectedModel[index]
-                                                          .plateNum,
-                                                )]
-                                            .carName!,
-                                    "Image Path":
-                                        "${imagesPath}${rcontroller.selectedModel[index].imgpath}",
-                                    "ScreenShot Path":
-                                        "${imagesPath}${rcontroller.selectedModel[index].scrnPath}",
-                                    "Plate Percsent": rcontroller
-                                        .selectedModel[index].platePercent,
-                                    "Char Percent": rcontroller
-                                        .selectedModel[index].charPercent,
-                                    "Date": rcontroller
-                                        .selectedModel[index].eDate!
-                                        .toPersianDate(),
-                                    "Time": rcontroller
-                                        .selectedModel[index].eTime!
-                                        .toPersianDigit(),
-                                    "Status": rcontroller
-                                                .selectedModel[index].status ==
-                                            "Active"
-                                        ? "White List"
-                                        : "Black List"
-                                  };
-                                },
-                              );
-                              await saveToExel(data);
-                          
-                              Get.snackbar("ذخیره شد", rcontroller.savePath!,
-                                  backgroundColor: purpule,
-                                  colorText: Colors.white,
-                                  snackStyle: SnackStyle.FLOATING,
-                                  snackPosition: SnackPosition.BOTTOM);
-                              }
-                              else{
-                                Get.snackbar("", "خطا گزارشی یافت نشد",colorText: Colors.white);
+                              if (rcontroller.selectedModel.isNotEmpty) {
+                                final List<Map<String, dynamic>> data =
+                                    await List.generate(
+                                  rcontroller.selectedModel.length,
+                                  (index) {
+                                    return {
+                                      "Plate Number": convertToPersianString(
+                                          rcontroller
+                                              .selectedModel[index].plateNum!,
+                                          alphabetP2),
+                                      "Name": Get.find<Boxes>()
+                                              .regBox
+                                              .where(
+                                                (element) =>
+                                                    element.plateNumber ==
+                                                    rcontroller
+                                                        .selectedModel[index]
+                                                        .plateNum,
+                                              )
+                                              .isEmpty
+                                          ? "-"
+                                          : Get.find<Boxes>()
+                                              .regBox[Get.find<Boxes>()
+                                                  .regBox
+                                                  .indexWhere(
+                                                    (element) =>
+                                                        element.plateNumber ==
+                                                        rcontroller
+                                                            .selectedModel[
+                                                                index]
+                                                            .plateNum,
+                                                  )]
+                                              .name!,
+                                      "Car name": Get.find<Boxes>()
+                                              .regBox
+                                              .where(
+                                                (element) =>
+                                                    element.plateNumber ==
+                                                    rcontroller
+                                                        .selectedModel[index]
+                                                        .plateNum,
+                                              )
+                                              .isEmpty
+                                          ? '-'
+                                          : Get.find<Boxes>()
+                                              .regBox[Get.find<Boxes>()
+                                                  .regBox
+                                                  .indexWhere(
+                                                    (element) =>
+                                                        element.plateNumber ==
+                                                        rcontroller
+                                                            .selectedModel[
+                                                                index]
+                                                            .plateNum,
+                                                  )]
+                                              .carName!,
+                                      "Image Path":
+                                          "${imagesPath}${rcontroller.selectedModel[index].imgpath}",
+                                      "ScreenShot Path":
+                                          "${imagesPath}${rcontroller.selectedModel[index].scrnPath}",
+                                      "Plate Percsent": rcontroller
+                                          .selectedModel[index].platePercent,
+                                      "Char Percent": rcontroller
+                                          .selectedModel[index].charPercent,
+                                      "Date": rcontroller
+                                          .selectedModel[index].eDate!
+                                          .toPersianDate(),
+                                      "Time": rcontroller
+                                          .selectedModel[index].eTime!
+                                          .toPersianDigit(),
+                                      "Status": rcontroller.selectedModel[index]
+                                                  .status ==
+                                              "Active"
+                                          ? "White List"
+                                          : "Black List"
+                                    };
+                                  },
+                                );
+                                await saveToExel(data);
+
+                                Get.snackbar("ذخیره شد", rcontroller.savePath!,
+                                    backgroundColor: purpule,
+                                    colorText: Colors.white,
+                                    snackStyle: SnackStyle.FLOATING,
+                                    snackPosition: SnackPosition.BOTTOM);
+                              } else {
+                                Get.snackbar("", "خطا گزارشی یافت نشد",
+                                    colorText: Colors.white);
                               }
                             },
                             icon: Icon(
@@ -319,7 +324,7 @@ class ReportScreen extends StatelessWidget {
                         SizedBox(
                           width: 25,
                         ),
-                        IconButton(
+                        TextButton(
                             onPressed: () {
                               rcontroller.persianalhpabet.value = '';
                               rcontroller.firtTwodigits.clear();
@@ -450,147 +455,128 @@ class ReportScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            icon: Icon(
-                              Icons.settings,
-                              color: Colors.white,
-                            )),
-                        rcontroller.platePicker == null
-                            ? DropFunc(rcontroller)
-                            : Container(
-                                height: 40,
-                                width: 210,
-                                decoration: BoxDecoration(
-                                    color: purpule,
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Center(
-                                  child: rcontroller
-                                                  .firtTwodigits.text.length !=
-                                              0 &&
-                                          rcontroller.threedigits.text.length !=
-                                              0 &&
-                                          rcontroller
-                                                  .lastTwoDigits.text.length !=
-                                              0 &&
-                                          rcontroller.engishalphabet != null
-                                      ? Text(
-                                          convertToPersianString(
-                                              rcontroller.platePicker!,
-                                              alphabetP2),
-                                          textDirection: TextDirection.rtl,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18),
-                                        )
-                                      : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(left: 10),
-                                              height: 30,
-                                              width: 36,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.deepPurple,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Center(
-                                                child: Text(
-                                                  rcontroller.firtTwodigits.text
-                                                              .length !=
-                                                          0
-                                                      ? rcontroller
-                                                          .firtTwodigits.text
-                                                      : '-',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(left: 10),
-                                              height: 30,
-                                              width: 36,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.deepPurple,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Center(
-                                                child: Text(
-                                                  rcontroller.engishalphabet !=
-                                                          null
-                                                      ? rcontroller
-                                                          .persianalhpabet.value
-                                                      : '?',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(left: 10),
-                                              height: 30,
-                                              width: 36,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.deepPurple,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Center(
-                                                child: Text(
-                                                  rcontroller.threedigits.text
-                                                              .length !=
-                                                          0
-                                                      ? rcontroller
-                                                          .threedigits.text
-                                                      : '-',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              '/',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Container(
-                                              height: 30,
-                                              width: 36,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.deepPurple,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Center(
-                                                child: Text(
-                                                  rcontroller.lastTwoDigits.text
-                                                              .length !=
-                                                          0
-                                                      ? rcontroller
-                                                          .lastTwoDigits.text
-                                                      : '-',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16),
-                                                ),
-                                              ),
-                                            )
-                                          ],
+                            child:Text("ویرایش",style: TextStyle(color: Colors.white,fontFamily: 'arial'),)),
+                        // rcontroller.platePicker == null
+                        //     ? DropFunc(rcontroller)
+                        Container(
+                          height: 40,
+                          width: 210,
+                          decoration: BoxDecoration(
+                              color: purpule,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Center(
+                            child: rcontroller.firtTwodigits.text.length != 0 &&
+                                    rcontroller.threedigits.text.length != 0 &&
+                                    rcontroller.lastTwoDigits.text.length !=
+                                        0 &&
+                                    rcontroller.engishalphabet != null
+                                ? Text(
+                                    convertToPersianString(
+                                        rcontroller.platePicker!, alphabetP2),
+                                    textDirection: TextDirection.rtl,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        height: 30,
+                                        width: 36,
+                                        decoration: BoxDecoration(
+                                            color: Colors.deepPurple,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Center(
+                                          child: Text(
+                                            rcontroller.firtTwodigits.text
+                                                        .length !=
+                                                    0
+                                                ? rcontroller.firtTwodigits.text
+                                                : '-',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          ),
                                         ),
-                                ),
-                              ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        height: 30,
+                                        width: 36,
+                                        decoration: BoxDecoration(
+                                            color: Colors.deepPurple,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Center(
+                                          child: Text(
+                                            rcontroller.engishalphabet != null
+                                                ? rcontroller
+                                                    .persianalhpabet.value
+                                                : '?',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        height: 30,
+                                        width: 36,
+                                        decoration: BoxDecoration(
+                                            color: Colors.deepPurple,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Center(
+                                          child: Text(
+                                            rcontroller.threedigits.text
+                                                        .length !=
+                                                    0
+                                                ? rcontroller.threedigits.text
+                                                : '-',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        '/',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Container(
+                                        height: 30,
+                                        width: 36,
+                                        decoration: BoxDecoration(
+                                            color: Colors.deepPurple,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Center(
+                                          child: Text(
+                                            rcontroller.lastTwoDigits.text
+                                                        .length !=
+                                                    0
+                                                ? rcontroller.lastTwoDigits.text
+                                                : '-',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                          ),
+                        ),
                         SizedBox(
                           height: 15,
                         )
@@ -1281,7 +1267,8 @@ Future<void> saveToExel(List<Map<String, dynamic>> data) async {
   // Get the path to save the file
   final directory = await getApplicationDocumentsDirectory();
 
-  Get.find<ReportController>().savePath= '${directory.path}/Report.${DateTime.now().month}.${DateTime.now().day} - ${DateTime.now().hour}:${DateTime.now().minute}.xlsx';
+  Get.find<ReportController>().savePath =
+      '${directory.path}/Report.${DateTime.now().month}.${DateTime.now().day} - ${DateTime.now().hour}:${DateTime.now().minute}.xlsx';
 
   // Write the file
   final File file = File(Get.find<ReportController>().savePath!);
