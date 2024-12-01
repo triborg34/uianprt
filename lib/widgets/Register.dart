@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uianprt/controller/mianController.dart';
@@ -12,9 +14,11 @@ class EnhancedCarRegistrationDialog extends StatefulWidget {
       entry; // Assuming this is the entry object from your original code
   final bool isEditing;
   final bool isRegister;
+  int index;
 
-  const EnhancedCarRegistrationDialog(
+   EnhancedCarRegistrationDialog(
       {Key? key,
+      required this.index,
       required this.entry,
       required this.isEditing,
       required this.isRegister})
@@ -31,10 +35,33 @@ class _EnhancedCarRegistrationDialogState
   final List<String> _roles = ['مجاز', 'غیر مجاز'];
   @override
   void initState() {
+    if(widget.isEditing){
+              Get.find<feildController>().Fname.text=Get.find<Boxes>().regBox[widget.index].name!.split(' ').toList()[1];
+    Get.find<feildController>().carName.text=Get.find<Boxes>().regBox[widget.index].carName!;
+    Get.find<feildController>().socialNumber.text=Get.find<Boxes>().regBox[widget.index].socialNumber!;
+    Get.find<feildController>().name.text=Get.find<Boxes>().regBox[widget.index].name!.split(' ').toList()[0];
+    _selectedRole=Get.find<Boxes>().regBox[widget.index].role;
+
+
+    //
+
+    print(Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[0-9]')).toList().toString());
+                    Get.find<ReportController>().persianalhpabet.value = '';
+                                  Get.find<ReportController>().firtTwodigits.clear();
+                                 Get.find<ReportController>().lastTwoDigits.clear();
+                                 Get.find<ReportController>().engishalphabet =  Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[0-9]')).toList()[2].toString();
+                                 Get.find<ReportController>().threedigits.clear();
+
+
+
+
+    }
+    else{
         Get.find<feildController>().Fname.clear();
     Get.find<feildController>().carName.clear();
     Get.find<feildController>().socialNumber.clear();
     Get.find<feildController>().name.clear();
+    }
     super.initState();
   }
   @override
@@ -62,7 +89,7 @@ class _EnhancedCarRegistrationDialogState
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "ثبت اطلاعات خودرو",
+              widget.isEditing? "ویرایش اطلاعات خودرو":  "ثبت اطلاعات خودرو",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -77,28 +104,13 @@ class _EnhancedCarRegistrationDialogState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: TextField(
-                          controller: Get.find<feildController>().carName,
-                          decoration: InputDecoration(
-                            hintText: "نام خودرو",
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    widget.isEditing ?EditPlateNum(widget: widget) :
                     widget.isRegister
                         ? licanceField()
-                        : Expanded(
+                        :  Expanded(
                             child: Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 4.0),
+                                  const EdgeInsets.symmetric(horizontal: 100),
                               child: LicanceNumber(entry: widget.entry),
                             ),
                           ),
@@ -106,6 +118,7 @@ class _EnhancedCarRegistrationDialogState
                 ),
               ),
               const SizedBox(height: 15),
+
 
               // Name and Family Name Row
               Padding(
@@ -153,17 +166,36 @@ class _EnhancedCarRegistrationDialogState
               // Social Security Number (کد ملی)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TextField(
-                  controller: Get.find<feildController>().socialNumber,
-                  decoration: InputDecoration(
-                    hintText: "کد ملی",
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                                         Expanded(
+                                           child: TextField(
+                                             controller: Get.find<feildController>().carName,
+                                             decoration: InputDecoration(
+                                               hintText: "نام خودرو",
+                                               filled: true,
+                                               fillColor: Colors.white,
+                                               border: OutlineInputBorder(
+                                                 borderRadius: BorderRadius.circular(10),
+                                               ),
+                                             ),
+                                           ),
+                                         ),SizedBox(width: 7,),
+                    Expanded(
+                      child: TextField(
+                        controller: Get.find<feildController>().socialNumber,
+                        decoration: InputDecoration(
+                          hintText: "کد ملی",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
                     ),
-                  ),
-                  keyboardType: TextInputType.number,
+                  ],
                 ),
               ),
               const SizedBox(height: 15),
@@ -237,7 +269,7 @@ class _EnhancedCarRegistrationDialogState
                         "${Get.find<feildController>().Fname.text} ${Get.find<feildController>().name.text}",
                     status: true,
                     eDate: DateTime.now().toString(),
-                    eTime: "${DateTime.now().hour}:${DateTime.now().minute}",
+                    eTime: "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}",
                     screenImg:'');
                   };
                   // Add to Hive and refresh
@@ -252,6 +284,7 @@ class _EnhancedCarRegistrationDialogState
                     backgroundColor: Colors.green.shade600,
                     maxWidth: 200,
                   );
+                  Get.find<Boxes>().update([9]);
 
                   // Close the dialog
                   Navigator.pop(context);
@@ -280,6 +313,97 @@ class _EnhancedCarRegistrationDialogState
   }
 }
 
+class EditPlateNum extends StatelessWidget {
+  const EditPlateNum({
+    super.key,
+    required this.widget,
+  });
+
+  final EnhancedCarRegistrationDialog widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(width: 50,height: 50,child: Center(
+          child: TextField(
+                controller:TextEditingController(text: Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[0]),
+                decoration: InputDecoration(
+            
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+        ),),SizedBox(width: 15,),
+            SizedBox(
+                height: 40,
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                      
+                        backgroundColor: Colors.white),
+                    onPressed: () async {
+                      await showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => DraggableScrollableSheet(
+                          initialChildSize:
+                              0.47, // You can adjust the size of the bottom sheet
+                          minChildSize: 0.3,
+                          maxChildSize: 0.7,
+                          expand: false,
+                          builder: (context, scrollController) {
+                            return Alphabetselector(
+                              scrollController: scrollController,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    child: Obx(() => Text(
+                          Get.find<ReportController>().persianalhpabet.value ==
+                                  ''
+                              ? "انتخاب حرف"
+                              : Get.find<ReportController>()
+                                  .persianalhpabet
+                                  .value,
+                          style: TextStyle(color: Colors.black),
+                        ))),
+              ),SizedBox(width: 15,),
+                SizedBox(width: 70,height: 50,child: Center(
+          child: TextField(
+                controller:TextEditingController(text: Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[1].substring(0,3)),
+                decoration: InputDecoration(
+                 
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+        )),SizedBox(width: 15,),
+        SizedBox(width: 70,height: 50,child: Center(
+          child: TextField(
+                controller:TextEditingController(text: Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[1].substring(3,5)),
+                decoration: InputDecoration(
+                 
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+        )),
+      ],
+    );
+  }
+}
+
 class licanceField extends StatefulWidget {
   const licanceField({super.key});
 
@@ -292,6 +416,7 @@ class _licanceFieldState extends State<licanceField> {
 
 @override
   void initState() {
+    
                                   Get.find<ReportController>().persianalhpabet.value = '';
                                   Get.find<ReportController>().firtTwodigits.clear();
                                  Get.find<ReportController>().lastTwoDigits.clear();

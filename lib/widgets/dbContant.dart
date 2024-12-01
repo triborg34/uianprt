@@ -109,7 +109,7 @@ class DbContant extends StatelessWidget {
                                     : IconButton(
                                       onPressed: () {
                                         showDialog(context: context, builder: (context) {
-                                          return EnhancedCarRegistrationDialog(entry:entry ,isEditing: false,isRegister: false,);
+                                          return EnhancedCarRegistrationDialog(entry:entry ,isEditing: false,isRegister: false,index: index,);
                                         },);
                                       },
                                         hoverColor:

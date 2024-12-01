@@ -177,7 +177,8 @@ class UserSetting extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            Container(
+GetBuilder<Boxes>(id: 9,builder: (controller) {
+  return             Container(
               height: 150,
               child: ListView.separated(
                   itemBuilder: (context, index) {
@@ -246,9 +247,12 @@ class UserSetting extends StatelessWidget {
                             color: purpule,
                           ),
                           IconButton(
-                              onPressed: () {},
-                              icon: IconButton(
-                                  onPressed: () {}, icon: Icon(Icons.edit))),
+                              onPressed: ()async {
+                             await    showDialog(context: context, builder: (context) {
+                                return EnhancedCarRegistrationDialog(entry:  null,isEditing: true,isRegister: true,index: index,);
+                             },) ;
+                              },
+                              icon:  Icon(Icons.edit)),
                           SizedBox(
                             width: 5,
                           ),
@@ -266,7 +270,8 @@ class UserSetting extends StatelessWidget {
                   },
                   separatorBuilder: (context, index) => SizedBox(),
                   itemCount: Get.find<Boxes>().regBox.length),
-            ),
+            );
+},),
             SizedBox(
               height: 15,
             ),
@@ -278,7 +283,7 @@ class UserSetting extends StatelessWidget {
                       //TODO:Addtinal Screen or popup screen for registrainon
 
                       await showDialog(context: context, builder: (context) {
-                        return EnhancedCarRegistrationDialog(entry:  null,isEditing: false,isRegister: true,);
+                        return EnhancedCarRegistrationDialog(entry:  null,isEditing: false,isRegister: true,index: 0,);
                       },);
                     },
                     child: Row(
@@ -287,13 +292,7 @@ class UserSetting extends StatelessWidget {
                 SizedBox(
                   width: 15,
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      //TODO:we can handle saving prosess here
-                    },
-                    child: Row(
-                      children: [Text("ذخیره")],
-                    ))
+         
               ],
             )),
           ],

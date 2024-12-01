@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         title: 'AmnAfarin',
         onReady: () {
        
-        Get.find<Boxes>().hivebox.clear();
+    
         },
         home: MainView(path));
   }
