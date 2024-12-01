@@ -6,8 +6,9 @@ import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
 import 'package:uianprt/model/storagedb/db.dart';
-import 'package:uianprt/model/storagedb/registredDb.dart';
-import 'package:uianprt/widgets/textfield.dart';
+
+import 'package:uianprt/widgets/Register.dart';
+
 
 import 'licancenumber.dart';
 
@@ -106,173 +107,180 @@ class DbContant extends StatelessWidget {
                                         ),
                                       )
                                     : IconButton(
+                                      onPressed: () {
+                                        showDialog(context: context, builder: (context) {
+                                          return EnhancedCarRegistrationDialog(entry:entry ,isEditing: false,isRegister: false,);
+                                        },);
+                                      },
                                         hoverColor:
                                             const Color.fromARGB(255, 29, 14, 55),
-                                        onPressed: () {
+                                        // onPressed: () {
                         
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              Get.find<feildController>().name.text='';
-                                              Get.find<feildController>().Fname.text='';
-                                              Get.find<feildController>().carName.text='';
-                                              return Center(
-                                                  child: Container(
-                                                padding: EdgeInsets.only(top: 20),
-                                                height: 240,
-                                                width: 450,
-                                                decoration: BoxDecoration(
-                                                    color: purpule,
-                                                    borderRadius:
-                                                        BorderRadius.circular(25),
-                                                    border: Border.all(
-                                                        color: Colors
-                                                            .deepPurpleAccent
-                                                            .shade700)),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "ثبت ماشین",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 24,
-                                                          fontWeight:
-                                                              FontWeight.w800),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 8.0),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        children: [
-                                                          Container(
-                                                              height: 40,
-                                                              width: 200,
-                                                              child: Material(
-                                                                child: MyTextField(
-                                                                    hint:
-                                                                        "نام خودرو",
-                                                                    controller: Get
-                                                                            .find<
-                                                                                feildController>()
-                                                                        .carName),
-                                                              )),
-                                                          Container(
-                                                            height: 40,
-                                                            width: 200,
-                                                            child: LicanceNumber(
-                                                                entry: entry),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 15,
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 10.0),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        children: [
-                                                          Container(
-                                                            height: 40,
-                                                            width: 200,
-                                                            child: Material(
-                                                              child: MyTextField(
-                                                                  hint:
-                                                                      " نام خانوادگی",
-                                                                  controller:
-                                                                      Get.find<
-                                                                              feildController>()
-                                                                          .name),
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            height: 40,
-                                                            width: 195,
-                                                            child: Material(
-                                                              child: MyTextField(
-                                                                  hint: "نام",
-                                                                  controller:
-                                                                      Get.find<
-                                                                              feildController>()
-                                                                          .Fname),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 15,
-                                                    ),
-                                                    Container(
-                                                      width: 200,
-                                                      child: ElevatedButton(
-                                                        onPressed: () {
-                                                          RegistredDb
-                                                              registredDb =
-                                                              RegistredDb(
-                                                                  plateImagePath:
-                                                                      entry.imgpath,
-                                                                  plateNumber: entry
-                                                                      .plateNum,
-                                                                  carName: Get.find<
-                                                                          feildController>()
-                                                                      .carName
-                                                                      .text,
-                                                                  name:
-                                                                      "${Get.find<feildController>().Fname.text} ${Get.find<feildController>().name.text} ",
-                                                                  status: true,
-                                                                  eDate:
-                                                                      entry.eDate,
-                                                                  eTime: entry
-                                                                      .eTime,
-                                                                      screenImg: entry.scrnPath);
-                                                          Get.find<Boxes>()
-                                                              .hivebox
-                                                              .add(registredDb);
-                                                          Get.find<Boxes>()
-                                                              .getregData();
-                                                          Get.snackbar(
-                                                            "ثبت شد",
-                                                            "",
-                                                            colorText:
-                                                                Colors.white,
-                                                            maxWidth: 90,
-                                                          );
-                                                          Navigator.pop(context);
-                                                        },
-                                                        child: Text(
-                                                          "ثبت",
-                                                          style: TextStyle(
-                                                              color: Colors.white,
-                                                              fontSize: 18),
-                                                        ),
-                                                        style:
-                                                            TextButton.styleFrom(
-                                                                backgroundColor:
-                                                                    Colors.green[
-                                                                        600]),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ));
-                                            },
-                                          );
-                                        },
+                                        //   showDialog(
+                                        //     context: context,
+                                        //     builder: (context) {
+                                        //       Get.find<feildController>().name.text='';
+                                        //       Get.find<feildController>().Fname.text='';
+                                        //       Get.find<feildController>().carName.text='';
+                                        //       return Center(
+                                        //           child: Container(
+                                        //         padding: EdgeInsets.only(top: 20),
+                                        //         height: 240,
+                                        //         width: 450,
+                                        //         decoration: BoxDecoration(
+                                        //             color: purpule,
+                                        //             borderRadius:
+                                        //                 BorderRadius.circular(25),
+                                        //             border: Border.all(
+                                        //                 color: Colors
+                                        //                     .deepPurpleAccent
+                                        //                     .shade700)),
+                                        //         child: Column(
+                                        //           mainAxisAlignment:
+                                        //               MainAxisAlignment.start,
+                                        //           children: [
+                                        //             Text(
+                                        //               "ثبت ماشین",
+                                        //               style: TextStyle(
+                                        //                   color: Colors.white,
+                                        //                   fontSize: 24,
+                                        //                   fontWeight:
+                                        //                       FontWeight.w800),
+                                        //             ),
+                                        //             SizedBox(
+                                        //               height: 20,
+                                        //             ),
+                                        //             Padding(
+                                        //               padding: const EdgeInsets
+                                        //                   .symmetric(
+                                        //                   horizontal: 8.0),
+                                        //               child: Row(
+                                        //                 mainAxisAlignment:
+                                        //                     MainAxisAlignment
+                                        //                         .spaceAround,
+                                        //                 children: [
+                                        //                   Container(
+                                        //                       height: 40,
+                                        //                       width: 200,
+                                        //                       child: Material(
+                                        //                         child: MyTextField(
+                                        //                             hint:
+                                        //                                 "نام خودرو",
+                                        //                             controller: Get
+                                        //                                     .find<
+                                        //                                         feildController>()
+                                        //                                 .carName),
+                                        //                       )),
+                                        //                   Container(
+                                        //                     height: 40,
+                                        //                     width: 200,
+                                        //                     child: LicanceNumber(
+                                        //                         entry: entry),
+                                        //                   ),
+                                        //                 ],
+                                        //               ),
+                                        //             ),
+                                        //             SizedBox(
+                                        //               height: 15,
+                                        //             ),
+                                        //             Padding(
+                                        //               padding: const EdgeInsets
+                                        //                   .symmetric(
+                                        //                   horizontal: 10.0),
+                                        //               child: Row(
+                                        //                 mainAxisAlignment:
+                                        //                     MainAxisAlignment
+                                        //                         .spaceAround,
+                                        //                 children: [
+                                        //                   Container(
+                                        //                     height: 40,
+                                        //                     width: 200,
+                                        //                     child: Material(
+                                        //                       child: MyTextField(
+                                        //                           hint:
+                                        //                               " نام خانوادگی",
+                                        //                           controller:
+                                        //                               Get.find<
+                                        //                                       feildController>()
+                                        //                                   .name),
+                                        //                     ),
+                                        //                   ),
+                                        //                   Container(
+                                        //                     height: 40,
+                                        //                     width: 195,
+                                        //                     child: Material(
+                                        //                       child: MyTextField(
+                                        //                           hint: "نام",
+                                        //                           controller:
+                                        //                               Get.find<
+                                        //                                       feildController>()
+                                        //                                   .Fname),
+                                        //                     ),
+                                        //                   )
+                                        //                 ],
+                                        //               ),
+                                        //             ),
+                                        //             SizedBox(
+                                        //               height: 15,
+                                        //             ),
+                                        //             Container(
+                                        //               width: 200,
+                                        //               child: ElevatedButton(
+                                        //                 onPressed: () {
+                                        //                   RegistredDb
+                                        //                       registredDb =
+                                        //                       RegistredDb(
+                                        //                         role: '',
+                                        //                         socialNumber: '',
+                                        //                           plateImagePath:
+                                        //                               entry.imgpath,
+                                        //                           plateNumber: entry
+                                        //                               .plateNum,
+                                        //                           carName: Get.find<
+                                        //                                   feildController>()
+                                        //                               .carName
+                                        //                               .text,
+                                        //                           name:
+                                        //                               "${Get.find<feildController>().Fname.text} ${Get.find<feildController>().name.text} ",
+                                        //                           status: true,
+                                        //                           eDate:
+                                        //                               entry.eDate,
+                                        //                           eTime: entry
+                                        //                               .eTime,
+                                        //                               screenImg: entry.scrnPath);
+                                        //                   Get.find<Boxes>()
+                                        //                       .hivebox
+                                        //                       .add(registredDb);
+                                        //                   Get.find<Boxes>()
+                                        //                       .getregData();
+                                        //                   Get.snackbar(
+                                        //                     "ثبت شد",
+                                        //                     "",
+                                        //                     colorText:
+                                        //                         Colors.white,
+                                        //                     maxWidth: 90,
+                                        //                   );
+                                        //                   Navigator.pop(context);
+                                        //                 },
+                                        //                 child: Text(
+                                        //                   "ثبت",
+                                        //                   style: TextStyle(
+                                        //                       color: Colors.white,
+                                        //                       fontSize: 18),
+                                        //                 ),
+                                        //                 style:
+                                        //                     TextButton.styleFrom(
+                                        //                         backgroundColor:
+                                        //                             Colors.green[
+                                        //                                 600]),
+                                        //               ),
+                                        //             )
+                                        //           ],
+                                        //         ),
+                                        //       ));
+                                        //     },
+                                        //   );
+                                        // },
                                         icon: Icon(Icons.add_box_outlined),
                                         color: Colors.white70,
                                         iconSize: 36,

@@ -21,6 +21,11 @@ class RegistredDb extends HiveObject {
   bool? status;
   @HiveField(7)
   String? screenImg;
+  @HiveField(8)
+  String? role;
+  @HiveField(9)
+  String? socialNumber;
+
 
   RegistredDb(
       {required this.plateNumber,
@@ -28,7 +33,7 @@ class RegistredDb extends HiveObject {
       this.name='-',
       this.carName='-',
       required this.eDate,
-      required this.eTime,this.status=false,required this.screenImg,});
+      required this.eTime,this.status=false,required this.screenImg,required this.role,required this.socialNumber});
 
   RegistredDb.fromJson(Map<String, dynamic> json) {
     plateNumber = json['plateNumber'];
@@ -39,6 +44,9 @@ class RegistredDb extends HiveObject {
     eTime = json['eTime'];
     status=json['status'];
     screenImg=json['screenImg'];
+    role=json['role'];
+    socialNumber=json['socialNumber'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +59,8 @@ class RegistredDb extends HiveObject {
     data['eTime'] = this.eTime;
     data['status']=this.status;
     data['screenImg']=this.screenImg;
+    data['role']=this.role;
+    data['socialNumber']=this.socialNumber;
     return data;
   }
 }

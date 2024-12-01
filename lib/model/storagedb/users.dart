@@ -13,19 +13,25 @@ class Users extends HiveObject {
   String? password;
   @HiveField(3)
   String? accsesslvl;
+  @HiveField(4)
+  String? email;
+  @HiveField(5)
+  String? nickname;
 
 
 
   Users(
       {required this.id,
       required this.username,
-      required this.password,required this.accsesslvl});
+      required this.password,required this.accsesslvl,required this.email,required this.nickname});
 
   Users.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     username = json['username'];
     password = json['password'];
     accsesslvl = json['accsesslvl'];
+    email=json['email'];
+    nickname=json['nickname'];
 
   }
 
@@ -35,6 +41,8 @@ class Users extends HiveObject {
     data['username'] = this.username;
     data['password'] = this.password;
     data['accsesslvl'] = this.accsesslvl;
+    data['email']=this.email;
+    data['nickname']=this.nickname;
 
     return data;
   }

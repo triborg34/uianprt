@@ -1,31 +1,19 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-
+import 'package:uianprt/model/storagedb/users.dart';
+import 'package:uianprt/widgets/Register.dart';
 
 class UserSetting extends StatelessWidget {
   UserSetting({super.key});
-  List users = [
-    {
-      "id": 0,
-      "username": "AmnAfarin",
-      "accsess": "admin",
-      "tbc1": "tbc1",
-      "tbc2": "tbc2"
-    },
-    {
-      "id": 1,
-      "username": "Mousavi",
-      "accsess": "Operator",
-      "tbc1": "tbc1",
-      "tbc2": "tbc2"
-    }
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,70 +43,107 @@ class UserSetting extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Container(
-              height: 110,
-              child: ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: purpule),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Row(
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          UserRows(title: users[index]['id']),
-                          VerticalDivider(
+            GetBuilder<Boxes>(
+              id: 6,
+              builder: (controller) {
+                return Container(
+                  height: 110,
+                  child: ListView.separated(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: purpule),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              UserRows(title: index.toString()),
+                              VerticalDivider(
+                                color: purpule,
+                              ),
+                              UserRows(
+                                  title: controller.userbox.values
+                                      .toList()[index]
+                                      .nickname),
+                              VerticalDivider(
+                                color: purpule,
+                              ),
+                              UserRows(
+                                  title: controller.userbox.values
+                                      .toList()[index]
+                                      .email),
+                              VerticalDivider(
+                                color: purpule,
+                              ),
+                              UserRows(
+                                  title: controller.userbox.values
+                                      .toList()[index]
+                                      .accsesslvl),
+                              VerticalDivider(
+                                color: purpule,
+                              ),
+                              UserRows(
+                                  title: controller.userbox.values
+                                      .toList()[index]
+                                      .id),
+                              VerticalDivider(
+                                color: purpule,
+                              ),
+                              IconButton(
+                                onPressed: () async {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        UserRegistrationDialog(
+                                      isEditing: true,
+                                      index: index,
+                                    ),
+                                  );
+                                  Get.find<Boxes>().update([6]);
+                                },
+                                icon: Icon(Icons.edit),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              IconButton(
+                                onPressed: ()async {
+                                  await Get.find<Boxes>().userbox.deleteAt(index);
+                                  Get.find<Boxes>().update([6]);
+                                },
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => Divider(
                             color: purpule,
+                            height: 0,
                           ),
-                          UserRows(title: users[index]['username']),
-                          VerticalDivider(
-                            color: purpule,
-                          ),
-                          UserRows(title: users[index]['accsess']),
-                          VerticalDivider(
-                            color: purpule,
-                          ),
-                          UserRows(title: users[index]['tbc1']),
-                          VerticalDivider(
-                            color: purpule,
-                          ),
-                          UserRows(title: users[index]['tbc1']),
-                          VerticalDivider(
-                            color: purpule,
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.edit),
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) => Divider(
-                        color: purpule,
-                        height: 0,
-                      ),
-                  itemCount: users.length),
+                      itemCount: controller.userbox.length),
+                );
+              },
             ),
             Container(
                 child: Row(
               children: [
                 ElevatedButton(
-                    onPressed: () {
-                      print("${Get.find<Boxes>().regBox[0].plateImagePath}");
+                    onPressed: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (context) => UserRegistrationDialog(
+                          isEditing: false,
+                          index: 0,
+                        ),
+                      );
+                      Get.find<Boxes>().update([6]);
                     },
                     child: Row(
                       children: [Text("اضافه کردن")],
@@ -208,27 +233,53 @@ class UserSetting extends StatelessWidget {
                           VerticalDivider(
                             color: purpule,
                           ),
-                          Get.find<Boxes>().regBox[index].status! ? Icon(Icons.check_box,color: Colors.lightGreenAccent,) :Icon(Icons.block,color: Colors.red,),
-                            VerticalDivider(
+                          Get.find<Boxes>().regBox[index].role=="مجاز"
+                              ? Icon(
+                                  Icons.check_box,
+                                  color: Colors.lightGreenAccent,
+                                )
+                              : Icon(
+                                  Icons.block,
+                                  color: Colors.red,
+                                ),
+                          VerticalDivider(
                             color: purpule,
                           ),
-
-                          IconButton(onPressed: (){}, icon: IconButton(onPressed: (){}, icon: Icon(Icons.edit))),SizedBox(width: 5,),
-                           IconButton(onPressed: (){}, icon: IconButton(onPressed: (){}, icon: Icon(Icons.delete,color: Colors.red,)))
+                          IconButton(
+                              onPressed: () {},
+                              icon: IconButton(
+                                  onPressed: () {}, icon: Icon(Icons.edit))),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  )))
                         ],
                       ),
                     );
                   },
                   separatorBuilder: (context, index) => SizedBox(),
                   itemCount: Get.find<Boxes>().regBox.length),
-
-            ),SizedBox(height: 15,),
-             Container(
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
                 child: Row(
               children: [
                 ElevatedButton(
-                    onPressed: () {
-                    //TODO:Addtinal Screen or popup screen for registrainon 
+                    onPressed: () async {
+                      //TODO:Addtinal Screen or popup screen for registrainon
+
+                      await showDialog(context: context, builder: (context) {
+                        return EnhancedCarRegistrationDialog(entry:  null,isEditing: false,isRegister: true,);
+                      },);
                     },
                     child: Row(
                       children: [Text("اضافه کردن")],
@@ -270,5 +321,217 @@ class UserRows extends StatelessWidget {
                 fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700),
           ),
         ));
+  }
+}
+
+class UserRegistrationDialog extends StatefulWidget {
+  final bool? isEditing;
+  final int? index;
+  UserRegistrationDialog(
+      {Key? key, required this.isEditing, required this.index})
+      : super(key: key);
+
+  @override
+  _UserRegistrationDialogState createState() => _UserRegistrationDialogState();
+}
+
+class _UserRegistrationDialogState extends State<UserRegistrationDialog> {
+  final _formKey = GlobalKey<FormState>();
+
+  // Form controllers
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nicknameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // Roles list
+  final List<String> _roles = [
+    'مدیر',
+    'ناظر',
+    'کاربر ساده',
+  ];
+
+  String? _selectedRole;
+
+  @override
+  void dispose() {
+    // Clean up controllers
+    _emailController.dispose();
+    _nicknameController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      // Collect form data
+      final registrationData = {
+        'email': _emailController.text,
+        'nickname': _nicknameController.text,
+        'username': _usernameController.text,
+        'password': _passwordController.text,
+        'role': _selectedRole,
+      };
+
+      // TODO: Implement actual registration logic
+      print('Registration Data: $registrationData');
+      await Get.find<Boxes>().userbox.add(Users(
+          id: Random().nextInt(9999),
+          username: registrationData['username'],
+          password: registrationData['password'],
+          accsesslvl: registrationData['role'],
+          email: registrationData['email'],
+          nickname: registrationData['nickname']));
+
+      // Close the dialog
+      Navigator.of(context).pop();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.isEditing!) {
+      _emailController.text =
+          Get.find<Boxes>().userbox.values.toList()[widget.index!].email!;
+      _nicknameController.text =
+          Get.find<Boxes>().userbox.values.toList()[widget.index!].nickname!;
+      _usernameController.text =
+          Get.find<Boxes>().userbox.values.toList()[widget.index!].username!;
+      _passwordController.text =
+          Get.find<Boxes>().userbox.values.toList()[widget.index!].password!;
+      _selectedRole =
+          Get.find<Boxes>().userbox.values.toList()[widget.index!].accsesslvl!;
+    }
+    return AlertDialog(
+      title: Text(widget.isEditing! ? "ویرایش" : 'ثبت نام'),
+      content: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Email TextField
+              TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  labelText: 'ایمیل',
+                  prefixIcon: Icon(Icons.email),
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter an email';
+                  }
+                  // Basic email validation
+                  final emailRegex =
+                      RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                  if (!emailRegex.hasMatch(value)) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Nickname TextField
+              TextFormField(
+                controller: _nicknameController,
+                decoration: const InputDecoration(
+                  labelText: 'نام و نام خانوادگی',
+                  prefixIcon: Icon(Icons.person_outline),
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a nickname';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Username TextField
+              TextFormField(
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                  labelText: 'نام کاربری',
+                  prefixIcon: Icon(Icons.account_circle),
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a username';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Password TextField
+              TextFormField(
+                controller: _passwordController,
+                decoration: const InputDecoration(
+                  labelText: 'رمز عبور',
+                  prefixIcon: Icon(Icons.lock),
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a password';
+                  }
+                  if (value.length < 6) {
+                    return 'Password must be at least 6 characters';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Role Dropdown
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: 'Role',
+                  prefixIcon: Icon(Icons.assignment_ind),
+                  border: OutlineInputBorder(),
+                ),
+                value: _selectedRole,
+                hint: const Text('نوع کاربری'),
+                items: _roles.map((role) {
+                  return DropdownMenuItem(
+                    value: role,
+                    child: Text(role),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedRole = value;
+                  });
+                },
+                validator: (value) {
+                  if (value == null) {
+                    return 'نوع کاربری';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('انصراف'),
+        ),
+        ElevatedButton(
+          onPressed: _submitForm,
+          child: const Text('ثبت'),
+        ),
+      ],
+    );
   }
 }

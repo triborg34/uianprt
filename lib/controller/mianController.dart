@@ -47,6 +47,8 @@ class feildController extends GetxController {
   var carName = TextEditingController();
   var name = TextEditingController();
   var Fname = TextEditingController();
+  TextEditingController socialNumber=TextEditingController();
+  var role;
 }
 
 class Boxes extends GetxController {
