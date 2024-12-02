@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 var labelmap = [
   '0',
@@ -281,8 +283,8 @@ try{
 
 
 
-String path = '../../../../anprv7/engine/database/entrieses.db';
-String imagesPath="../anprv7/engine/";
+late String path ;
+late String imagesPath;
 
 Color purpule = Color.fromARGB(255, 56, 2, 109);
 Color selecetpurpule=const Color.fromARGB(255, 109, 20, 125);
@@ -294,4 +296,16 @@ String generateRandomString(int len) {
   var r = Random();
   const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
+}
+
+
+
+
+Future<Map<String, String>> loadConfig() async {
+  // For asset-based file
+  final configString = await rootBundle.loadString('assets/config.json');
+  final Map<String, dynamic> config = jsonDecode(configString);
+  
+  // Convert dynamic values to strings
+  return config.map((key, value) => MapEntry(key, value.toString()));
 }

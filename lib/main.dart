@@ -22,25 +22,26 @@ import 'package:uianprt/widgets/tempcamra.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+              final config = await loadConfig();
+
+          path = config['db_path']!;
+          imagesPath = config['images_folder_path']!;
   tz.initializeTimeZones();
-   
 
-final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
-  
 
-  
   Hive.registerAdapter(UsersAdapter());
-    await Hive.openBox<Users>('userbox');
-   Hive.registerAdapter(RegistredDbAdapter());
+  await Hive.openBox<Users>('userbox');
+  Hive.registerAdapter(RegistredDbAdapter());
   await Hive.openBox<RegistredDb>('regbox');
   Hive.registerAdapter(CamerasAdapter());
   await Hive.openBox<Cameras>('camerabox');
 
- await DesktopWindow.setWindowSize(Size(1820, 810));
+  await DesktopWindow.setWindowSize(Size(1820, 810));
   runApp(const MyApp());
 }
 
@@ -50,22 +51,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print("${MediaQuery.of(context).size.width},${MediaQuery.of(context).size.height}");
     return GetMaterialApp(
-      
         initialBinding: MyBinding(),
-        theme: ThemeData(fontFamily: 'byekan',useMaterial3: true),
- 
+        theme: ThemeData(fontFamily: 'byekan', useMaterial3: true),
         debugShowCheckedModeBanner: false,
         title: 'AmnAfarin',
-        onReady: () {
-     
-    
+        onReady: () async {
+
         },
-        home:
- ModernLoginPage()
-        );
+        home: ModernLoginPage());
   }
 }
-
-
