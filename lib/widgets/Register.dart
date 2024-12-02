@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,11 +46,16 @@ class _EnhancedCarRegistrationDialogState
     //
 
     print(Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[0-9]')).toList().toString());
-                    Get.find<ReportController>().persianalhpabet.value = '';
-                                  Get.find<ReportController>().firtTwodigits.clear();
-                                 Get.find<ReportController>().lastTwoDigits.clear();
-                                 Get.find<ReportController>().engishalphabet =  Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[0-9]')).toList()[2].toString();
-                                 Get.find<ReportController>().threedigits.clear();
+    var d=Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[0-9]')).toList()[2].toString();
+    var ind=plateAlphabet.keys.toList().indexOf(d);
+    var f=plateAlphabet.values.elementAt(ind);
+    print(f);
+                    Get.find<ReportController>().persianalhpabet.value = f;
+                    Get.find<ReportController>().engishalphabet =  d;
+                                  Get.find<ReportController>().firtTwodigits.text=Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[0];
+                                 Get.find<ReportController>().lastTwoDigits.text= Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[1].substring(0,3);
+                                 
+                                 Get.find<ReportController>().threedigits.text= Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[1].substring(3,5);
 
 
 
@@ -238,6 +243,7 @@ class _EnhancedCarRegistrationDialogState
               ElevatedButton(
                 onPressed: () {
                   Get.find<ReportController>().platePicker="${Get.find<ReportController>().firtTwodigits.text}${Get.find<ReportController>().engishalphabet == null ? '' : Get.find<ReportController>().engishalphabet}${Get.find<ReportController>().threedigits.text}${Get.find<ReportController>().lastTwoDigits.text}";
+                  print(Get.find<ReportController>().platePicker);
                   // Create RegistredDb object with the new fields
  RegistredDb? registredDb;
                   try{
@@ -273,8 +279,14 @@ class _EnhancedCarRegistrationDialogState
                     screenImg:'');
                   };
                   // Add to Hive and refresh
+                  if(widget.isEditing){
+                    Get.find<Boxes>().hivebox.putAt(widget.index, registredDb);
+                      Get.find<Boxes>().getregData();
+                  }
+                  else{
                   Get.find<Boxes>().hivebox.add(registredDb);
                   Get.find<Boxes>().getregData();
+                  }
 
                   // Show success notification
                   Get.snackbar(
@@ -327,7 +339,7 @@ class EditPlateNum extends StatelessWidget {
       children: [
         SizedBox(width: 50,height: 50,child: Center(
           child: TextField(
-                controller:TextEditingController(text: Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[0]),
+                controller:Get.find<ReportController>().firtTwodigits,
                 decoration: InputDecoration(
             
                   filled: true,
@@ -375,7 +387,7 @@ class EditPlateNum extends StatelessWidget {
               ),SizedBox(width: 15,),
                 SizedBox(width: 70,height: 50,child: Center(
           child: TextField(
-                controller:TextEditingController(text: Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[1].substring(0,3)),
+                controller:Get.find<ReportController>().threedigits,
                 decoration: InputDecoration(
                  
                   filled: true,
@@ -388,7 +400,7 @@ class EditPlateNum extends StatelessWidget {
         )),SizedBox(width: 15,),
         SizedBox(width: 70,height: 50,child: Center(
           child: TextField(
-                controller:TextEditingController(text: Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[1].substring(3,5)),
+                controller:Get.find<ReportController>().lastTwoDigits,
                 decoration: InputDecoration(
                  
                   filled: true,

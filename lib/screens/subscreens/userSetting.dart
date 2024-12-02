@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
@@ -259,7 +260,12 @@ GetBuilder<Boxes>(id: 9,builder: (controller) {
                           IconButton(
                               onPressed: () {},
                               icon: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () async{
+                                    await Get.find<Boxes>().hivebox.deleteAt(index);
+                                     Get.find<Boxes>().getregData();
+                                    Get.find<Boxes>().update([9]);
+                                    
+                                  },
                                   icon: Icon(
                                     Icons.delete,
                                     color: Colors.red,

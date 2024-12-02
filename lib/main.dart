@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'AmnAfarin',
         onReady: () {
-       
+     
     
         },
         home: MainView(path));
