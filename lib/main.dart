@@ -6,12 +6,15 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:splash_view/source/presentation/pages/pages.dart';
+import 'package:splash_view/source/presentation/presentation.dart';
 import 'package:uianprt/controller/bindings.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/storagedb/cameras.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
 import 'package:uianprt/model/storagedb/users.dart';
+import 'package:uianprt/screens/loginScreen.dart';
 import 'package:uianprt/screens/mainPage.dart';
 import 'package:uianprt/testscreens/dbpage.dart';
 import 'package:uianprt/testscreens/testfield.dart';
@@ -59,7 +62,9 @@ class MyApp extends StatelessWidget {
      
     
         },
-        home: MainView(path));
+        home:
+ ModernLoginPage()
+        );
   }
 }
 

@@ -63,6 +63,8 @@ dependencies:
   syncfusion_flutter_xlsio: ^21.2.3
 
   dio: ^5.7.0
+  splash_view: ^2.0.1
+  shared_preferences: ^2.3.3
 
 
 
