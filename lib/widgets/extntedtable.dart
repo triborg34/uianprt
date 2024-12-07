@@ -29,7 +29,7 @@ Container contant() {
                     decoration: BoxDecoration(
                         border: Border(left: BorderSide(color: purpule))),
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    width: 205,
+                    width: Get.width/9.03,
                     height: 48,
                     child: LicanceNumber(entry: tcontroller.selectedmodel)),
             tcontroller.selectedIndex == -1
@@ -126,11 +126,12 @@ Container header() {
 }
 
 Container headerOftable(String title) {
+
   return Container(
       decoration:
           BoxDecoration(border: Border(left: BorderSide(color: purpule))),
       height: 50,
-      width: 205,
+      width: Get.width/9.03,
       child: Center(
           child: Text(
         title,
@@ -139,11 +140,12 @@ Container headerOftable(String title) {
 }
 
 Container contactOfTable(String title) {
+  
   return Container(
       decoration:
           BoxDecoration(border: Border(left: BorderSide(color: purpule))),
       height: 98,
-      width: 222.5,
+      width: Get.width/8.34,
       child: Center(
           child: Text(
         title,

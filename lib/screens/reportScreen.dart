@@ -801,7 +801,7 @@ class ReportScreen extends StatelessWidget {
                                     Container(
                                         padding: EdgeInsets.all(1.0),
                                         height: 50,
-                                        width: 209,
+                                        width: Get.width/9.03,
                                         decoration: BoxDecoration(
                                             border: Border(
                                                 right:
@@ -1163,7 +1163,7 @@ Container headerOftable2(String title) {
                   ? BorderSide(color: purpule)
                   : BorderSide.none)),
       height: 50,
-      width: 200,
+      width: Get.width/9.26,
       child: Center(
           child: Text(
         title,
@@ -1268,7 +1268,7 @@ Future<void> saveToExel(List<Map<String, dynamic>> data) async {
   final directory = await getApplicationDocumentsDirectory();
 
   Get.find<ReportController>().savePath =
-      '${directory.path}/Report.${DateTime.now().month}.${DateTime.now().day} - ${DateTime.now().hour}:${DateTime.now().minute}.xlsx';
+      '${directory.path}/Report ${DateTime.now().month}/${DateTime.now().day} - ${DateTime.now().hour}:${DateTime.now().minute}.xlsx';
 
   // Write the file
   final File file = File(Get.find<ReportController>().savePath!);

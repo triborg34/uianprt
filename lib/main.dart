@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splash_view/source/presentation/pages/pages.dart';
 import 'package:splash_view/source/presentation/presentation.dart';
@@ -42,8 +43,7 @@ void main() async {
   Hive.registerAdapter(CamerasAdapter());
   await Hive.openBox<Cameras>('camerabox');
 
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.remove('isLoggedIn');
+
   await DesktopWindow.setWindowSize(Size(1820, 810));
   runApp(const MyApp());
 }
@@ -55,6 +55,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        builder: (context, child) {
+          return ResponsiveBreakpoints.builder(child: child!, breakpoints: []);
+        },
         initialBinding: MyBinding(),
         theme: ThemeData(fontFamily: 'byekan', useMaterial3: true),
         debugShowCheckedModeBanner: false,

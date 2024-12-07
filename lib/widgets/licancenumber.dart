@@ -17,6 +17,7 @@ class LicanceNumber extends StatelessWidget {
       margin: EdgeInsets.only(right: 3),
       height: 40,
       decoration: BoxDecoration(
+        
         borderRadius: BorderRadius.circular(5),
           color: Colors.white,
           border: Border.all(width: 3)),
