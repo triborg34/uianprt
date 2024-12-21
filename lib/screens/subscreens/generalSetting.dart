@@ -1,19 +1,40 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:filepicker_windows/filepicker_windows.dart';
+import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:get/get.dart';
+
 import 'package:uianprt/controller/mianController.dart';
+
 import 'package:uianprt/model/consts.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone_utc_offset/timezone_utc_offset.dart';
+import 'package:uianprt/model/storagedb/setting.dart';
 
 class Generalsetting extends StatelessWidget {
-  const Generalsetting({super.key});
+  Generalsetting({super.key});
 
   // Get a list of available timezones
 
   @override
   Widget build(BuildContext context) {
+    Get.find<settingController>().psliderValue.value =
+        Get.find<Boxes>().settingbox.values.last.plateConf!;
+    Get.find<settingController>().csliderValue.value =
+        Get.find<Boxes>().settingbox.values.last.charConf!;
+    Get.find<settingController>().hardWareValue =
+        Get.find<Boxes>().settingbox.values.last.hardWare!;
+    Get.find<settingController>().pathOfdb.value =
+        Get.find<Boxes>().settingbox.values.last.dbPath!;
+    Get.find<settingController>().pathOfOutput.value =
+        Get.find<Boxes>().settingbox.values.last.outPutPath!;
+    Get.find<settingController>().timezoneseleted =
+        Get.find<Boxes>().settingbox.values.last.timeZone!;
+    Get.find<settingController>().clockType =
+        Get.find<Boxes>().settingbox.values.last.clockType!;
+
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -41,7 +62,7 @@ class Generalsetting extends StatelessWidget {
                 Expanded(
                     child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  height: 105,
+                  height: 150,
                   color: Colors.transparent,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,19 +138,55 @@ class Generalsetting extends StatelessWidget {
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400),
                             ),
-                          )
+                          ),
                         ],
                       ),
                       SizedBox(
-                        height: 15,
+                        height: 25,
                       ),
+                      Row(
+                        children: [
+                          FutursOfSystemRow(lable: "مسیر دیتابیس"),
+                          ElevatedButton(
+                            onPressed: () {
+                              final file = OpenFilePicker()
+                                ..filterSpecification = {
+                                  'SQLite Database': '*.db',
+                                }
+                                ..initialDirectory = 'C:\\'
+                                ..defaultFilterIndex = 0
+                                ..defaultExtension = 'db';
+                              Get.find<settingController>().pathOfdb.value =
+                                  file.getFile()!.path;
+                            },
+                            child: Obx(
+                              () => Text(
+                                Get.find<settingController>()
+                                            .pathOfdb
+                                            .value
+                                            .length >
+                                        0
+                                    ? Get.find<settingController>()
+                                        .pathOfdb
+                                        .value
+                                        .split('\\')
+                                        .last
+                                    : "انتخاب",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            style:
+                                TextButton.styleFrom(backgroundColor: purpule),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 )),
                 Expanded(
                     child: Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  height: 105,
+                  height: 150,
                   color: Colors.transparent,
                   child: Column(
                     children: [
@@ -186,6 +243,42 @@ class Generalsetting extends StatelessWidget {
                               ])
                         ],
                       ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: [
+                          FutursOfSystemRow(lable: "مسیر تصاویر"),
+                          ElevatedButton(
+                            onPressed: () {
+                              final file = DirectoryPicker();
+                              Get.find<settingController>().pathOfOutput.value =
+                                  file.getDirectory()!.path;
+                              print(Get.find<settingController>()
+                                  .pathOfOutput
+                                  .value);
+                            },
+                            child: Obx(
+                              () => Text(
+                                Get.find<settingController>()
+                                            .pathOfOutput
+                                            .value
+                                            .length >
+                                        0
+                                    ? Get.find<settingController>()
+                                        .pathOfOutput
+                                        .value
+                                        .split('\\')
+                                        .last
+                                    : "انتخاب",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            style:
+                                TextButton.styleFrom(backgroundColor: purpule),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 )),
@@ -197,30 +290,73 @@ class Generalsetting extends StatelessWidget {
                 ElevatedButton(
                   child: Text("ذخیره"),
                   onPressed: () async {
+                    var configFile = File('assets/config.json');
+                    var configContent =
+                        json.decode(configFile.readAsStringSync());
+
+                    configContent['db_path'] = Get.find<settingController>()
+                        .pathOfdb
+                        .value
+                        .replaceAll('\\', '/');
+                    configContent['images_folder_path'] =
+                        Get.find<settingController>()
+                                .pathOfOutput
+                                .value
+                                .replaceAll('\\', '/') +
+                            '/';
+
+                    configFile.writeAsStringSync(json.encode(configContent));
+
+                    await Get.find<Boxes>().settingbox.add(
+                          Setting(
+                              plateConf: Get.find<settingController>()
+                                  .psliderValue
+                                  .value,
+                              charConf: Get.find<settingController>()
+                                  .csliderValue
+                                  .value,
+                              hardWare:
+                                  Get.find<settingController>().hardWareValue,
+                              dbPath:
+                                  Get.find<settingController>().pathOfdb.value,
+                              outPutPath: Get.find<settingController>()
+                                  .pathOfOutput
+                                  .value,
+                              timeZone:
+                                  Get.find<settingController>().timezoneseleted,
+                              clockType:
+                                  Get.find<settingController>().clockType),
+                        );
+
+                    // TODO: Implement the save button
+
                     Dio dio = Dio();
                     var res =
                         await dio.post('http://127.0.0.1:8000/config', data: {
                       "section": "DEFAULT",
                       "key": "character_confidence",
-                      "value": Get.find<settingController>().csliderValue.value.toStringAsFixed(2)
+                      "value": Get.find<settingController>()
+                          .csliderValue
+                          .value
+                          .toStringAsFixed(2)
                     });
                     if (res.statusCode == 200) {
                       await dio.post("http://127.0.0.1:8000/config", data: {
                         "section": "DEFAULT",
                         "key": "plate_confidence",
                         "value":
-                            (Get.find<settingController>().psliderValue.value*100).toInt().toString()
+                            (Get.find<settingController>().psliderValue.value *
+                                    100)
+                                .toInt()
+                                .toString()
                       });
-                    await dio.post("http://127.0.0.1:8000/config", data: {
+                      await dio.post("http://127.0.0.1:8000/config", data: {
                         "section": "DEFAULT",
                         "key": "device",
-                        "value":
-                            Get.find<settingController>().hardWareValue.toString()
-                      }).then((value) {
-                        if(value.statusCode==200){
-                        Get.snackbar("", "");
-                        }
-                      },);
+                        "value": Get.find<settingController>()
+                            .hardWareValue
+                            .toString()
+                      });
                     }
                   },
                 ),
@@ -229,7 +365,18 @@ class Generalsetting extends StatelessWidget {
                 ),
                 ElevatedButton(
                   child: Text("پیش فرض"),
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Get.find<Boxes>().settingbox.add(
+                          Setting(
+                              plateConf: 80,
+                              charConf: 50,
+                              hardWare: 'cuda',
+                              dbPath: "انتخاب",
+                              outPutPath: "انتخاب",
+                              timeZone: "Asia/Tehran",
+                              clockType: "24"),
+                        );
+                  },
                 ),
               ],
             ),
@@ -301,14 +448,46 @@ class Generalsetting extends StatelessWidget {
               children: [
                 ElevatedButton(
                   child: Text("ذخیره"),
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Get.find<Boxes>().settingbox.add(
+                          Setting(
+                              plateConf: Get.find<settingController>()
+                                  .psliderValue
+                                  .value,
+                              charConf: Get.find<settingController>()
+                                  .csliderValue
+                                  .value,
+                              hardWare:
+                                  Get.find<settingController>().hardWareValue,
+                              dbPath:
+                                  Get.find<settingController>().pathOfdb.value,
+                              outPutPath: Get.find<settingController>()
+                                  .pathOfOutput
+                                  .value,
+                              timeZone:
+                                  Get.find<settingController>().timezoneseleted,
+                              clockType:
+                                  Get.find<settingController>().clockType),
+                        );
+                  },
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 ElevatedButton(
                   child: Text("پیش فرض"),
-                  onPressed: () {},
+                  onPressed: () async{
+                      await Get.find<Boxes>().settingbox.add(
+                          Setting(
+                              plateConf: 80,
+                              charConf: 50,
+                              hardWare: 'cuda',
+                              dbPath: "انتخاب",
+                              outPutPath: "انتخاب",
+                              timeZone: "Asia/Tehran",
+                              clockType: "24"),
+                        );
+                  },
                 ),
               ],
             ),

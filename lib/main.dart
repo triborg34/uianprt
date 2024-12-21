@@ -15,6 +15,7 @@ import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/storagedb/cameras.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
+import 'package:uianprt/model/storagedb/setting.dart';
 import 'package:uianprt/model/storagedb/users.dart';
 import 'package:uianprt/screens/loginScreen.dart';
 import 'package:uianprt/screens/mainPage.dart';
@@ -42,10 +43,13 @@ void main() async {
   await Hive.openBox<RegistredDb>('regbox');
   Hive.registerAdapter(CamerasAdapter());
   await Hive.openBox<Cameras>('camerabox');
+  Hive.registerAdapter(SettingAdapter());
+  await Hive.openBox<Setting>('settingbox');
+
 
 
   await DesktopWindow.setWindowSize(Size(1820, 810));
-  runApp(const MyApp());
+  runApp(  MyApp());
 }
 
 class MyApp extends StatelessWidget {

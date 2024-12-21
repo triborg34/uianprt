@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/services.dart';
 
+
 var labelmap = [
   '0',
   '1',
@@ -312,3 +313,4 @@ Future<Map<String, String>> loadConfig() async {
   // Convert dynamic values to strings
   return config.map((key, value) => MapEntry(key, value.toString()));
 }
+

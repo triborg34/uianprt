@@ -13,6 +13,8 @@ import 'package:uianprt/model/storagedb/db.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
 import 'package:uianprt/model/storagedb/users.dart';
 
+import '../model/storagedb/setting.dart';
+
 
 
 class videoController extends GetxController {
@@ -62,7 +64,7 @@ class Boxes extends GetxController {
   Box<Cameras> camerabox=Hive.box<Cameras>('camerabox');
 
   //
-
+  Box<Setting> settingbox=Hive.box<Setting>('settingbox');
   void getregData() {
     regBox.clear();
     for (var values in hivebox.values) {
@@ -141,11 +143,14 @@ class settingController extends GetxController{
   var psliderValue=0.7.obs;
   var csliderValue=0.75.obs;
   var hardWareValue='cuda';
+  var pathOfdb=''.obs;
+  var pathOfOutput=''.obs;
+  var clockType='24';
 
   String timezoneseleted="Asia/Tehran";
   
 
-
+  
 
   
 }
