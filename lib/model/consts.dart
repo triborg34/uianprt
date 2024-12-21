@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
 
 var labelmap = [
@@ -49,7 +49,7 @@ var carDict = {
   'A': '10',
   'B': '11',
   'P': '12',
-  'Taxi': '13',
+  'x': '13',
   'ث': '14',
   'J': '15',
   'چ': '16',
@@ -107,7 +107,7 @@ var alphabetP = {
   "Sad": "ص",
   "Sin": "س",
   "T": "ط",
-  "Taxi": "ت",
+  "x": "ت",
   "V": "و",
   "Y": "ی",
 };
@@ -138,7 +138,7 @@ var alphabetP2 = {
   "Sad": "ص",
   "Sin": "س",
   "T": "ط",
-  "Taxi": "ت",
+  "x": "ت",
   "V": "و",
   "Y": "ی",
 };
@@ -169,7 +169,7 @@ var alphabetE = {
   'SAD': 'Sad',
   'SEEN': 'Sin',
   'TAH': 'T',
-  'TEH': 'Taxi',
+  'x': 'Taxi',
   'WAW': 'V',
   'YEH': 'Y',
 };
@@ -190,7 +190,7 @@ var plateAlphabet = {
   "Sad": "ص",
   "Sin": "س",
   "T": "ط",
-  "Taxi": "ت",
+  "x": "ت",
   "V": "و",
   "Y": "ی",
 };
@@ -237,6 +237,7 @@ try{
     "${result[3]}${result[4]}${result[5]} ${result[2]} ${result[0]}${result[1]}",
     "${result[6]}${result[7]}"
   ];
+
 
 
   return persianres;

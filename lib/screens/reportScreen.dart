@@ -455,7 +455,7 @@ class ReportScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            child:Text("ویرایش",style: TextStyle(color: Colors.white,fontFamily: 'arial'),)),
+                            child:Text("انتخاب",style: TextStyle(color: Colors.white,),)),
                         // rcontroller.platePicker == null
                         //     ? DropFunc(rcontroller)
                         Container(

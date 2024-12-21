@@ -30,7 +30,7 @@ class Infoscreen extends StatelessWidget {
                SizedBox(height: 0,),
               
                SizedBox(height: 40,width: 200,child: ElevatedButton(onPressed: (){
-                //TODO:CHEK TO A SERVER
+              
                }, child: Center(child: Text("Check For Upadte",style: TextStyle(fontSize: 14),)))),
               
 
