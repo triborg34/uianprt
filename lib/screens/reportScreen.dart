@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:path_provider/path_provider.dart';
+
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-import 'package:syncfusion_flutter_xlsio/xlsio.dart' as Excel;
+
 
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
@@ -166,7 +166,7 @@ class ReportScreen extends StatelessWidget {
                                     };
                                   },
                                 );
-                                await saveToExel(data);
+                                await saveToCsv(data);
 
                                 Get.snackbar("ذخیره شد", rcontroller.savePath!,
                                     backgroundColor: purpule,
@@ -1227,52 +1227,87 @@ class ReportTextField extends StatelessWidget {
 //   }
 // }
 
-Future<void> saveToExel(List<Map<String, dynamic>> data) async {
-  // Create a new Excel workbook
-  final Excel.Workbook workbook = Excel.Workbook();
 
-  // Access the first worksheet
-  final Excel.Worksheet sheet = workbook.worksheets[0];
-  Excel.Style globalStyle = workbook.styles.add('style');
-  // Set the worksheet direction to RTL
-  sheet.isRightToLeft = true;
 
-  globalStyle.bold = true;
-  globalStyle.backColor = '#37D8E9';
-  // Add headers to the first row
-  final headers = data.first.keys.toList();
-  for (int i = 0; i < headers.length; i++) {
-    sheet.getRangeByIndex(1, i + 1).setText(headers[i]);
+Future<void> saveToCsv(List<Map<String, dynamic>> data) async {
+  if (data.isEmpty) return;
+
+  // Define the custom directory path
+  final directory = Directory('D:/Codes/uianprt/output/');
+  if (!await directory.exists()) {
+    await directory.create(recursive: true);
   }
-
-  // Populate data starting from the second row
-  for (int row = 0; row < data.length; row++) {
-    final rowData = data[row];
-    for (int col = 0; col < headers.length; col++) {
-      final cellValue = rowData[headers[col]];
-      sheet
-          .getRangeByIndex(row + 2, col + 1)
-          .setText(cellValue?.toString() ?? '');
-    }
-  }
-
-  // Save the workbook as a stream
-  final List<int> bytes = workbook.saveAsStream();
-  try {
-    workbook.dispose();
-  } catch (e) {
-    print(e);
-  }
-
-  // Get the path to save the file
-  final directory = await getApplicationDocumentsDirectory();
 
   Get.find<ReportController>().savePath =
-      '${directory.path}/Report ${DateTime.now().month}/${DateTime.now().day} - ${DateTime.now().hour}:${DateTime.now().minute}.xlsx';
+      '${directory.path}/Report ${DateTime.now().month}-${DateTime.now().day} ${DateTime.now().hour}-${DateTime.now().minute}.csv';
 
-  // Write the file
+  // Create a CSV file
   final File file = File(Get.find<ReportController>().savePath!);
-  await file.writeAsBytes(bytes, flush: true);
+  final sink = file.openWrite();
 
-  print('Excel file saved as RTL at: ${Get.find<ReportController>().savePath}');
+  // Write headers
+  final headers = data.first.keys.toList();
+  sink.writeln(headers.join(','));
+
+  // Write data
+  for (final row in data) {
+    final values = headers.map((header) => row[header]?.toString() ?? '').toList();
+    sink.writeln(values.join(','));
+  }
+
+  await sink.flush();
+  await sink.close();
+
+  print('CSV file saved at: ${Get.find<ReportController>().savePath}');
 }
+
+// Future<void> saveToExel(List<Map<String, dynamic>> data) async {
+//   // Create a new Excel workbook
+  
+//   final Excel.Workbook workbook = Excel.Workbook();
+
+//   // Access the first worksheet
+//   final Excel.Worksheet sheet = workbook.worksheets[0];
+//   Excel.Style globalStyle = workbook.styles.add('style');
+//   // Set the worksheet direction to RTL
+//   sheet.isRightToLeft = true;
+
+//   globalStyle.bold = true;
+//   globalStyle.backColor = '#37D8E9';
+//   // Add headers to the first row
+//   final headers = data.first.keys.toList();
+//   for (int i = 0; i < headers.length; i++) {
+//     sheet.getRangeByIndex(1, i + 1).setText(headers[i]);
+//   }
+
+//   // Populate data starting from the second row
+//   for (int row = 0; row < data.length; row++) {
+//     final rowData = data[row];
+//     for (int col = 0; col < headers.length; col++) {
+//       final cellValue = rowData[headers[col]];
+//       sheet
+//           .getRangeByIndex(row + 2, col + 1)
+//           .setText(cellValue?.toString() ?? '');
+//     }
+//   }
+
+//   // Save the workbook as a stream
+//   final List<int> bytes = workbook.saveAsStream();
+//   try {
+//     workbook.dispose();
+//   } catch (e) {
+//     print(e);
+//   }
+
+//   // Get the path to save the file
+// final directory = Directory('D:/Codes/uianprt/output/');
+
+//   Get.find<ReportController>().savePath =
+//       '${directory.path}/Report ${DateTime.now().month}/${DateTime.now().day} - ${DateTime.now().hour}:${DateTime.now().minute}.xlsx';
+
+//   // Write the file
+//   final File file = File(Get.find<ReportController>().savePath!);
+//   await file.writeAsBytes(bytes, flush: true);
+
+//   print('Excel file saved as RTL at: ${Get.find<ReportController>().savePath}');
+// }
