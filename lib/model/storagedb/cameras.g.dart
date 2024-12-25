@@ -19,6 +19,7 @@ class CamerasAdapter extends TypeAdapter<Cameras> {
     return Cameras(
       id: fields[0] as int?,
       nameCamera: fields[1] as String?,
+      rtspname: fields[8] as String?,
       ip: fields[2] as String?,
       gate: fields[3] as String?,
       status: fields[4] as bool?,
@@ -31,7 +32,7 @@ class CamerasAdapter extends TypeAdapter<Cameras> {
   @override
   void write(BinaryWriter writer, Cameras obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class CamerasAdapter extends TypeAdapter<Cameras> {
       ..writeByte(6)
       ..write(obj.password)
       ..writeByte(7)
-      ..write(obj.licance);
+      ..write(obj.licance)
+      ..writeByte(8)
+      ..write(obj.rtspname);
   }
 
   @override

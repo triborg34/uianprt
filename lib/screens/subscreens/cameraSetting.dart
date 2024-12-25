@@ -332,6 +332,7 @@ class CameraSetting extends StatelessWidget {
                                               gate: value['type'],
                                               ip: value['ip'],
                                               nameCamera: value['name'],
+                                              rtspname: value['rtspname'],
                                               status: true,
                                               username: "",
                                               password: "",
@@ -395,6 +396,8 @@ class CameraSetting extends StatelessWidget {
                       final TextEditingController username=TextEditingController();
                       final TextEditingController password=TextEditingController();
                       String cameraType = 'entrance'; // Default value
+                      final TextEditingController rtspname=TextEditingController();
+
 
                       return AlertDialog(
                         title: const Text('اضافه کردن دوربین'),
@@ -425,6 +428,18 @@ class CameraSetting extends StatelessWidget {
                                     decoration: InputDecoration(
                                       labelText: 'آدرس دوربین',
                                       hintText: 'e.g:192.168.1.1',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    // Enable keyboard handling for Windows
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                  const SizedBox(height: 16),
+                                                      TextFormField(
+                                    style: TextStyle(fontFamily: 'arial'),
+                                    controller: rtspname,
+                                    decoration: InputDecoration(
+                                      labelText: 'آدرس نمایش',
+                                      hintText: 'e.g:steam,mainstream',
                                       border: OutlineInputBorder(),
                                     ),
                                     // Enable keyboard handling for Windows
@@ -486,6 +501,8 @@ class CameraSetting extends StatelessWidget {
                             onPressed: () {
                               nameController.dispose();
                               ipController.dispose();
+                              rtspname.dispose();
+
                               Navigator.of(context).pop();
                             },
                             child: const Text('خروج'),
@@ -498,12 +515,14 @@ class CameraSetting extends StatelessWidget {
                                 'type': cameraType,
                                 'username':username.text,
                                 'password':password.text
+                                ,'rtspname':rtspname.text
                               };
 
                               nameController.dispose();
                               ipController.dispose();
                               username.dispose();
                               password.dispose();
+                              rtspname.dispose();
                               Navigator.of(context).pop(cameraData);
                             },
                             child: const Text('ثبت'),
@@ -523,6 +542,7 @@ class CameraSetting extends StatelessWidget {
                           status: true,
                           username: value['username'],
                           password: value['password'],
+                          rtspname: value['rtspname'],
                           licance: generateRandomString(100)));
                     }
                     Get.find<Boxes>().update([5]);
