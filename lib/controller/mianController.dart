@@ -146,7 +146,6 @@ class settingController extends GetxController{
   var pathOfdb=''.obs;
   var pathOfOutput=''.obs;
   var clockType='24';
-
   String timezoneseleted="Asia/Tehran";
   
 

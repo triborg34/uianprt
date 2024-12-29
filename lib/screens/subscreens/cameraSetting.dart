@@ -1,4 +1,3 @@
-
 // ignore_for_file: unused_local_variable
 
 import 'dart:math';
@@ -11,7 +10,6 @@ import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/storagedb/cameras.dart';
 import 'package:uianprt/widgets/videogetter.dart';
-
 
 class CameraSetting extends StatelessWidget {
   CameraSetting({super.key});
@@ -215,109 +213,206 @@ class CameraSetting extends StatelessWidget {
                                           .camerabox.values
                                           .toList()[index]
                                           .gate!; // Default value
+                                          final TextEditingController username=TextEditingController(text: controller.camerabox.values.toList()[index].username);
+                                                  final TextEditingController password=TextEditingController(text: controller.camerabox.values.toList()[index].password);
+                                                          final TextEditingController rtspname=TextEditingController(text: controller.camerabox.values.toList()[index].rtspname);
+                                bool isnotrtsp=true;
+                                   return AlertDialog(
+                        title: const Text('اضافه کردن دوربین'),
+                        content: SingleChildScrollView(
+                          child: StatefulBuilder(
+                            builder:
+                                (BuildContext context, StateSetter setState) {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  // Using TextFormField instead of TextField for better Windows compatibility
+                                  TextFormField(
+                                    style: TextStyle(fontFamily: 'arial'),
+                                    controller: nameController,
+                                    decoration: const InputDecoration(
+                                      labelText: 'اسم دوربین',
+                                      hintText: 'اسم دوربین را وارد کنید',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    // Enable keyboard handling for Windows
+                                    keyboardType: TextInputType.text,
+                                    autofocus: true,
+                                  ),
+                                  const SizedBox(height: 16),
+                                
+                               Visibility(
+                                    maintainAnimation: false,
+                                    
+                                        replacement: Column(
+                                          children: [
+                               
+                                                          TextButton(
+                                      onPressed: () {
+                                
+                                isnotrtsp=!isnotrtsp;
+                                setState(() {
+                                  
+                                },);
+                                      },
+                                      child: Text(
+                                        "وارد کردن  Ip",
+                                        textDirection: TextDirection.rtl,
+                                      )),            const SizedBox(height: 15,),
+                                           TextFormField(
+                                            
+                                              style: TextStyle(
 
-                                      return AlertDialog(
-                                        title: const Text('اضافه کردن دوربین'),
-                                        content: SingleChildScrollView(
-                                          child: StatefulBuilder(
-                                            builder: (BuildContext context,
-                                                StateSetter setState) {
-                                              return Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  // Using TextFormField instead of TextField for better Windows compatibility
-                                                  TextFormField(
-                                                    style: TextStyle(
-                                                        fontFamily: 'arial'),
-                                                    controller: nameController,
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      labelText: 'اسم دوربین',
-                                                      hintText:
-                                                          'اسم دوربین را وارد کنید',
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                    ),
-                                                    // Enable keyboard handling for Windows
-                                                    keyboardType:
-                                                        TextInputType.text,
-                                                    autofocus: true,
-                                                  ),
-                                                  const SizedBox(height: 16),
-                                                  TextFormField(
-                                                    style: TextStyle(
-                                                        fontFamily: 'arial'),
-                                                    controller: ipController,
-                                                    decoration: InputDecoration(
-                                                      labelText: 'آدرس دوربین',
-                                                      hintText:
-                                                          'e.g:192.168.1.1',
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                    ),
-                                                    // Enable keyboard handling for Windows
-                                                    keyboardType:
-                                                        TextInputType.text,
-                                                  ),
-                                                  const SizedBox(height: 16),
-                                                  // Using DropdownButton instead of Radio for better Windows experience
-                                                  DropdownButtonFormField<
-                                                      String>(
-                                                    value: cameraType,
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      labelText: 'نوع دوربین',
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                    ),
-                                                    items: const [
-                                                      DropdownMenuItem(
-                                                        value: 'entrance',
-                                                        child: Text('ورود'),
-                                                      ),
-                                                      DropdownMenuItem(
-                                                        value: 'exit',
-                                                        child: Text('خروج'),
-                                                      ),
-                                                    ],
-                                                    onChanged:
-                                                        (String? newValue) {
-                                                      setState(() {
-                                                        cameraType = newValue!;
-                                                      });
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          ),
+                                                  fontFamily: 'arial'),
+                                              controller: ipController,
+                                              decoration: InputDecoration(
+                                                labelText: 'آدرس RTSP',
+                                                hintText: 'e.g:rtsp://192.168.1.1:554/ch4',
+                                                
+                                                border: OutlineInputBorder(),
+                                              ),
+                                              // Enable keyboard handling for Windows
+                                              keyboardType: TextInputType.text,
+                                            ),
+                                
+                                          ],
                                         ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              nameController.dispose();
-                                              ipController.dispose();
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('خروج'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              final cameraData = {
-                                                'name': nameController.text,
-                                                'ip': ipController.text,
-                                                'type': cameraType,
-                                              };
+                                        visible: isnotrtsp,
+                                        child: Column(
+                                          children: [
+                                              TextButton(
+                                      onPressed: () {
+                              
+                                                isnotrtsp=!isnotrtsp;
+                                setState(() {
+                                  
+                                },);
+             
+                                
+                                      },
+                                      child: Text(
+                                        "وارد کردن مستقیم RTSP",
+                                        textDirection: TextDirection.rtl,
+                                      )),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                            TextFormField(
+                                              style: TextStyle(
+                                                  fontFamily: 'arial'),
+                                              controller: ipController,
+                                              decoration: InputDecoration(
+                                                labelText: 'آدرس دوربین',
+                                                hintText: 'e.g:192.168.1.1',
+                                                border: OutlineInputBorder(),
+                                              ),
+                                              // Enable keyboard handling for Windows
+                                              keyboardType: TextInputType.text,
+                                            ),
+                                            const SizedBox(height: 16),
+                                            TextFormField(
+                                              style: TextStyle(
+                                                  fontFamily: 'arial'),
+                                              controller: rtspname,
+                                              decoration: InputDecoration(
+                                                labelText: 'آدرس نمایش',
+                                                hintText:
+                                                    'e.g:stream,mainstream',
+                                                border: OutlineInputBorder(),
+                                              ),
+                                              // Enable keyboard handling for Windows
+                                              keyboardType: TextInputType.text,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                  const SizedBox(height: 16),
+                                  TextFormField(
+                                    style: TextStyle(fontFamily: 'arial'),
+                                    controller: username,
+                                    decoration: InputDecoration(
+                                      labelText: 'نام کاربری',
+                                      hintText: 'e.g:admin',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    // Enable keyboard handling for Windows
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  TextFormField(
+                                    style: TextStyle(fontFamily: 'arial'),
+                                    controller: password,
+                                    decoration: InputDecoration(
+                                      labelText: 'کلمه عبور',
+                                      hintText: 'e.g:admin',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    // Enable keyboard handling for Windows
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  // Using DropdownButton instead of Radio for better Windows experience,
+                                  DropdownButtonFormField<String>(
+                                    value: cameraType,
+                                    decoration: const InputDecoration(
+                                      labelText: 'نوع دوربین',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    items: const [
+                                      DropdownMenuItem(
+                                        value: 'entrance',
+                                        child: Text('ورود'),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'exit',
+                                        child: Text('خروج'),
+                                      ),
+                                    ],
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        cameraType = newValue!;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                                            nameController.dispose();
+                              ipController.dispose();
+                              username.dispose();
+                              password.dispose();
+                              rtspname.dispose();
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('خروج'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              final cameraData = {
+                                'name': nameController.text,
+                                'ip': ipController.text,
+                                'type': cameraType,
+                                'username': username.text,
+                                'password': password.text,
+                                'rtspname': rtspname.text
+                              };
 
-                                              nameController.dispose();
-                                              ipController.dispose();
-                                              Navigator.of(context)
-                                                  .pop(cameraData);
-                                            },
-                                            child: const Text('ثبت'),
-                                          ),
-                                        ],
-                                      );
+                              nameController.dispose();
+                              ipController.dispose();
+                              username.dispose();
+                              password.dispose();
+                              rtspname.dispose();
+                              Navigator.of(context).pop(cameraData);
+                            },
+                            child: const Text('ثبت'),
+                          ),
+                        ],
+                      );
                                     },
                                   ).then((value) async {
                                     if (value != null) {
@@ -393,11 +488,15 @@ class CameraSetting extends StatelessWidget {
                           TextEditingController();
                       final TextEditingController ipController =
                           TextEditingController();
-                      final TextEditingController username=TextEditingController();
-                      final TextEditingController password=TextEditingController();
+                      final TextEditingController username =
+                          TextEditingController();
+                      final TextEditingController password =
+                          TextEditingController();
                       String cameraType = 'entrance'; // Default value
-                      final TextEditingController rtspname=TextEditingController();
-
+                      final TextEditingController rtspname =
+                          TextEditingController();
+                          bool isnotrtsp=true;
+             
 
                       return AlertDialog(
                         title: const Text('اضافه کردن دوربین'),
@@ -422,31 +521,94 @@ class CameraSetting extends StatelessWidget {
                                     autofocus: true,
                                   ),
                                   const SizedBox(height: 16),
+                                
+                               Visibility(
+                                    maintainAnimation: false,
+                                    
+                                        replacement: Column(
+                                          children: [
+                               
+                                                          TextButton(
+                                      onPressed: () {
+                                
+                                isnotrtsp=!isnotrtsp;
+                                setState(() {
+                                  
+                                },);
+                                      },
+                                      child: Text(
+                                        "وارد کردن  Ip",
+                                        textDirection: TextDirection.rtl,
+                                      )),            const SizedBox(height: 15,),
+                                           TextFormField(
+                                            
+                                              style: TextStyle(
+
+                                                  fontFamily: 'arial'),
+                                              controller: ipController,
+                                              decoration: InputDecoration(
+                                                labelText: 'آدرس RTSP',
+                                                hintText: 'e.g:rtsp://192.168.1.1:554/ch4',
+                                                
+                                                border: OutlineInputBorder(),
+                                              ),
+                                              // Enable keyboard handling for Windows
+                                              keyboardType: TextInputType.text,
+                                            ),
+                                
+                                          ],
+                                        ),
+                                        visible: isnotrtsp,
+                                        child: Column(
+                                          children: [
+                                              TextButton(
+                                      onPressed: () {
+                              
+                                                isnotrtsp=!isnotrtsp;
+                                setState(() {
+                                  
+                                },);
+             
+                                
+                                      },
+                                      child: Text(
+                                        "وارد کردن مستقیم RTSP",
+                                        textDirection: TextDirection.rtl,
+                                      )),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                            TextFormField(
+                                              style: TextStyle(
+                                                  fontFamily: 'arial'),
+                                              controller: ipController,
+                                              decoration: InputDecoration(
+                                                labelText: 'آدرس دوربین',
+                                                hintText: 'e.g:192.168.1.1',
+                                                border: OutlineInputBorder(),
+                                              ),
+                                              // Enable keyboard handling for Windows
+                                              keyboardType: TextInputType.text,
+                                            ),
+                                            const SizedBox(height: 16),
+                                            TextFormField(
+                                              style: TextStyle(
+                                                  fontFamily: 'arial'),
+                                              controller: rtspname,
+                                              decoration: InputDecoration(
+                                                labelText: 'آدرس نمایش',
+                                                hintText:
+                                                    'e.g:stream,mainstream',
+                                                border: OutlineInputBorder(),
+                                              ),
+                                              // Enable keyboard handling for Windows
+                                              keyboardType: TextInputType.text,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                  const SizedBox(height: 16),
                                   TextFormField(
-                                    style: TextStyle(fontFamily: 'arial'),
-                                    controller: ipController,
-                                    decoration: InputDecoration(
-                                      labelText: 'آدرس دوربین',
-                                      hintText: 'e.g:192.168.1.1',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                    // Enable keyboard handling for Windows
-                                    keyboardType: TextInputType.text,
-                                  ),
-                                  const SizedBox(height: 16),
-                                                      TextFormField(
-                                    style: TextStyle(fontFamily: 'arial'),
-                                    controller: rtspname,
-                                    decoration: InputDecoration(
-                                      labelText: 'آدرس نمایش',
-                                      hintText: 'e.g:steam,mainstream',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                    // Enable keyboard handling for Windows
-                                    keyboardType: TextInputType.text,
-                                  ),
-                                  const SizedBox(height: 16),
-                                    TextFormField(
                                     style: TextStyle(fontFamily: 'arial'),
                                     controller: username,
                                     decoration: InputDecoration(
@@ -456,8 +618,9 @@ class CameraSetting extends StatelessWidget {
                                     ),
                                     // Enable keyboard handling for Windows
                                     keyboardType: TextInputType.text,
-                                  ),const SizedBox(height: 16),
-                                    TextFormField(
+                                  ),
+                                  const SizedBox(height: 16),
+                                  TextFormField(
                                     style: TextStyle(fontFamily: 'arial'),
                                     controller: password,
                                     decoration: InputDecoration(
@@ -467,7 +630,8 @@ class CameraSetting extends StatelessWidget {
                                     ),
                                     // Enable keyboard handling for Windows
                                     keyboardType: TextInputType.text,
-                                  ),const SizedBox(height: 16),
+                                  ),
+                                  const SizedBox(height: 16),
                                   // Using DropdownButton instead of Radio for better Windows experience,
                                   DropdownButtonFormField<String>(
                                     value: cameraType,
@@ -499,10 +663,11 @@ class CameraSetting extends StatelessWidget {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              nameController.dispose();
+                                            nameController.dispose();
                               ipController.dispose();
+                              username.dispose();
+                              password.dispose();
                               rtspname.dispose();
-
                               Navigator.of(context).pop();
                             },
                             child: const Text('خروج'),
@@ -513,9 +678,9 @@ class CameraSetting extends StatelessWidget {
                                 'name': nameController.text,
                                 'ip': ipController.text,
                                 'type': cameraType,
-                                'username':username.text,
-                                'password':password.text
-                                ,'rtspname':rtspname.text
+                                'username': username.text,
+                                'password': password.text,
+                                'rtspname': rtspname.text
                               };
 
                               nameController.dispose();
@@ -568,13 +733,18 @@ class CameraSetting extends StatelessWidget {
                   print(Get.find<Boxes>().camerabox.values.first.ip);
                   var res = dio.post('http://127.0.0.1:8000/cameras', data: {
                     "ip": "${Get.find<Boxes>().camerabox.values.first.ip}",
-                    "username":"${Get.find<Boxes>().camerabox.values.first.username}",
-                    "password":"${Get.find<Boxes>().camerabox.values.first.password}"
-                    
+                    "username":
+                        "${Get.find<Boxes>().camerabox.values.first.username}",
+                    "password":
+                        "${Get.find<Boxes>().camerabox.values.first.password}"
                   }).then(
                     (value) {
-                      print({   "username":"${Get.find<Boxes>().camerabox.values.first.username}",
-                    "password":"${Get.find<Boxes>().camerabox.values.first.password}"});
+                      print({
+                        "username":
+                            "${Get.find<Boxes>().camerabox.values.first.username}",
+                        "password":
+                            "${Get.find<Boxes>().camerabox.values.first.password}"
+                      });
                       if (value.statusCode == 200) {
                         Get.snackbar(
                           "",
@@ -633,4 +803,10 @@ class CameraSettingRows extends StatelessWidget {
           ),
         ));
   }
+  //TODO:Get Rtsp name in ip controller and handle it in backend 
+  //TODO:Get value isrtsp or isnotrtsp in database for validation of editing
+  //TODO:IN Setting add a button to delete all rows on database
 }
+
+
+

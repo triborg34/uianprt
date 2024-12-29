@@ -54,18 +54,28 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: ResponsiveNavigationBar(
+
         inactiveIconColor: Colors.white38,
         backgroundColor: Colors.transparent,
         selectedIndex: navIndex,
-        showActiveButtonText: false,
+        textStyle: TextStyle(color: Colors.white38),
+        
+fontSize: 22,
+        showActiveButtonText: true,
         navigationBarButtons: [
+
           NavigationBarButton(
-              backgroundColor: const Color.fromARGB(255, 21, 19, 24), icon: Icons.info),
+
+            text: 'اطلاعات',
+
+              backgroundColor: const Color.fromARGB(255, 21, 19, 24), icon: Icons.info,),
           NavigationBarButton(
+            text: "تنظیمات",
               backgroundColor: const Color.fromARGB(255, 21, 19, 24), icon: Icons.settings),
           NavigationBarButton(
+            text: "گزارش گیری",
               backgroundColor: const Color.fromARGB(255, 21, 19, 24), icon: Icons.car_repair_outlined),
-          NavigationBarButton(backgroundColor: const Color.fromARGB(255, 21, 19, 24), icon: Icons.home),
+          NavigationBarButton(text: "خانه",backgroundColor: const Color.fromARGB(255, 21, 19, 24), icon: Icons.home),
         ],
         onTabChange: (index) {
           switch (index) {

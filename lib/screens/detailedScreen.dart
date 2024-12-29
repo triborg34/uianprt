@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
@@ -30,6 +31,7 @@ class Detailedscreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+          
               Container(
                 margin: EdgeInsets.symmetric(vertical: 15),
                 alignment: Alignment.topCenter,
@@ -40,11 +42,11 @@ class Detailedscreen extends StatelessWidget {
                 width: 800,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image.file(
-                      fit: BoxFit.contain,
-                      File(
-                        "${imagesPath}${selectedModel.scrnPath}",
-                      )),
+                  child: EasyImageView(
+                    imageProvider: FileImage( File(
+                          "${imagesPath}${selectedModel.scrnPath}",
+                        )),),
+    
                 ),
               ),
               Padding(

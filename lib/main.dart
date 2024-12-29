@@ -25,6 +25,8 @@ import 'package:uianprt/widgets/tempcamra.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import 'testscreens/test.dart';
+
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +50,7 @@ void main() async {
 
 
 
-  await DesktopWindow.setWindowSize(Size(1820, 810));
+  await DesktopWindow.setFullScreen(true);
   runApp(  MyApp());
 }
 
