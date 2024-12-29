@@ -44,3 +44,4 @@ app.*.map.json
 index.html
 
 output
+lib/testscreens/test.dart
