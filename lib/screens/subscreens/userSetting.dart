@@ -286,7 +286,7 @@ GetBuilder<Boxes>(id: 9,builder: (controller) {
               children: [
                 ElevatedButton(
                     onPressed: () async {
-                      //TODO:Addtinal Screen or popup screen for registrainon
+            
 
                       await showDialog(context: context, builder: (context) {
                         return EnhancedCarRegistrationDialog(entry:  null,isEditing: false,isRegister: true,index: 0,);
@@ -380,7 +380,7 @@ class _UserRegistrationDialogState extends State<UserRegistrationDialog> {
         'role': _selectedRole,
       };
 
-      // TODO: Implement actual registration logic
+
       print('Registration Data: $registrationData');
       await Get.find<Boxes>().userbox.add(Users(
           id: Random().nextInt(9999),

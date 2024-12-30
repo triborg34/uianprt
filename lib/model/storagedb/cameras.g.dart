@@ -25,6 +25,7 @@ class CamerasAdapter extends TypeAdapter<Cameras> {
       status: fields[4] as bool?,
       username: fields[5] as String?,
       password: fields[6] as String?,
+      isNotrtsp: fields[9] as bool?,
       licance: fields[7] as String?,
     );
   }
@@ -32,7 +33,7 @@ class CamerasAdapter extends TypeAdapter<Cameras> {
   @override
   void write(BinaryWriter writer, Cameras obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class CamerasAdapter extends TypeAdapter<Cameras> {
       ..writeByte(7)
       ..write(obj.licance)
       ..writeByte(8)
-      ..write(obj.rtspname);
+      ..write(obj.rtspname)
+      ..writeByte(9)
+      ..write(obj.isNotrtsp);
   }
 
   @override

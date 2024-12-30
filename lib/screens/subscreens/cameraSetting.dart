@@ -400,6 +400,7 @@ class CameraSetting extends StatelessWidget {
                                 'username': username.text,
                                 'password': password.text,
                                 'rtspname': rtspname.text
+                                ,'isnotrtsp':isnotrtsp
                               };
 
                               nameController.dispose();
@@ -429,8 +430,9 @@ class CameraSetting extends StatelessWidget {
                                               nameCamera: value['name'],
                                               rtspname: value['rtspname'],
                                               status: true,
-                                              username: "",
-                                              password: "",
+                                              username: value['username'],
+                                              password: value['username'],
+                                              isNotrtsp: value['isnotrtsp'],
                                               licance: controller
                                                   .camerabox.values
                                                   .toList()[index]
@@ -681,6 +683,7 @@ class CameraSetting extends StatelessWidget {
                                 'username': username.text,
                                 'password': password.text,
                                 'rtspname': rtspname.text
+                                ,'isnotrtsp':isnotrtsp
                               };
 
                               nameController.dispose();
@@ -708,6 +711,7 @@ class CameraSetting extends StatelessWidget {
                           username: value['username'],
                           password: value['password'],
                           rtspname: value['rtspname'],
+                          isNotrtsp: value['isnotrtsp'],
                           licance: generateRandomString(100)));
                     }
                     Get.find<Boxes>().update([5]);
@@ -729,8 +733,8 @@ class CameraSetting extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   var dio = Dio();
-                  //TODO:Save is Completed , Delete ?? chtgpt
-                  print(Get.find<Boxes>().camerabox.values.first.ip);
+                 
+        
                   var res = dio.post('http://127.0.0.1:8000/cameras', data: {
                     "ip": "${Get.find<Boxes>().camerabox.values.first.ip}",
                     "username":
@@ -804,7 +808,7 @@ class CameraSettingRows extends StatelessWidget {
         ));
   }
   //TODO:Get Rtsp name in ip controller and handle it in backend 
-  //TODO:Get value isrtsp or isnotrtsp in database for validation of editing
+  //TODO:Get value isrtsp or isnotrtsp in database for validation of editing DONE✅
   //TODO:IN Setting add a button to delete all rows on database
 }
 
