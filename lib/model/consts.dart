@@ -314,3 +314,10 @@ Future<Map<String, String>> loadConfig() async {
   return config.map((key, value) => MapEntry(key, value.toString()));
 }
 
+
+enum DifCars {
+ TAXI,
+ ALEF,
+THES
+
+}

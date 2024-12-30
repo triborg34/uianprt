@@ -9,7 +9,6 @@ import 'package:uianprt/model/storagedb/db.dart';
 
 import 'package:uianprt/widgets/Register.dart';
 
-
 import 'licancenumber.dart';
 
 class DbContant extends StatelessWidget {
@@ -42,9 +41,8 @@ class DbContant extends StatelessWidget {
                   initialScrollOffset: 0.0,
                 ),
                 itemBuilder: (context, index) {
-                   
                   final entry = entries[index];
-                  
+
                   return InkWell(
                     onTap: () {
                       Get.find<tableController>().selectedIndex = index;
@@ -53,9 +51,9 @@ class DbContant extends StatelessWidget {
                       Get.find<tableController>().update();
                     },
                     child: Visibility(
-                      visible: convertToPersian(
-                    entry.plateNum!,
-                    alphabetP2)[0]!='-',
+                      visible:
+                          convertToPersian(entry.plateNum!, alphabetP2)[0] !=
+                              '-',
                       child: Container(
                         height: 60,
                         decoration: BoxDecoration(
@@ -65,7 +63,8 @@ class DbContant extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           textDirection: TextDirection.rtl,
                           children: [
-                            LicanceNumber(entry: entry),
+                            SizedBox(
+                                width: 210, child: LicanceNumber(entry: entry)),
                             VerticalDivider(
                               color: Colors.black,
                             ),
@@ -74,18 +73,21 @@ class DbContant extends StatelessWidget {
                               child: Center(
                                   child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
-                                child: 
-                                Image.file(File("${imagesPath}${entry.imgpath}"),fit: BoxFit.fill,width: 210,height: 48,),
-                              )
-                              ),
+                                child: Image.file(
+                                  File("${imagesPath}${entry.imgpath}"),
+                                  fit: BoxFit.fill,
+                                  width: 235,
+                                  height: 48,
+                                ),
+                              )),
                             ),
                             VerticalDivider(
                               color: Colors.black,
                             ),
-                            Expanded(
-                                child: Padding(
+                            Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: Container(
+                                width: 225,
                                 child: Get.find<Boxes>()
                                         .regBox
                                         .where(
@@ -96,26 +98,36 @@ class DbContant extends StatelessWidget {
                                         .isNotEmpty
                                     ? Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
                                             color: const Color.fromARGB(
                                                 255, 36, 87, 37)),
                                         child: Center(
                                           child: Text(
                                             "ثبت شده است",
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           ),
                                         ),
                                       )
                                     : IconButton(
-                                      onPressed: () {
-                                        showDialog(context: context, builder: (context) {
-                                          return EnhancedCarRegistrationDialog(entry:entry ,isEditing: false,isRegister: false,index: index,);
-                                        },);
-                                      },
-                                        hoverColor:
-                                            const Color.fromARGB(255, 29, 14, 55),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return EnhancedCarRegistrationDialog(
+                                                entry: entry,
+                                                isEditing: false,
+                                                isRegister: false,
+                                                index: index,
+                                              );
+                                            },
+                                          );
+                                        },
+                                        hoverColor: const Color.fromARGB(
+                                            255, 29, 14, 55),
                                         // onPressed: () {
-                        
+
                                         //   showDialog(
                                         //     context: context,
                                         //     builder: (context) {
@@ -287,7 +299,20 @@ class DbContant extends StatelessWidget {
                                       ),
                                 height: 50,
                               ),
-                            ))
+                            ),
+                            VerticalDivider(
+                              color: Colors.black,
+                            ),
+                            Expanded(
+                                child: Center(
+                                    child: Container(
+                                      
+                              child: Text(entry.plateNum!.contains('x')
+                                  ? "تاکسی"
+                                  : entry.plateNum!.contains('A')
+                                      ? "دولتی"
+                                      : "شخصی",style: TextStyle(color: Colors.white,fontSize: 18),),
+                            )))
                           ],
                         ),
                       ),

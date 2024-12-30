@@ -47,6 +47,17 @@ class TableTitle extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.w700),
             )
+            ,
+                        VerticalDivider(
+              color: Colors.black,
+            ),
+            Text(
+              "نوع پلاک",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700),
+            )
           ],
         ));
   }

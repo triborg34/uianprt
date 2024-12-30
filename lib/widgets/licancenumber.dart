@@ -12,6 +12,7 @@ class LicanceNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       width: 185,
       margin: EdgeInsets.only(right: 3),
@@ -52,7 +53,11 @@ class LicanceNumber extends StatelessWidget {
               child: Text(
                 convertToPersian(
                     entry.plateNum!,
-                    alphabetP2)[0],
+                    alphabetP2)[0].contains('آ') ? convertToPersian(
+                    entry.plateNum!,
+                    alphabetP2)[0].replaceAll("آ", "الف")  :   convertToPersian(
+                    entry.plateNum!,
+                    alphabetP2)[0], 
                 textDirection:
                     TextDirection.rtl,
                 style:
