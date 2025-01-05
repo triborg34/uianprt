@@ -18,8 +18,7 @@ class Detailedscreen extends StatelessWidget {
   @override
   
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.height,);
-    print(MediaQuery.of(context).size.width,);
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: MyAppBar(),

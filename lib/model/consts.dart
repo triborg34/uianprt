@@ -279,7 +279,7 @@ try{
 
   return persianres;
 }catch(e){
-  print(e);
+
   return "-";
 }
 }

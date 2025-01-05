@@ -45,11 +45,11 @@ class _EnhancedCarRegistrationDialogState
 
     //
 
-    print(Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[0-9]')).toList().toString());
+
     var d=Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[0-9]')).toList()[2].toString();
     var ind=plateAlphabet.keys.toList().indexOf(d);
     var f=plateAlphabet.values.elementAt(ind);
-    print(f);
+
                     Get.find<ReportController>().persianalhpabet.value = f;
                     Get.find<ReportController>().engishalphabet =  d;
                                   Get.find<ReportController>().firtTwodigits.text=Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[0];
@@ -243,7 +243,7 @@ class _EnhancedCarRegistrationDialogState
               ElevatedButton(
                 onPressed: () {
                   Get.find<ReportController>().platePicker="${Get.find<ReportController>().firtTwodigits.text}${Get.find<ReportController>().engishalphabet == null ? '' : Get.find<ReportController>().engishalphabet}${Get.find<ReportController>().threedigits.text}${Get.find<ReportController>().lastTwoDigits.text}";
-                  print(Get.find<ReportController>().platePicker);
+
                   // Create RegistredDb object with the new fields
  RegistredDb? registredDb;
                   try{

@@ -19,7 +19,7 @@ class _TestFieldState extends State<TestField> {
   void initState() {
     databaseHelper = DatabaseHelper.withPath(widget.dbPath);
     databaseHelper!.queryAndEmitEntries();
-    print(databaseHelper!.getEntriesAsList());
+
     super.initState();
   }
 
@@ -46,7 +46,7 @@ class _TestFieldState extends State<TestField> {
             var entry = snapshot.data!;
             var datas=entry.where((element) => element.status=='Active',).toList();
         
-            print(datas[0].plateNum);
+
             
             return Text(
               convertToPersian(datas[0].plateNum!, alphabetP2)[0],

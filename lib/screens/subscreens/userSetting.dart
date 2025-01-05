@@ -381,7 +381,7 @@ class _UserRegistrationDialogState extends State<UserRegistrationDialog> {
       };
 
 
-      print('Registration Data: $registrationData');
+
       await Get.find<Boxes>().userbox.add(Users(
           id: Random().nextInt(9999),
           username: registrationData['username'],

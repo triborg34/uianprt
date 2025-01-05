@@ -75,10 +75,7 @@ class Boxes extends GetxController {
   @override
   void onReady() {
     getregData();
-    for(var val in regBox){
-      print(val.carName);
-    
-    }
+
     super.onReady();
   }
 
@@ -128,7 +125,7 @@ class ReportController extends GetxController{
               platePercent: json.platePercent,
               status: json.status));
         }});
-        print(pModel[0].plateNum);
+ 
   }
   
 }

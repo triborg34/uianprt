@@ -283,7 +283,7 @@ class ReportScreen extends StatelessWidget {
                                 rcontroller.lastdate =
                                     d.toDateTime().toString().split(' ')[0];
 
-                                print(rcontroller.lastdate);
+                   
                                 rcontroller.update([1]);
                               },
                               child: Text(
@@ -312,7 +312,7 @@ class ReportScreen extends StatelessWidget {
                                 rcontroller.firstdate =
                                     d.toDateTime().toString().split(' ')[0];
 
-                                print(rcontroller.firstdate);
+                        
                                 rcontroller.update([1]);
                               },
                               child: Text(
@@ -990,7 +990,7 @@ class ReportScreen extends StatelessWidget {
         rcontroller.firstdate == null &&
         rcontroller.firstime == null &&
         rcontroller.platePicker != null) {
-      print("::::" + rcontroller.platePicker!);
+
       //plate picker is not null
 
       rcontroller.selectedModel = rcontroller.pModel.where(
@@ -1003,7 +1003,7 @@ class ReportScreen extends StatelessWidget {
 
       rcontroller.selectedModel = rcontroller.pModel;
     }
-    print(rcontroller.selectedModel.length);
+
     return true;
   }
 
@@ -1258,7 +1258,7 @@ Future<void> saveToCsv(List<Map<String, dynamic>> data) async {
   await sink.flush();
   await sink.close();
 
-  print('CSV file saved at: ${Get.find<ReportController>().savePath}');
+
 }
 
 // Future<void> saveToExel(List<Map<String, dynamic>> data) async {

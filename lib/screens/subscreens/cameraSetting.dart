@@ -16,7 +16,7 @@ class CameraSetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Get.find<Boxes>().camerabox.length);
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       height: MediaQuery.of(context).size.height,
@@ -418,7 +418,7 @@ class CameraSetting extends StatelessWidget {
                                   ).then((value) async {
                                     if (value != null) {
                                       // Handle the camera data
-                                      print('Camera Patched: $value');
+
                                       await Get.find<Boxes>().camerabox.putAt(
                                           index,
                                           Cameras(
@@ -701,7 +701,7 @@ class CameraSetting extends StatelessWidget {
                   ).then((value) async {
                     if (value != null) {
                       // Handle the camera data
-                      print('Camera added: $value');
+
                       await Get.find<Boxes>().camerabox.add(Cameras(
                           id: Random().nextInt(9999),
                           gate: value['type'],
@@ -743,12 +743,12 @@ class CameraSetting extends StatelessWidget {
                         "${Get.find<Boxes>().camerabox.values.first.password}"
                   }).then(
                     (value) {
-                      print({
-                        "username":
-                            "${Get.find<Boxes>().camerabox.values.first.username}",
-                        "password":
-                            "${Get.find<Boxes>().camerabox.values.first.password}"
-                      });
+                      // print({
+                      //   "username":
+                      //       "${Get.find<Boxes>().camerabox.values.first.username}",
+                      //   "password":
+                      //       "${Get.find<Boxes>().camerabox.values.first.password}"
+                      // });
                       if (value.statusCode == 200) {
                         Get.snackbar(
                           "",

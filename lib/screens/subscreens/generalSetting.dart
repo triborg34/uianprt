@@ -254,9 +254,8 @@ class Generalsetting extends StatelessWidget {
                               final file = DirectoryPicker();
                               Get.find<settingController>().pathOfOutput.value =
                                   file.getDirectory()!.path;
-                              print(Get.find<settingController>()
-                                  .pathOfOutput
-                                  .value);
+                     
+                          
                             },
                             child: Obx(
                               () => Text(
