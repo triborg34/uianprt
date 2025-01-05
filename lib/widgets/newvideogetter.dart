@@ -13,7 +13,7 @@ class VideoStream extends StatefulWidget {
 }
 
 class _VideoStreamState extends State<VideoStream> {
-  final WebSocket _socket = WebSocket("ws://127.0.0.1:5000");
+  final WebSocket _socket = WebSocket("ws://127.0.0.1:5000/rt1");
   bool _isConnected = false;
   void connect(BuildContext context) async {
     _socket.connect();
