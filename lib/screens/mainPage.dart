@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +28,7 @@ class _MainViewState extends State<MainView> {
   
   @override
   void initState() {
+     DesktopWindow.setFullScreen(true);
     _databaseHelper = DatabaseHelper.withPath(widget.dbPath);
 
     _databaseHelper.queryAndEmitEntries();

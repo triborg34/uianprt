@@ -68,6 +68,7 @@ dependencies:
   shared_preferences: ^2.3.3
   filepicker_windows: ^2.1.4
   easy_image_viewer: ^1.5.1
+  responsive_grid_list: ^1.4.0
 
 
  
