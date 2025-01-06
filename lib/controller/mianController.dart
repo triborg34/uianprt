@@ -1,43 +1,30 @@
+
 import 'package:flutter/material.dart';
-
-
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:media_kit_video/media_kit_video.dart';
-
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
 import 'package:uianprt/model/storagedb/cameras.dart';
 import 'package:uianprt/model/storagedb/db.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
 import 'package:uianprt/model/storagedb/users.dart';
+import 'package:uianprt/widgets/videogetter.dart';
 
 import '../model/storagedb/setting.dart';
 
 
 
 class videoController extends GetxController {
-  late final player = Player();
-  late final vController;
 
-  @override
-  void onInit() {
+  late final WebSocket socket;
+  bool isconnected=false;
+  
+  void connect(String url){
+socket=WebSocket(url);
+socket.connect();
 
-    WidgetsFlutterBinding.ensureInitialized();
-    // Necessary initialization for package:media_kit.
-    MediaKit.ensureInitialized();
-    vController = VideoController(
-      player,
-    );
-
-    super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  
 }
 
 class tableController extends GetxController {
@@ -150,4 +137,6 @@ class settingController extends GetxController{
 
   
 }
+
+
 

@@ -48,7 +48,7 @@ class _MainViewState extends State<MainView> {
   void dispose() {
     _pollingTimer?.cancel();
     _databaseHelper.dispose();
-    Get.find<videoController>().player.dispose();
+
     super.dispose();
   }
 
