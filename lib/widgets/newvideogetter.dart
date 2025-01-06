@@ -6,16 +6,19 @@ import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/widgets/videogetter.dart';
 
 class VideoStream extends StatefulWidget {
-  const VideoStream({Key? key}) : super(key: key);
+  String url;
+  VideoStream({Key? key, required this.url}) : super(key: key);
 
   @override
   State<VideoStream> createState() => _VideoStreamState();
 }
 
 class _VideoStreamState extends State<VideoStream> {
-  final WebSocket _socket = WebSocket("ws://127.0.0.1:5000/rt1");
-  bool _isConnected = false;
+    late final WebSocket _socket;
+     bool _isConnected = false;
   void connect(BuildContext context) async {
+      _socket = WebSocket(widget.url);
+ 
     _socket.connect();
     setState(() {
       _isConnected = true;
@@ -31,6 +34,7 @@ class _VideoStreamState extends State<VideoStream> {
 
   @override
   void initState() {
+    
     connect(context);
     super.initState();
   }
@@ -38,6 +42,7 @@ class _VideoStreamState extends State<VideoStream> {
   @override
   Widget build(BuildContext context) {
     if (_isConnected) {
+      
       return Container(
         margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         decoration: BoxDecoration(
@@ -60,7 +65,7 @@ class _VideoStreamState extends State<VideoStream> {
                     child: ElevatedButton(
                         onPressed: () {
                           WebSocket webSocket =
-                              WebSocket("ws://127.0.0.1:5000");
+                              WebSocket(widget.url);
                           webSocket.connect();
                         },
                         child: Icon(Icons.repeat)));
@@ -83,7 +88,7 @@ class _VideoStreamState extends State<VideoStream> {
     } else {
       return ElevatedButton(
           onPressed: () {
-            WebSocket webSocket = WebSocket("ws://127.0.0.1:5000");
+            WebSocket webSocket = WebSocket(widget.url);
             webSocket.connect();
           },
           child: Icon(Icons.repartition));
