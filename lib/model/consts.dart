@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 
@@ -315,9 +316,25 @@ Future<Map<String, String>> loadConfig() async {
 }
 
 
-enum DifCars {
- TAXI,
- ALEF,
-THES
 
-}
+
+late String ipname;
+late String ipadress;
+late String ethname;
+late String rawAddress;
+ Future printIps() async {
+    for (var interface in await NetworkInterface.list()) {
+      print('== Interface: ${interface.name} ==');
+      for (var addr in interface.addresses) {
+
+            if(addr.type.name=="IPv4" ){
+              ipname=addr.type.name;
+              ipadress=addr.address;
+              ethname=interface.name;
+              rawAddress=addr.rawAddress.toString();
+              
+            }
+      }
+    }
+
+  }

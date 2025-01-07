@@ -4,6 +4,7 @@ import 'package:side_bar_custom/side_bar_custom.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/screens/subscreens/cameraSetting.dart';
 import 'package:uianprt/screens/subscreens/generalSetting.dart';
+import 'package:uianprt/screens/subscreens/portSetting.dart';
 import 'package:uianprt/screens/subscreens/userSetting.dart';
 
 class Settingscreen extends StatelessWidget {
@@ -30,14 +31,15 @@ class Settingscreen extends StatelessWidget {
              SideBarItem(
              text: "کاربران",
              icon: FontAwesomeIcons.usersGear,)
-          //  ), SideBarItem(
-          //    text: "شبکه",
-          //    icon: FontAwesomeIcons.networkWired,
-          //  ),
+         ,  SideBarItem(
+             text: "شبکه",
+             icon: FontAwesomeIcons.networkWired,
+           ),
          ], children:  [
             Generalsetting(),
             CameraSetting(),
             UserSetting(),
+            PortSettings(),
             //      Center(
             //   child: Text("Add User",style: TextStyle(color: Colors.white),),
             // ),

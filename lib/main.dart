@@ -63,6 +63,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'AmnAfarin',
         onReady: () async {
+          printIps();
         },
         home: ModernLoginPage());
   }

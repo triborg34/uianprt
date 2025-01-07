@@ -16,15 +16,20 @@ import '../model/storagedb/setting.dart';
 
 class videoController extends GetxController {
 
-  late final WebSocket socket;
+  late final WebSocket soccket;
   bool isconnected=false;
   
   void connect(String url){
-socket=WebSocket(url);
-socket.connect();
+soccket=WebSocket(url);
+soccket.connect();
 
   }
   
+  @override
+  void onReady() {
+
+    super.onReady();
+  }
 }
 
 class tableController extends GetxController {
@@ -131,6 +136,9 @@ class settingController extends GetxController{
   var pathOfOutput=''.obs;
   var clockType='24';
   String timezoneseleted="Asia/Tehran";
+  String port=5000.toString();
+  String connect=8000.toString();
+
   
 
   

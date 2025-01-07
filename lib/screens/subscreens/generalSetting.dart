@@ -20,10 +20,10 @@ class Generalsetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<settingController>().psliderValue.value =
-        Get.find<Boxes>().settingbox.values.last.plateConf!;
-    Get.find<settingController>().csliderValue.value =
-        Get.find<Boxes>().settingbox.values.last.charConf!;
+    // Get.find<settingController>().psliderValue.value =
+    //     Get.find<Boxes>().settingbox.values.last.plateConf!;
+    // Get.find<settingController>().csliderValue.value =
+    //     Get.find<Boxes>().settingbox.values.last.charConf!;
     Get.find<settingController>().hardWareValue =
         Get.find<Boxes>().settingbox.values.last.hardWare!;
     Get.find<settingController>().pathOfdb.value =
@@ -599,7 +599,7 @@ class Generalsetting extends StatelessWidget {
 
 class FutursOfSystemRow extends StatelessWidget {
   String lable;
-  TextEditingController controller = TextEditingController();
+
   FutursOfSystemRow({required this.lable});
   @override
   Widget build(BuildContext context) {
