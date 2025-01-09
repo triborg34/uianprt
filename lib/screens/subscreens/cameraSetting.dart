@@ -216,7 +216,8 @@ class CameraSetting extends StatelessWidget {
                                           final TextEditingController username=TextEditingController(text: controller.camerabox.values.toList()[index].username);
                                                   final TextEditingController password=TextEditingController(text: controller.camerabox.values.toList()[index].password);
                                                           final TextEditingController rtspname=TextEditingController(text: controller.camerabox.values.toList()[index].rtspname);
-                                bool isnotrtsp=true;
+
+                                bool isnotrtsp=controller.camerabox.values.toList()[index].isNotrtsp!;
                                    return AlertDialog(
                         title: const Text('اضافه کردن دوربین'),
                         content: SingleChildScrollView(
@@ -736,11 +737,13 @@ class CameraSetting extends StatelessWidget {
                  
         
                   var res = dio.post('http://127.0.0.1:8000/cameras', data: {
-                    "ip": "${Get.find<Boxes>().camerabox.values.first.ip}",
+                    "ip": "${Get.find<Boxes>().camerabox.values.last.ip}",
                     "username":
-                        "${Get.find<Boxes>().camerabox.values.first.username}",
+                        "${Get.find<Boxes>().camerabox.values.last.username}",
                     "password":
-                        "${Get.find<Boxes>().camerabox.values.first.password}"
+                        "${Get.find<Boxes>().camerabox.values.last.password}",
+                        
+                        'isnotrstp':"${Get.find<Boxes>().camerabox.values.last.isNotrtsp}"
                   }).then(
                     (value) {
                       // print({

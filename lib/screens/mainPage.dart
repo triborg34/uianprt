@@ -24,10 +24,11 @@ class _MainViewState extends State<MainView> {
   late DatabaseHelper _databaseHelper;
   Timer? _pollingTimer;
   int navIndex = Get.find<navController>().navIndex;
-
+  
   
   @override
   void initState() {
+      _getFull();
      DesktopWindow.setFullScreen(true);
     _databaseHelper = DatabaseHelper.withPath(widget.dbPath);
 
@@ -42,6 +43,10 @@ class _MainViewState extends State<MainView> {
     Get.find<navController>().body=HomeScreen(databaseHelper: _databaseHelper,);
 
     super.initState();
+  }
+
+  _getFull()async{
+      await DesktopWindow.setFullScreen(true);
   }
 
   @override

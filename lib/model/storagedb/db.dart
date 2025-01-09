@@ -5,7 +5,7 @@ import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart'; // For desktop support
 import "../model.dart"; // Import your class
 
-List<plateModel> platemode=[];
+List<plateModel> platemode = [];
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -14,7 +14,8 @@ class DatabaseHelper {
   DatabaseHelper._internal(); // Default constructor
 
   Database? _database;
-  late final String dbPath; // Using late ensures it will be initialized before usage
+  late final String
+      dbPath; // Using late ensures it will be initialized before usage
 
   // Constructor to receive the database path (use this for custom paths)
   DatabaseHelper.withPath(String path) {
@@ -40,40 +41,47 @@ class DatabaseHelper {
     return await openDatabase(dbPath);
   }
 
+
   // Fetch entries and convert them into 'as' class instances
   Future<List<plateModel>> getEntriesAsList() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('entry'); // Fetch all entries
-    for(var data in maps){
-       platemode.add(plateModel(charPercent: data['charPercent'],eDate: data['eDate'],eTime: data["eTime"],plateNum: data["plateNum"],platePercent: data["platePercent"],status: data["status"],imgpath: data["imgpath"],scrnPath: data["scrnpath"]));
+    final List<Map<String, dynamic>> maps =
+        await db.query('entry'); // Fetch all entries
+    for (var data in maps) {
+      platemode.add(plateModel(
+          charPercent: data['charPercent'],
+          eDate: data['eDate'],
+          eTime: data["eTime"],
+          plateNum: data["plateNum"].contains('Taxi') ?data["plateNum"].replaceAll('Taxi','x') : data["plateNum"],
+          platePercent: data["platePercent"],
+          status: data["status"],
+          imgpath: data["imgpath"],
+          scrnPath: data["scrnpath"]));
     }
     // Convert each row into an 'as' class instance
     return List.generate(maps.length, (i) {
       return plateModel(
-        charPercent: maps[i]['charPercent'],
-        eDate: maps[i]['eDate'],
-        eTime: maps[i]['eTime'],
-        plateNum: maps[i]['plateNum'],
-        platePercent: maps[i]['platePercent'],
-        status: maps[i]['status'],
-        imgpath: maps[i]['imgpath'],
-        scrnPath:maps[i]['scrnpath']
-      );
+          charPercent: maps[i]['charPercent'],
+          eDate: maps[i]['eDate'],
+          eTime: maps[i]['eTime'],
+          plateNum: maps[i]['plateNum'].contains('Taxi') ? maps[i]['plateNum'].replaceAll('Taxi','x') : maps[i]['plateNum'],
+          platePercent: maps[i]['platePercent'],
+          status: maps[i]['status'],
+          imgpath: maps[i]['imgpath'],
+          scrnPath: maps[i]['scrnpath']);
     });
-    
   }
 
   // Insert a new entry record
-  Future<void> insertEntry({
-    required int platePercent,
-    required int charPercent,
-    required String eDate,
-    required String eTime,
-    required String plateNum,
-    required int status,
-    required String imgpath,
-    required String scrnpath
-  }) async {
+  Future<void> insertEntry(
+      {required int platePercent,
+      required int charPercent,
+      required String eDate,
+      required String eTime,
+      required String plateNum,
+      required int status,
+      required String imgpath,
+      required String scrnpath}) async {
     final db = await database;
     await db.insert(
       'entries',
@@ -84,8 +92,8 @@ class DatabaseHelper {
         'eTime': eTime,
         'plateNum': plateNum,
         'status': status,
-        'imgpath':imgpath,
-        'scrnpath':scrnpath
+        'imgpath': imgpath,
+        'scrnpath': scrnpath
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -100,25 +108,21 @@ class DatabaseHelper {
   Future<void> queryAndEmitEntries() async {
     final db = await database;
     final List<Map<String, dynamic>> entries = await db.query('entry');
-    
+
     // Convert each row into an 'as' class instance and emit to the stream
     List<plateModel> entryList = List.generate(entries.length, (i) {
       return plateModel(
-        charPercent: entries[i]['charPercent'],
-        eDate: entries[i]['eDate'],
-        eTime: entries[i]['eTime'],
-        plateNum: entries[i]['plateNum'],
-        platePercent: entries[i]['platePercent'],
-        status: entries[i]['status'],
-        imgpath: entries[i]['imgpath'],
-        scrnPath:entries[i]['scrnpath']
-      );
+          charPercent: entries[i]['charPercent'],
+          eDate: entries[i]['eDate'],
+          eTime: entries[i]['eTime'],
+          plateNum: entries[i]['plateNum'].contains('Taxi') ? entries[i]['plateNum'].replaceAll('Taxi' , 'x') :entries[i]['plateNum'],
+          platePercent: entries[i]['platePercent'],
+          status: entries[i]['status'],
+          imgpath: entries[i]['imgpath'],
+          scrnPath: entries[i]['scrnpath']);
     });
     _controller.sink.add(entryList); // Emit the data to the stream
-
   }
-
-
 
   // Close the stream controller
   void dispose() {

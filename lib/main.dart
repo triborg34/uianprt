@@ -1,5 +1,4 @@
 
-import 'package:desktop_window/desktop_window.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +42,7 @@ void main() async {
 
 
 
-  await DesktopWindow.setFullScreen(true);
+
 
   runApp(  MyApp());
 }

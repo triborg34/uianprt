@@ -20,10 +20,10 @@ class Generalsetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get.find<settingController>().psliderValue.value =
-    //     Get.find<Boxes>().settingbox.values.last.plateConf!;
-    // Get.find<settingController>().csliderValue.value =
-    //     Get.find<Boxes>().settingbox.values.last.charConf!;
+    Get.find<settingController>().psliderValue.value =
+        Get.find<Boxes>().settingbox.values.last.plateConf!;
+    Get.find<settingController>().csliderValue.value =
+        Get.find<Boxes>().settingbox.values.last.charConf!;
     Get.find<settingController>().hardWareValue =
         Get.find<Boxes>().settingbox.values.last.hardWare!;
     Get.find<settingController>().pathOfdb.value =
@@ -34,6 +34,7 @@ class Generalsetting extends StatelessWidget {
         Get.find<Boxes>().settingbox.values.last.timeZone!;
     Get.find<settingController>().clockType =
         Get.find<Boxes>().settingbox.values.last.clockType!;
+        print(  Get.find<Boxes>().settingbox.values.last.charConf!);
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -87,6 +88,7 @@ class Generalsetting extends StatelessWidget {
                                     Get.find<settingController>()
                                         .psliderValue
                                         .value = value;
+                                   
                                   },
                                 ),
                               )),
@@ -124,6 +126,9 @@ class Generalsetting extends StatelessWidget {
                                     Get.find<settingController>()
                                         .csliderValue
                                         .value = value;
+                                        print( Get.find<settingController>()
+                                        .csliderValue
+                                        .value);
                                   },
                                 ),
                               )),
@@ -356,6 +361,7 @@ class Generalsetting extends StatelessWidget {
                             .hardWareValue
                             .toString()
                       });
+                    Get.snackbar("", "ذخیره شد");
                     }
                   },
                 ),
@@ -365,6 +371,7 @@ class Generalsetting extends StatelessWidget {
                 ElevatedButton(
                   child: Text("پیش فرض"),
                   onPressed: () async {
+                  await  Get.find<Boxes>().settingbox.clear();
                     await Get.find<Boxes>().settingbox.add(
                           Setting(
                               plateConf: 80,
@@ -374,7 +381,7 @@ class Generalsetting extends StatelessWidget {
                               outPutPath: "انتخاب",
                               timeZone: "Asia/Tehran",
                               clockType: "24"),
-                        );
+                        ).then((value) => Get.snackbar("", "پیش فرض شد"),);
                   },
                 ),
               ],
@@ -431,13 +438,13 @@ class Generalsetting extends StatelessWidget {
                 children: [
                   FutursOfSystemRow(lable: "نوع قالب"),
                   DropdownMenu(
-                      initialSelection: 24,
+                      initialSelection: Get.find<settingController>().clockType,
                       enableSearch: false,
                       enableFilter: false,
                       textStyle: TextStyle(color: Colors.white),
                       dropdownMenuEntries: [
-                        DropdownMenuEntry(value: 24, label: "24 ساعت"),
-                        DropdownMenuEntry(value: 12, label: "12 ساعت")
+                        DropdownMenuEntry(value: "24", label: "24 ساعت"),
+                        DropdownMenuEntry(value: "12", label: "12 ساعت")
                       ]),
                 ],
               ),
@@ -467,7 +474,7 @@ class Generalsetting extends StatelessWidget {
                                   Get.find<settingController>().timezoneseleted,
                               clockType:
                                   Get.find<settingController>().clockType),
-                        );
+                        ).then((value) => Get.snackbar("ذخیره شد", "",colorText: Colors.white),);
                   },
                 ),
                 SizedBox(
@@ -476,7 +483,8 @@ class Generalsetting extends StatelessWidget {
                 ElevatedButton(
                   child: Text("پیش فرض"),
                   onPressed: () async{
-                      await Get.find<Boxes>().settingbox.add(
+                        await  Get.find<Boxes>().settingbox.clear();
+                    await Get.find<Boxes>().settingbox.add(
                           Setting(
                               plateConf: 80,
                               charConf: 50,
@@ -485,7 +493,7 @@ class Generalsetting extends StatelessWidget {
                               outPutPath: "انتخاب",
                               timeZone: "Asia/Tehran",
                               clockType: "24"),
-                        );
+                        ).then((value) => Get.snackbar("", "پیش فرض شد"),);
                   },
                 ),
               ],

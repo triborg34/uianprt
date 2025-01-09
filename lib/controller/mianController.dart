@@ -129,8 +129,8 @@ class navController extends GetxController{
 }
 
 class settingController extends GetxController{
-  var psliderValue=0.7.obs;
-  var csliderValue=0.75.obs;
+  var psliderValue=0.6.obs;
+  var csliderValue=0.5.obs;
   var hardWareValue='cuda';
   var pathOfdb=''.obs;
   var pathOfOutput=''.obs;
@@ -138,6 +138,19 @@ class settingController extends GetxController{
   String timezoneseleted="Asia/Tehran";
   String port=5000.toString();
   String connect=8000.toString();
+
+
+
+  @override
+  void onReady() {
+    if (Get.find<Boxes>().settingbox.isEmpty){
+      Get.find<Boxes>().settingbox.add(Setting(charConf: csliderValue.value,clockType: clockType,plateConf: psliderValue.value,dbPath: pathOfdb.value,outPutPath: pathOfOutput.value,hardWare: hardWareValue,timeZone: timezoneseleted));
+
+    }else{
+      print("box is not eampty");
+    }
+    super.onReady();
+  }
 
   
 
