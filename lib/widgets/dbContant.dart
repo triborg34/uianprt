@@ -307,11 +307,7 @@ class DbContant extends StatelessWidget {
                                 child: Center(
                                     child: Container(
                                       
-                              child: Text(entry.plateNum!.contains('x')
-                                  ? "تاکسی"
-                                  : entry.plateNum!.contains('A')
-                                      ? "دولتی"
-                                      : "شخصی",style: TextStyle(color: Colors.white,fontSize: 18),),
+                              child: Text(Get.find<Boxes>().camerabox.values.firstWhere((element) => element.rtpath==entry.rtpath,).gate =="exit" ? "دوربین خروجی" :"دوربین ورودی",style: TextStyle(color: Colors.white,fontSize: 18),),
                             )))
                           ],
                         ),

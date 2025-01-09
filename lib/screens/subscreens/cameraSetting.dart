@@ -423,6 +423,7 @@ class CameraSetting extends StatelessWidget {
                                       await Get.find<Boxes>().camerabox.putAt(
                                           index,
                                           Cameras(
+                                            rtpath: controller.camerabox.values.toList()[index].rtpath,
                                               id: controller.camerabox.values
                                                   .toList()[index]
                                                   .id,
@@ -655,6 +656,7 @@ class CameraSetting extends StatelessWidget {
                                     onChanged: (String? newValue) {
                                       setState(() {
                                         cameraType = newValue!;
+                                   
                                       });
                                     },
                                   ),
@@ -713,6 +715,7 @@ class CameraSetting extends StatelessWidget {
                           password: value['password'],
                           rtspname: value['rtspname'],
                           isNotrtsp: value['isnotrtsp'],
+                          rtpath: '/rt${Get.find<Boxes>().camerabox.length+1}',
                           licance: generateRandomString(100)));
                     }
                     Get.find<Boxes>().update([5]);

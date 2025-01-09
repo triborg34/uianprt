@@ -27,13 +27,15 @@ class RegistredDbAdapter extends TypeAdapter<RegistredDb> {
       screenImg: fields[7] as String?,
       role: fields[8] as String?,
       socialNumber: fields[9] as String?,
+      isarvand: fields[10] as int?,
+      rtpath: fields[11] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, RegistredDb obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.plateNumber)
       ..writeByte(1)
@@ -53,7 +55,11 @@ class RegistredDbAdapter extends TypeAdapter<RegistredDb> {
       ..writeByte(8)
       ..write(obj.role)
       ..writeByte(9)
-      ..write(obj.socialNumber);
+      ..write(obj.socialNumber)
+      ..writeByte(10)
+      ..write(obj.isarvand)
+      ..writeByte(11)
+      ..write(obj.rtpath);
   }
 
   @override

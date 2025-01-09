@@ -23,12 +23,14 @@ class Cameras  extends HiveObject{
     String? rtspname;
     @HiveField(9)
     bool? isNotrtsp;
+    @HiveField(10)
+    String? rtpath;
 
      Cameras(
       
       {required this.id,
       required this.nameCamera,
-      required this.rtspname,
+      required this.rtspname,required this.rtpath,
       required this.ip,required this.gate,required this.status,required this.username,required this.password,required this.isNotrtsp, this.licance});
 
   Cameras.fromJson(Map<String, dynamic> json) {
@@ -41,6 +43,7 @@ class Cameras  extends HiveObject{
     password=json['password'];
     rtspname=json['rtspname'];
     isNotrtsp=json['isNotrtsp'];
+    rtpath=json['rtpath'];
     
 
   }
@@ -56,6 +59,7 @@ class Cameras  extends HiveObject{
     data['password']=this.password;
     data['rtspname']=this.rtspname;
     data['isNotrtsp']=this.isNotrtsp;
+    data['rtpath']=this.rtpath;
     
 
     return data;

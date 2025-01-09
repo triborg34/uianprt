@@ -56,7 +56,9 @@ class DatabaseHelper {
           platePercent: data["platePercent"],
           status: data["status"],
           imgpath: data["imgpath"],
-          scrnPath: data["scrnpath"]));
+          scrnPath: data["scrnpath"],
+          isarvand: data['isarvand'],
+          rtpath: data['rtpath']));
     }
     // Convert each row into an 'as' class instance
     return List.generate(maps.length, (i) {
@@ -68,7 +70,9 @@ class DatabaseHelper {
           platePercent: maps[i]['platePercent'],
           status: maps[i]['status'],
           imgpath: maps[i]['imgpath'],
-          scrnPath: maps[i]['scrnpath']);
+          scrnPath: maps[i]['scrnpath'],
+          isarvand: maps[i]['isarvand'],
+          rtpath: maps[i]['rtpath']);
     });
   }
 
@@ -119,7 +123,9 @@ class DatabaseHelper {
           platePercent: entries[i]['platePercent'],
           status: entries[i]['status'],
           imgpath: entries[i]['imgpath'],
-          scrnPath: entries[i]['scrnpath']);
+          scrnPath: entries[i]['scrnpath'],
+          isarvand: entries[i]['isarvnad'],
+          rtpath: entries[i]['rtpath']);
     });
     _controller.sink.add(entryList); // Emit the data to the stream
   }

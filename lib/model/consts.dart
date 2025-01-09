@@ -4,6 +4,8 @@ import 'dart:math';
 
 
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:uianprt/controller/mianController.dart';
 
 
 var labelmap = [
@@ -338,3 +340,10 @@ late String rawAddress;
     }
 
   }
+
+
+test(){
+  print(Get.find<Boxes>().camerabox.values.firstWhere((element) => element.rtpath==Get.find<ReportController>().pModel.first.rtpath,).gate);
+  
+}
+

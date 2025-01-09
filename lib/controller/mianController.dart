@@ -113,6 +113,8 @@ class ReportController extends GetxController{
               charPercent: json.charPercent,
               eDate: json.eDate,
               eTime: json.eTime,
+              isarvand: json.isarvand,
+              rtpath: json.rtpath,
               scrnPath: json.scrnPath,
               platePercent: json.platePercent,
               status: json.status));

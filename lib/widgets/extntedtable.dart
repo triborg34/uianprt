@@ -68,22 +68,35 @@ Container contant() {
                               tcontroller.selectedmodel.plateNum,
                         )]
                     .name!),
-           contactOfTable(Get.find<Boxes>()
-                    .regBox
-                    .where(
-                      (element) =>
-                          element.plateNumber ==
-                          tcontroller.selectedmodel.plateNum,
-                    )
-                    .isEmpty
-                ? "-"
-                : Get.find<Boxes>()
-                    .regBox[Get.find<Boxes>().regBox.indexWhere(
-                          (element) =>
-                              element.plateNumber ==
-                              tcontroller.selectedmodel.plateNum,
-                        )]
-                    .carName!),
+           contactOfTable(
+            tcontroller.selectedmodel.plateNum!.contains("x") ? 'تاکسی' : tcontroller.selectedmodel.plateNum!.contains('A') ? "دولتی" : "شخصی" 
+            // Get.find<Boxes>()
+            //         .regBox
+            //         .where(
+            //           (element) =>
+            //               element.plateNumber ==
+            //               tcontroller.selectedmodel.plateNum,
+            //         )
+            //         .isEmpty
+            //     ? "-"
+            //     : Get.find<Boxes>()
+            //         .regBox[Get.find<Boxes>().regBox.indexWhere(
+            //               (element) =>
+            //                   element.plateNumber ==
+            //                   tcontroller.selectedmodel.plateNum,
+            //             )]
+            //         .carName!
+                    ),
+                      // Expanded(
+                      //           child: Center(
+                      //               child: Container(
+                                      
+                      //         child: Text(entry.plateNum!.contains('x')
+                      //             ? "تاکسی"
+                      //             : entry.plateNum!.contains('A')
+                      //                 ? "دولتی"
+                      //                 : "شخصی",style: TextStyle(color: Colors.white,fontSize: 18),),
+                      //       )))
             contactOfTable(tcontroller.selectedIndex == -1
                 ? "-"
                 : tcontroller.selectedmodel.platePercent!.toString()+"%"),

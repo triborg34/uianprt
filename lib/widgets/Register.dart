@@ -254,6 +254,7 @@ class _EnhancedCarRegistrationDialogState
                         .text, // Add the social security number here
                     plateImagePath: widget.entry.imgpath,
                     plateNumber: widget.entry.plateNum,
+                    rtpath: widget.entry.rtpath,
                     carName: Get.find<feildController>().carName.text,
                     name:
                         "${Get.find<feildController>().Fname.text} ${Get.find<feildController>().name.text}",
@@ -261,9 +262,12 @@ class _EnhancedCarRegistrationDialogState
                     eDate: widget.entry.eDate,
                     eTime: widget.entry.eTime,
                     screenImg: widget.entry.scrnPath,
+                    isarvand: widget.entry.isarvand
                   );
                   }catch(e){
                      registredDb = RegistredDb(
+                      isarvand: widget.entry.isarvand,
+                      rtpath: widget.entry.rtpath,
                     role: _selectedRole ?? '',
                     socialNumber: Get.find<feildController>()
                         .socialNumber
