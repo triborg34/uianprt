@@ -11,6 +11,7 @@ class MyBinding extends Bindings{
     Get.put(ReportController());
     Get.put(navController());
     Get.lazyPut(() => settingController(),);
+    Get.put(ViedoSocket());
 
   }
 

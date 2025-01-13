@@ -51,6 +51,7 @@ class LicanceNumber extends StatelessWidget {
                             Colors.black))),
             child: Center(
               child: Text(
+              
                 convertToPersian(
                     entry.plateNum!,
                     alphabetP2)[0].contains('آ') ? convertToPersian(

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:uianprt/model/consts.dart';
+
+import '../controller/mianController.dart';
 
 
 class Infoscreen extends StatelessWidget {
@@ -30,7 +33,7 @@ class Infoscreen extends StatelessWidget {
                SizedBox(height: 0,),
               
                SizedBox(height: 40,width: 200,child: ElevatedButton(onPressed: (){
-              
+                print(Get.find<ReportController>().pModel.last.isarvand);
                }, child: Center(child: Text("Check For Upadte",style: TextStyle(fontSize: 14),)))),
               
 

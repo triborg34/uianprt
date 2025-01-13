@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:web_socket_channel/status.dart' as status;
+
 
 class WebSocket {
   // ------------------------- Members ------------------------- //
@@ -39,7 +39,7 @@ class WebSocket {
   /// Disconnects the current application from a websocket
   void disconnect() {
     if (_channel != null) {
-      _channel!.sink.close(status.goingAway);
+      _channel!.sink.close(4000);
     }
   }
 }

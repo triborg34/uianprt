@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
@@ -48,12 +49,12 @@ class DbContant extends StatelessWidget {
                       Get.find<tableController>().selectedIndex = index;
                       Get.find<tableController>().selectedmodel =
                           entries[index];
+                          print(entry.isarvand);
                       Get.find<tableController>().update();
                     },
                     child: Visibility(
                       visible:
-                          convertToPersian(entry.plateNum!, alphabetP2)[0] !=
-                              '-',
+                        true,
                       child: Container(
                         height: 60,
                         decoration: BoxDecoration(
@@ -64,7 +65,7 @@ class DbContant extends StatelessWidget {
                           textDirection: TextDirection.rtl,
                           children: [
                             SizedBox(
-                                width: 210, child: LicanceNumber(entry: entry)),
+                                width: 210, child:  entry.isarvand=='arvand' ? Text("data"): LicanceNumber(entry: entry)),
                             VerticalDivider(
                               color: Colors.black,
                             ),

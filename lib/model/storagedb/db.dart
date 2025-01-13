@@ -124,7 +124,7 @@ class DatabaseHelper {
           status: entries[i]['status'],
           imgpath: entries[i]['imgpath'],
           scrnPath: entries[i]['scrnpath'],
-          isarvand: entries[i]['isarvnad'],
+          isarvand: entries[i]['isarvand'],
           rtpath: entries[i]['rtpath']);
     });
     _controller.sink.add(entryList); // Emit the data to the stream

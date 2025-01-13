@@ -14,7 +14,7 @@ class VideoStream extends StatefulWidget {
 }
 
 class _VideoStreamState extends State<VideoStream> {
-  //TODO:Selected Video to Display on First
+  // TODO:Selected Video to Display on First
     late final WebSocket _socket;
      bool _isConnected = false;
   void connect(BuildContext context) async {
@@ -26,12 +26,13 @@ class _VideoStreamState extends State<VideoStream> {
     });
   }
 
-  void disconnect() {
-    _socket.disconnect();
-    setState(() {
-      _isConnected = false;
-    });
-  }
+  // void disconnect() {
+  //   _socket.disconnect();
+  //   setState(() {
+  //     _isConnected = false;
+  //   });
+  // }
+
 
   @override
   void initState() {
@@ -39,6 +40,14 @@ class _VideoStreamState extends State<VideoStream> {
     connect(context);
     super.initState();
   }
+  @override
+  void dispose() {
+
+    _socket.disconnect();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {

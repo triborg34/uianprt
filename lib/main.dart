@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'package:uianprt/controller/bindings.dart';
+import 'package:uianprt/controller/mianController.dart';
 
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/storagedb/cameras.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'AmnAfarin',
         onReady: () async {
+        printIps();
         
         },
         home: ModernLoginPage());

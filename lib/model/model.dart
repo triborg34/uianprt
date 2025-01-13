@@ -7,7 +7,7 @@ class plateModel {
   String? status;
   String? imgpath;
   String? scrnPath;
-  int? isarvand;
+  String? isarvand;
   String? rtpath;
 
   plateModel(

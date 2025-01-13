@@ -4,8 +4,7 @@ import 'dart:math';
 
 
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:uianprt/controller/mianController.dart';
+
 
 
 var labelmap = [
@@ -217,6 +216,8 @@ String convertString(String input) {
 List convertToPersian(String input, Map<String, String> dictionary) {
   String result = '';
 
+  
+
   // Loop through each character or group of characters in the input
   for (int i = 0; i < input.length; i++) {
     // Check if multi-character tokens exist in the dictionary
@@ -325,8 +326,10 @@ late String ipadress;
 late String ethname;
 late String rawAddress;
  Future printIps() async {
+  try{
     for (var interface in await NetworkInterface.list()) {
       print('== Interface: ${interface.name} ==');
+      ethname=interface.name;
       for (var addr in interface.addresses) {
 
             if(addr.type.name=="IPv4" ){
@@ -338,12 +341,17 @@ late String rawAddress;
             }
       }
     }
+  }catch(e){
+    ethname="تعریف نشده";
+     ipname="تعریف نشده";
+ipadress="تعریف نشده";
+ ethname="تعریف نشده";
+rawAddress="تعریف نشده";
+
+  }
 
   }
 
 
-test(){
-  print(Get.find<Boxes>().camerabox.values.firstWhere((element) => element.rtpath==Get.find<ReportController>().pModel.first.rtpath,).gate);
-  
-}
+
 
