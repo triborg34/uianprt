@@ -29,12 +29,13 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
       _getFull();
-     DesktopWindow.setFullScreen(true);
+   
     _databaseHelper = DatabaseHelper.withPath(widget.dbPath);
 
     _databaseHelper.queryAndEmitEntries();
     _pollingTimer = Timer.periodic(Duration(seconds: 3), (timer) {
       _databaseHelper.queryAndEmitEntries();
+ 
     });
     // Get.find<videoController>()
     //     .player

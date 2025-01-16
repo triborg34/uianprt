@@ -129,6 +129,10 @@ class settingController extends GetxController {
   String timezoneseleted = "Asia/Tehran";
   String port = 5000.toString();
   String connect = 8000.toString();
+  var isRfid=false.obs;
+  var rl1=false.obs;
+  var rl2=false.obs;
+  
 
   @override
   void onReady() {

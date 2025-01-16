@@ -52,7 +52,7 @@ class TableTitle extends StatelessWidget {
               color: Colors.black,
             ),
             Text(
-              "نوع پلاک",
+              "جهت دوربین",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,

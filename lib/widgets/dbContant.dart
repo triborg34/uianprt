@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
@@ -37,6 +38,24 @@ class DbContant extends StatelessWidget {
               );
             }
             final entries = snapshot.data!.reversed.toList();
+            if (Get.find<settingController>().isRfid.value) {
+              if (Get.find<Boxes>()
+                  .regBox
+                  .where(
+                    (element) => element.plateNumber == entries.last.plateNum,
+                  )
+                  .isNotEmpty) {
+
+                    if(Get.find<settingController>().rl1.value || Get.find<settingController>().rl1.value ){
+
+
+                    }
+
+                    Dio dio=Dio();
+                    //TODO:IMPORTANT
+                    dio.get('http://127.0.0.1:8000/iprelay?onOff=true&relay=');
+                  }
+            }
             return ListView.separated(
                 controller: ScrollController(
                   initialScrollOffset: 0.0,
@@ -49,12 +68,13 @@ class DbContant extends StatelessWidget {
                       Get.find<tableController>().selectedIndex = index;
                       Get.find<tableController>().selectedmodel =
                           entries[index];
-                          print(entry.isarvand);
+                      print(entry.isarvand);
                       Get.find<tableController>().update();
                     },
                     child: Visibility(
-                      visible:
-                        entry.isarvand=='arvand' ?true:   convertToPersian(entry.plateNum!, alphabetP2)[0] !=
+                      visible: entry.isarvand == 'arvand'
+                          ? true
+                          : convertToPersian(entry.plateNum!, alphabetP2)[0] !=
                               '-',
                       child: Container(
                         height: 60,
@@ -66,7 +86,18 @@ class DbContant extends StatelessWidget {
                           textDirection: TextDirection.rtl,
                           children: [
                             SizedBox(
-                                width: 210, child:  entry.isarvand=='arvand' ? Text("data"): LicanceNumber(entry: entry)),
+                                width: 210,
+                                child: entry.isarvand == 'arvand'
+                                    ? SizedBox(
+                                        child: Center(
+                                            child: Text(
+                                        entry.plateNum!.toPersianDigit(),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      )))
+                                    : LicanceNumber(entry: entry)),
                             VerticalDivider(
                               color: Colors.black,
                             ),
@@ -308,8 +339,22 @@ class DbContant extends StatelessWidget {
                             Expanded(
                                 child: Center(
                                     child: Container(
-                                      
-                              child: Text(Get.find<Boxes>().camerabox.values.firstWhere((element) => element.rtpath==entry.rtpath,).gate =="exit" ? "دوربین خروجی" :"دوربین ورودی",style: TextStyle(color: Colors.white,fontSize: 18),),
+                              child: Text(
+                                Get.find<Boxes>()
+                                            .camerabox
+                                            .values
+                                            .firstWhere(
+                                              (element) =>
+                                                  element.rtpath ==
+                                                  entry.rtpath,
+                                            )
+                                            .gate ==
+                                        "exit"
+                                    ? "دوربین خروجی"
+                                    : "دوربین ورودی",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
                             )))
                           ],
                         ),
