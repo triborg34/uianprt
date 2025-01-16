@@ -54,7 +54,8 @@ class DbContant extends StatelessWidget {
                     },
                     child: Visibility(
                       visible:
-                        true,
+                        entry.isarvand=='arvand' ?true:   convertToPersian(entry.plateNum!, alphabetP2)[0] !=
+                              '-',
                       child: Container(
                         height: 60,
                         decoration: BoxDecoration(
