@@ -216,12 +216,12 @@ class PortSettings extends StatelessWidget {
                         Get.find<settingController>().isRfid.value = value;
                         if (value == false) {
                           String url =
-                              'http://127.0.0.1:8000/iprelay?ip=${rfidip.text}&port=${rfidport.text}';
+                              'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?ip=${rfidip.text}&port=${rfidport.text}';
                           Dio dio = Dio();
                           await dio.get(
-                              'http://127.0.0.1:8000/iprelay?onOff=false&relay=1');
+                              'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=false&relay=1');
                           await dio.get(
-                              'http://127.0.0.1:8000/iprelay?onOff=false&relay=2');
+                              'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=false&relay=2');
                           dio.post(url, data: {"isconnect": false}).then(
                             (value) {
                               if (value.statusCode == 200) {
@@ -299,7 +299,7 @@ class PortSettings extends StatelessWidget {
                           TextButton(
                               onPressed: () async {
                                 String url =
-                                    'http://127.0.0.1:8000/iprelay?ip=${rfidip.text}&port=${rfidport.text}';
+                                    'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?ip=${rfidip.text}&port=${rfidport.text}';
                                 Dio dio = Dio();
                                 await dio
                                     .post(url, data: {"isconnect": true}).then(
@@ -379,15 +379,15 @@ class PortSettings extends StatelessWidget {
                           },
                         );
                         Dio dio = Dio();
-                        await dio.post('http://127.0.0.1:8000/config', data: {
+                        await dio.post('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config', data: {
                           "section": "DEFAULT",
                           "key": "socketport",
-                          "value": int.parse(portController.text)
+                          "value": portController.text
                         });
-                        await dio.post('http://127.0.0.1:8000/config', data: {
+                        await dio.post('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config', data: {
                           "section": "DEFAULT",
                           "key": "serverport",
-                          "value": int.parse(connectConttroler.text)
+                          "value": connectConttroler.text
                         });
                       },
                       child: Text("ذخیره")))),

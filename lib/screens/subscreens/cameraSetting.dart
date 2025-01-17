@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/storagedb/cameras.dart';
-import 'package:uianprt/widgets/videogetter.dart';
+
 
 class CameraSetting extends StatefulWidget {
   CameraSetting({super.key});
@@ -181,9 +181,8 @@ class _CameraSettingState extends State<CameraSetting> {
                           child: Center(
                             child: IconButton(
                                 onPressed: () {
-                                  WebSocket webSocket =
-                                      WebSocket("ws://127.0.0.1:5000");
-                                  webSocket.connect();
+
+                        Get.defaultDialog(title: "",middleText: "لطفا برای اعمال تغییرات برنامه را مجدد باز کنید");
                                 },
                                 icon: Icon(
                                   FontAwesomeIcons.repeat,
@@ -754,8 +753,8 @@ class _CameraSettingState extends State<CameraSetting> {
                 onPressed: () async {
                   var dio = Dio();
                  
-        
-                  var res = dio.post('http://127.0.0.1:8000/cameras', data: {
+                
+                  var res = dio.post('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/cameras', data: {
                     "ip": "${Get.find<Boxes>().camerabox.values.last.ip}",
                     "username":
                         "${Get.find<Boxes>().camerabox.values.last.username}",

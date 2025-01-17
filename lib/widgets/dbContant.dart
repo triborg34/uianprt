@@ -65,18 +65,18 @@ class DbContant extends StatelessWidget {
 
                     
              
-                    dio.get('http://127.0.0.1:8000/iprelay?onOff=true&relay=1').then((value) {
+                    dio.get('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=1').then((value) {
                       if(value.statusCode==200) {
-                        dio.get('http://127.0.0.1:8000/iprelay?onOff=true&relay=2');
+                        dio.get('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=2');
                       }
                     },);
 
 
                     }else if(Get.find<settingController>().rl1.value==true || Get.find<settingController>().rl2.value==false ){
-                      dio.get('http://127.0.0.1:8000/iprelay?onOff=true&relay=1');
+                      dio.get('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=1');
                     }
                     else if(Get.find<settingController>().rl1.value==false || Get.find<settingController>().rl2.value==true){
-                       dio.get('http://127.0.0.1:8000/iprelay?onOff=true&relay=2');
+                       dio.get('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=2');
                     }
                     else{
                       Get.snackbar("", "مشکلی در رله پیش امده");

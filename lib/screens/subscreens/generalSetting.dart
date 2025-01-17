@@ -346,7 +346,7 @@ class Generalsetting extends StatelessWidget {
 
                     Dio dio = Dio();
                     var res =
-                        await dio.post('http://127.0.0.1:8000/config', data: {
+                        await dio.post('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config', data: {
                       "section": "DEFAULT",
                       "key": "character_confidence",
                       "value": Get.find<settingController>()
@@ -355,7 +355,7 @@ class Generalsetting extends StatelessWidget {
                           .toStringAsFixed(2)
                     });
                     if (res.statusCode == 200) {
-                      await dio.post("http://127.0.0.1:8000/config", data: {
+                      await dio.post("http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config", data: {
                         "section": "DEFAULT",
                         "key": "plate_confidence",
                         "value":
@@ -364,7 +364,7 @@ class Generalsetting extends StatelessWidget {
                                 .toInt()
                                 .toString()
                       });
-                      await dio.post("http://127.0.0.1:8000/config", data: {
+                      await dio.post("http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config", data: {
                         "section": "DEFAULT",
                         "key": "device",
                         "value": Get.find<settingController>()

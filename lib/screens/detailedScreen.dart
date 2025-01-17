@@ -20,6 +20,7 @@ class Detailedscreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      
       backgroundColor: Colors.black,
       appBar: MyAppBar(),
       body: Container(
