@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -9,7 +7,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import 'package:uianprt/controller/bindings.dart';
 
-
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/storagedb/cameras.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
@@ -18,18 +15,14 @@ import 'package:uianprt/model/storagedb/users.dart';
 import 'package:uianprt/screens/loginScreen.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
-
-
-
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
-              final config = await loadConfig();
+  final config = await loadConfig();
 
-          path = config['db_path']!;
-          imagesPath = config['images_folder_path']!;
+  path = config['db_path']!;
+  imagesPath = config['images_folder_path']!;
   tz.initializeTimeZones();
-  
+
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
 
@@ -44,9 +37,7 @@ void main() async {
 
   //Clean Up Code Refactor all codes and remove duplicate code
 
-
-
-  runApp(  MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -64,8 +55,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'AmnAfarin',
         onReady: () async {
-        printIps();
-        
+          printIps();
         },
         home: ModernLoginPage());
   }

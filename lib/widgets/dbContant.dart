@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,7 +39,20 @@ class DbContant extends StatelessWidget {
               );
             }
             final entries = snapshot.data!.reversed.toList();
-            if (Get.find<settingController>().isRfid.value) {
+
+            if(Get.find<settingController>().alarm.value){
+              AudioPlayer audioPlayer=AudioPlayer();
+                   if (Get.find<Boxes>()
+                  .regBox
+                  .where(
+                    (element) => element.plateNumber == entries.last.plateNum,
+                  )
+                  .isNotEmpty){
+                  audioPlayer.play(AssetSource('assets/alarm.mp3'));
+                  }
+            }
+
+            if (Get.find<Boxes>().settingbox.values.last.isRfid!) {
               Dio dio=Dio();
               if (Get.find<Boxes>()
                   .regBox

@@ -31,13 +31,14 @@ class SettingAdapter extends TypeAdapter<Setting> {
       rfidport: fields[13] as int?,
       rl1: fields[10] as bool?,
       rl2: fields[11] as bool?,
+      alarm: fields[14] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Setting obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.plateConf)
       ..writeByte(1)
@@ -65,7 +66,9 @@ class SettingAdapter extends TypeAdapter<Setting> {
       ..writeByte(12)
       ..write(obj.rfidip)
       ..writeByte(13)
-      ..write(obj.rfidport);
+      ..write(obj.rfidport)
+      ..writeByte(14)
+      ..write(obj.alarm);
   }
 
   @override

@@ -69,6 +69,7 @@ dependencies:
   filepicker_windows: ^2.1.4
   easy_image_viewer: ^1.5.1
   responsive_grid_list: ^1.4.0
+  audioplayers: ^6.1.0
 
 
  
@@ -114,6 +115,7 @@ flutter:
     - assets/images/
     - assets/images/plates/
     - assets/config.json
+    - assets/alarm.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

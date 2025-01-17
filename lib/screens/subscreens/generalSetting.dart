@@ -313,6 +313,7 @@ class Generalsetting extends StatelessWidget {
                  
                     await Get.find<Boxes>().settingbox.add(
                           Setting(
+                            alarm: Get.find<Boxes>().settingbox.values.last.alarm!,
                             connect: Get.find<Boxes>().settingbox.values.last.connect!,
                             isRfid:Get.find<Boxes>().settingbox.values.last.isRfid! ,
                             port: Get.find<Boxes>().settingbox.values.last.port!,
@@ -383,6 +384,8 @@ class Generalsetting extends StatelessWidget {
                   await  Get.find<Boxes>().settingbox.clear();
                     await Get.find<Boxes>().settingbox.add(
                           Setting(
+
+                          alarm: Get.find<settingController>().alarm.value,
                               plateConf: Get.find<settingController>().psliderValue.value,
                               charConf: Get.find<settingController>().csliderValue.value,
                               hardWare: Get.find<settingController>().hardWareValue,
@@ -476,6 +479,7 @@ class Generalsetting extends StatelessWidget {
                   onPressed: () async {
                     await Get.find<Boxes>().settingbox.add(
                           Setting(
+                            alarm: Get.find<Boxes>().settingbox.values.last.alarm!,
                                                         connect: Get.find<Boxes>().settingbox.values.last.connect!,
                             isRfid:Get.find<Boxes>().settingbox.values.last.isRfid! ,
                             port: Get.find<Boxes>().settingbox.values.last.port!,
@@ -512,6 +516,7 @@ class Generalsetting extends StatelessWidget {
                         await  Get.find<Boxes>().settingbox.clear();
                     await Get.find<Boxes>().settingbox.add(
                           Setting(
+                            alarm: Get.find<settingController>().alarm.value,
                               plateConf: Get.find<settingController>().psliderValue.value,
                               charConf: Get.find<settingController>().csliderValue.value,
                               hardWare: Get.find<settingController>().hardWareValue,

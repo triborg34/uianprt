@@ -136,6 +136,7 @@ class settingController extends GetxController {
   var rl2=false.obs;
   String rfidip='192.168.1.91';
   int rfidport=2000;
+  var alarm=false.obs;
   
 
   @override
@@ -155,7 +156,8 @@ class settingController extends GetxController {
           rl1: rl1.value,
           rl2: rl2.value
           ,rfidip: rfidip,
-          rfidport: rfidport
+          rfidport: rfidport,
+          alarm: alarm.value
           ));
     } else {
       print("box is not eampty");

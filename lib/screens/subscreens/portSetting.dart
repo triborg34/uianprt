@@ -12,8 +12,10 @@ class PortSettings extends StatelessWidget {
   TextEditingController connectConttroler =
       TextEditingController(text: Get.find<settingController>().connect);
 
-  TextEditingController rfidip = TextEditingController(text: Get.find<settingController>().rfidip);
-  TextEditingController rfidport = TextEditingController(text: Get.find<settingController>().rfidport.toString());
+  TextEditingController rfidip =
+      TextEditingController(text: Get.find<settingController>().rfidip);
+  TextEditingController rfidport = TextEditingController(
+      text: Get.find<settingController>().rfidport.toString());
 
   @override
   Widget build(BuildContext context) {
@@ -320,6 +322,29 @@ class PortSettings extends StatelessWidget {
             ),
           ),
           SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 100,
+                  child: Text(
+                    "فعال سازی آلارم",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                Obx(() => Switch(
+                      value: Get.find<settingController>().alarm.value,
+                      onChanged: (value) {
+                        Get.find<settingController>().alarm.value = value;
+                      },
+                    )),
+              ],
+            ),
+          ),
+          SizedBox(
             width: 15,
           ),
           SizedBox(
@@ -333,6 +358,9 @@ class PortSettings extends StatelessWidget {
                             .put(
                                 Get.find<Boxes>().settingbox.length - 1,
                                 Setting(
+                                    alarm: Get.find<settingController>()
+                                        .alarm
+                                        .value,
                                     port: portController.text,
                                     connect: connectConttroler.text,
                                     isRfid: Get.find<settingController>()
@@ -352,16 +380,15 @@ class PortSettings extends StatelessWidget {
                         );
                         Dio dio = Dio();
                         await dio.post('http://127.0.0.1:8000/config', data: {
-                      "section": "DEFAULT",
-                      "key": "socketport",
-                      "value": int.parse(portController.text)
-                    });
-                            await dio.post('http://127.0.0.1:8000/config', data: {
-                      "section": "DEFAULT",
-                      "key": "serverport",
-                      "value": int.parse(connectConttroler.text)
-                    });
-
+                          "section": "DEFAULT",
+                          "key": "socketport",
+                          "value": int.parse(portController.text)
+                        });
+                        await dio.post('http://127.0.0.1:8000/config', data: {
+                          "section": "DEFAULT",
+                          "key": "serverport",
+                          "value": int.parse(connectConttroler.text)
+                        });
                       },
                       child: Text("ذخیره")))),
         ],

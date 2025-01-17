@@ -30,7 +30,8 @@ class Setting {
   String? rfidip;
   @HiveField(13)
   int? rfidport;
-
+  @HiveField(14)
+  bool? alarm;
 
   Setting(
       {this.plateConf,
@@ -40,7 +41,7 @@ class Setting {
       this.outPutPath,
       this.timeZone,
       this.clockType,
-     required this.connect,this.port,this.isRfid,this.rfidip,this.rfidport,this.rl1,this.rl2});
+      this.connect,this.port,this.isRfid,this.rfidip,this.rfidport,this.rl1,this.rl2,required this.alarm});
 
   Setting.fromJson(Map<String, dynamic> json) {
     plateConf = json['plateConf'];
@@ -57,6 +58,7 @@ class Setting {
     rl2 = json['rl2'];
     rfidip = json['rfidip'];
     rfidport = json['rfidport'];
+    alarm = json['alarm'];
 
   }
 
@@ -76,7 +78,7 @@ class Setting {
     data['rl2'] = this.rl2;
     data['rfidip'] = this.rfidip;
     data['rfidport'] = this.rfidport;
-
+    data['alarm'] = this.alarm;
     return data;
   }
 }
