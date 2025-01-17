@@ -24,7 +24,7 @@ class ReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO:SEARCH FOR PESEFIC PATTERN
+
     Get.find<ReportController>().selectedItem = null;
     Get.find<ReportController>().firstime = null;
     Get.find<ReportController>().lastTime = null;

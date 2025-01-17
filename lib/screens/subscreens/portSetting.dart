@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
+import 'package:uianprt/model/storagedb/setting.dart';
 
 class PortSettings extends StatelessWidget {
   PortSettings({super.key});
@@ -11,8 +12,8 @@ class PortSettings extends StatelessWidget {
   TextEditingController connectConttroler =
       TextEditingController(text: Get.find<settingController>().connect);
 
-  TextEditingController rfidip=TextEditingController(text: '192.168.1.91');
-  TextEditingController rfidport=TextEditingController(text: '2000');
+  TextEditingController rfidip = TextEditingController(text: Get.find<settingController>().rfidip);
+  TextEditingController rfidport = TextEditingController(text: Get.find<settingController>().rfidport.toString());
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +65,10 @@ class PortSettings extends StatelessWidget {
                             controller: portController,
                             readOnly: false,
                             textDirection: TextDirection.ltr,
+                            onEditingComplete: () {
+                              Get.find<settingController>().port =
+                                  portController.text;
+                            },
                             style: TextStyle(
                                 color: Colors.white, fontFamily: 'arial'),
                             decoration: InputDecoration(
@@ -94,6 +99,10 @@ class PortSettings extends StatelessWidget {
                         child: TextFormField(
                           controller: connectConttroler,
                           readOnly: false,
+                          onEditingComplete: () {
+                            Get.find<settingController>().connect =
+                                connectConttroler.text;
+                          },
                           textDirection: TextDirection.ltr,
                           style: TextStyle(
                               color: Colors.white, fontFamily: 'arial'),
@@ -138,6 +147,9 @@ class PortSettings extends StatelessWidget {
                 ))
               ],
             ),
+          ),
+          SizedBox(
+            height: 15,
           ),
           SizedBox(
             height: 15,
@@ -198,85 +210,104 @@ class PortSettings extends StatelessWidget {
                 ),
                 Obx(() => Switch(
                       value: Get.find<settingController>().isRfid.value,
-                      onChanged: (value) async{
+                      onChanged: (value) async {
                         Get.find<settingController>().isRfid.value = value;
-                        if(value==false){
-                              String url='http://127.0.0.1:8000/iprelay?ip=${rfidip.text}&port=${rfidport.text}';
-                            Dio dio=Dio();
-                            await dio.get('http://127.0.0.1:8000/iprelay?onOff=false&relay=1');
-                            await dio.get('http://127.0.0.1:8000/iprelay?onOff=false&relay=2');
-                            dio.post(url,data: {"isconnect":false}).then((value) {
-                              if(value.statusCode==200){
+                        if (value == false) {
+                          String url =
+                              'http://127.0.0.1:8000/iprelay?ip=${rfidip.text}&port=${rfidport.text}';
+                          Dio dio = Dio();
+                          await dio.get(
+                              'http://127.0.0.1:8000/iprelay?onOff=false&relay=1');
+                          await dio.get(
+                              'http://127.0.0.1:8000/iprelay?onOff=false&relay=2');
+                          dio.post(url, data: {"isconnect": false}).then(
+                            (value) {
+                              if (value.statusCode == 200) {
                                 Get.snackbar("", "اتصال قطع شد");
                               }
-                            },);
+                            },
+                          );
                         }
                       },
                     )),
-
                 Obx(() => Visibility(
                       visible: Get.find<settingController>().isRfid.value,
                       child: Row(
                         children: [
-                                          SizedBox(
-                  width: 15,
-                ),
-                SizedBox(
-                    width: 100,
-                    child: TextFormField(
-                        controller: rfidip,
-                        readOnly: false,
-                        textDirection: TextDirection.ltr,
-                        style: TextStyle(
-                            color: Colors.white70, fontFamily: 'arial'),
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'eg:192.168.1.91',
-                            hintTextDirection: TextDirection.ltr))),
-                SizedBox(
-                  width: 15,
-                ),
-                SizedBox(
-                    width: 100,
-                    child: TextFormField(
-                        controller:rfidport,
-                        readOnly: false,
-                        textDirection: TextDirection.ltr,
-                        style: TextStyle(
-                            color: Colors.white70, fontFamily: 'arial'),
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'eg:2000',
-                            hintTextDirection: TextDirection.ltr))),
-                SizedBox(
-                  width: 15,
-                ),
-                Text("رله یک",style: TextStyle(color: Colors.white),),
-                Obx(() => Checkbox(
-                      value: Get.find<settingController>().rl1.value,
-                      onChanged: (value) {
-                        Get.find<settingController>().rl1.value = value!;
-                      },
-                    )),
-                SizedBox(
-                  width: 15,
-                ),
-                Text("رله دو",style: TextStyle(color: Colors.white),),
-                Obx(() => Checkbox(
-                      value: Get.find<settingController>().rl2.value,
-                      onChanged: (value) {
-                        Get.find<settingController>().rl2.value = value!;
-                      },
-                    )),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          SizedBox(
+                              width: 100,
+                              child: TextFormField(
+                                  controller: rfidip,
+                                  readOnly: false,
+                                  textDirection: TextDirection.ltr,
+                                  style: TextStyle(
+                                      color: Colors.white70,
+                                      fontFamily: 'arial'),
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: 'eg:192.168.1.91',
+                                      hintTextDirection: TextDirection.ltr))),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          SizedBox(
+                              width: 100,
+                              child: TextFormField(
+                                  controller: rfidport,
+                                  readOnly: false,
+                                  textDirection: TextDirection.ltr,
+                                  style: TextStyle(
+                                      color: Colors.white70,
+                                      fontFamily: 'arial'),
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: 'eg:2000',
+                                      hintTextDirection: TextDirection.ltr))),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            "رله یک",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Obx(() => Checkbox(
+                                value: Get.find<settingController>().rl1.value,
+                                onChanged: (value) {
+                                  Get.find<settingController>().rl1.value =
+                                      value!;
+                                },
+                              )),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            "رله دو",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Obx(() => Checkbox(
+                                value: Get.find<settingController>().rl2.value,
+                                onChanged: (value) {
+                                  Get.find<settingController>().rl2.value =
+                                      value!;
+                                },
+                              )),
                           TextButton(
-                              onPressed: ()async {
-                               String url='http://127.0.0.1:8000/iprelay?ip=${rfidip.text}&port=${rfidport.text}';
-                                Dio dio=Dio();
-                              await  dio.post(url,data: {"isconnect":true}).then((value) {
-                                  if(value.statusCode==200){
-                                    Get.snackbar("", "اتصال با موفقیت برقرار شد");
-                                  }
-                                },);
+                              onPressed: () async {
+                                String url =
+                                    'http://127.0.0.1:8000/iprelay?ip=${rfidip.text}&port=${rfidport.text}';
+                                Dio dio = Dio();
+                                await dio
+                                    .post(url, data: {"isconnect": true}).then(
+                                  (value) {
+                                    if (value.statusCode == 200) {
+                                      Get.snackbar(
+                                          "", "اتصال با موفقیت برقرار شد");
+                                    }
+                                  },
+                                );
                               },
                               child: Text(
                                 "اتصال",
@@ -287,7 +318,52 @@ class PortSettings extends StatelessWidget {
                     ))
               ],
             ),
-          )
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          SizedBox(
+              height: 50,
+              width: double.infinity,
+              child: Center(
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        await Get.find<Boxes>()
+                            .settingbox
+                            .put(
+                                Get.find<Boxes>().settingbox.length - 1,
+                                Setting(
+                                    port: portController.text,
+                                    connect: connectConttroler.text,
+                                    isRfid: Get.find<settingController>()
+                                        .isRfid
+                                        .value,
+                                    rl1:
+                                        Get.find<settingController>().rl1.value,
+                                    rl2:
+                                        Get.find<settingController>().rl2.value,
+                                    rfidip: rfidip.text,
+                                    rfidport: int.parse(rfidport.text)))
+                            .then(
+                          (value) {
+                            Get.snackbar("", "تغییرات ذخیره شد",
+                                colorText: Colors.white);
+                          },
+                        );
+                        Dio dio = Dio();
+                        await dio.post('http://127.0.0.1:8000/config', data: {
+                      "section": "DEFAULT",
+                      "key": "socketport",
+                      "value": int.parse(portController.text)
+                    });
+                            await dio.post('http://127.0.0.1:8000/config', data: {
+                      "section": "DEFAULT",
+                      "key": "serverport",
+                      "value": int.parse(connectConttroler.text)
+                    });
+
+                      },
+                      child: Text("ذخیره")))),
         ],
       ),
     );

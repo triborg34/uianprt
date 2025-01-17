@@ -17,7 +17,7 @@ import 'package:uianprt/model/storagedb/setting.dart';
 import 'package:uianprt/model/storagedb/users.dart';
 import 'package:uianprt/screens/loginScreen.dart';
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:uianprt/screens/subscreens/licancecheker.dart';
+
 
 
 
@@ -42,7 +42,7 @@ void main() async {
   Hive.registerAdapter(SettingAdapter());
   await Hive.openBox<Setting>('settingbox');
 
-
+  //Clean Up Code Refactor all codes and remove duplicate code
 
 
 
@@ -67,6 +67,6 @@ class MyApp extends StatelessWidget {
         printIps();
         
         },
-        home: Licancecheker());
+        home: ModernLoginPage());
   }
 }

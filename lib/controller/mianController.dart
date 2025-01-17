@@ -122,11 +122,11 @@ class navController extends GetxController {
 }
 
 class settingController extends GetxController {
-  var psliderValue = 0.6.obs;
+  var psliderValue = 0.7.obs;
   var csliderValue = 0.5.obs;
   var hardWareValue = 'cuda';
-  var pathOfdb = ''.obs;
-  var pathOfOutput = ''.obs;
+  var pathOfdb = '../engine/database/entrieses.db'.obs;
+  var pathOfOutput = '../engine/'.obs;
   var clockType = '24';
   String timezoneseleted = "Asia/Tehran";
   String port = 5000.toString();
@@ -134,7 +134,8 @@ class settingController extends GetxController {
   var isRfid=false.obs;
   var rl1=false.obs;
   var rl2=false.obs;
-
+  String rfidip='192.168.1.91';
+  int rfidport=2000;
   
 
   @override
@@ -147,7 +148,15 @@ class settingController extends GetxController {
           dbPath: pathOfdb.value,
           outPutPath: pathOfOutput.value,
           hardWare: hardWareValue,
-          timeZone: timezoneseleted));
+          timeZone: timezoneseleted,
+          connect: connect,
+          isRfid: isRfid.value
+          ,port: port,
+          rl1: rl1.value,
+          rl2: rl2.value
+          ,rfidip: rfidip,
+          rfidport: rfidport
+          ));
     } else {
       print("box is not eampty");
     }

@@ -24,13 +24,20 @@ class SettingAdapter extends TypeAdapter<Setting> {
       outPutPath: fields[4] as String?,
       timeZone: fields[5] as String?,
       clockType: fields[6] as String?,
+      connect: fields[8] as String?,
+      port: fields[7] as String?,
+      isRfid: fields[9] as bool?,
+      rfidip: fields[12] as String?,
+      rfidport: fields[13] as int?,
+      rl1: fields[10] as bool?,
+      rl2: fields[11] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Setting obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.plateConf)
       ..writeByte(1)
@@ -44,7 +51,21 @@ class SettingAdapter extends TypeAdapter<Setting> {
       ..writeByte(5)
       ..write(obj.timeZone)
       ..writeByte(6)
-      ..write(obj.clockType);
+      ..write(obj.clockType)
+      ..writeByte(7)
+      ..write(obj.port)
+      ..writeByte(8)
+      ..write(obj.connect)
+      ..writeByte(9)
+      ..write(obj.isRfid)
+      ..writeByte(10)
+      ..write(obj.rl1)
+      ..writeByte(11)
+      ..write(obj.rl2)
+      ..writeByte(12)
+      ..write(obj.rfidip)
+      ..writeByte(13)
+      ..write(obj.rfidport);
   }
 
   @override

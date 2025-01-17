@@ -44,7 +44,7 @@ class _VideoStreamState extends State<VideoStream> {
   void dispose() {
 
     _socket.disconnect();
-    // TODO: implement dispose
+
     super.dispose();
   }
 

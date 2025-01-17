@@ -5,7 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/screens/mainPage.dart';
-import 'package:uianprt/screens/subscreens/splashScreen.dart';
+import 'package:uianprt/screens/subscreens/licancecheker.dart';
+
 
 class ModernLoginPage extends StatefulWidget {
   const ModernLoginPage({super.key});
@@ -26,7 +27,7 @@ class _ModernLoginPageState extends State<ModernLoginPage> {
 
     if (isLoggedIn) {
           Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) =>  SplashScreen()),
+      MaterialPageRoute(builder: (_) =>  Licancecheker()),
     );
       
     }

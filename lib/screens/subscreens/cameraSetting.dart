@@ -829,9 +829,7 @@ class CameraSettingRows extends StatelessWidget {
           ),
         ));
   }
-  //TODO:Get Rtsp name in ip controller and handle it in backend 
-  //TODO:Get value isrtsp or isnotrtsp in database for validation of editing DONE✅
-  //TODO:IN Setting add a button to delete all rows on database
+
 }
 
 
