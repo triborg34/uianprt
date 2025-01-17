@@ -40,6 +40,7 @@ class feildController extends GetxController {
 }
 
 class Boxes extends GetxController {
+    var nol=0.obs;
   //
   Box<RegistredDb> hivebox = Hive.box<RegistredDb>('regbox');
   List<RegistredDb> regBox = <RegistredDb>[];
@@ -73,6 +74,7 @@ class Boxes extends GetxController {
 }
 
 class ReportController extends GetxController {
+
   DatabaseHelper databaseHelper = DatabaseHelper.withPath(path);
   List<plateModel> pModel = <plateModel>[];
   List<plateModel> selectedModel = <plateModel>[];
@@ -132,6 +134,7 @@ class settingController extends GetxController {
   var isRfid=false.obs;
   var rl1=false.obs;
   var rl2=false.obs;
+
   
 
   @override

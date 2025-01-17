@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:splash_view/splash_view.dart';
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/screens/mainPage.dart';
+import 'package:uianprt/screens/subscreens/splashScreen.dart';
 
 class ModernLoginPage extends StatefulWidget {
   const ModernLoginPage({super.key});
@@ -27,24 +26,7 @@ class _ModernLoginPageState extends State<ModernLoginPage> {
 
     if (isLoggedIn) {
           Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) =>  SplashView(
-          backgroundColor: Colors.black,
-          logo: Image.asset('assets/images/logo.jpg'),
-          subtitle: Text(
-            "Automatic Licence Plate Recognition",
-            style: TextStyle(color: Colors.white60),
-          ),
-          bottomLoading: true,
-          showStatusBar: true,
-          loadingIndicator: LinearProgressIndicator(),
-          title: Text(
-            'AmnAfarin',
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-          duration: Duration(seconds: 2),
-          done: Done(MainView(path),
-              animationDuration: Duration(seconds: 0), curve: Curves.easeIn),
-        )),
+      MaterialPageRoute(builder: (_) =>  SplashScreen()),
     );
       
     }
@@ -172,6 +154,8 @@ class _ModernLoginPageState extends State<ModernLoginPage> {
                           },
                         ),
                         const SizedBox(height: 10),
+                        
+                        
         
                         // Remember Me Checkbox
                         Row(
@@ -282,3 +266,4 @@ class _ModernLoginPageState extends State<ModernLoginPage> {
 
   }
 }
+

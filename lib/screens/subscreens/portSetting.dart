@@ -198,14 +198,16 @@ class PortSettings extends StatelessWidget {
                 ),
                 Obx(() => Switch(
                       value: Get.find<settingController>().isRfid.value,
-                      onChanged: (value) {
+                      onChanged: (value) async{
                         Get.find<settingController>().isRfid.value = value;
                         if(value==false){
                               String url='http://127.0.0.1:8000/iprelay?ip=${rfidip.text}&port=${rfidport.text}';
                             Dio dio=Dio();
+                            await dio.get('http://127.0.0.1:8000/iprelay?onOff=false&relay=1');
+                            await dio.get('http://127.0.0.1:8000/iprelay?onOff=false&relay=2');
                             dio.post(url,data: {"isconnect":false}).then((value) {
                               if(value.statusCode==200){
-                                print(value.data['massage']);
+                                Get.snackbar("", "اتصال قطع شد");
                               }
                             },);
                         }
@@ -267,12 +269,12 @@ class PortSettings extends StatelessWidget {
                       },
                     )),
                           TextButton(
-                              onPressed: () {
+                              onPressed: ()async {
                                String url='http://127.0.0.1:8000/iprelay?ip=${rfidip.text}&port=${rfidport.text}';
                                 Dio dio=Dio();
-                                dio.post(url,data: {"isconnect":true}).then((value) {
+                              await  dio.post(url,data: {"isconnect":true}).then((value) {
                                   if(value.statusCode==200){
-                                    print(value.data['massage']);
+                                    Get.snackbar("", "اتصال با موفقیت برقرار شد");
                                   }
                                 },);
                               },

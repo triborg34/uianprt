@@ -17,6 +17,7 @@ import 'package:uianprt/model/storagedb/setting.dart';
 import 'package:uianprt/model/storagedb/users.dart';
 import 'package:uianprt/screens/loginScreen.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:uianprt/screens/subscreens/licancecheker.dart';
 
 
 
@@ -28,7 +29,7 @@ void main() async {
           path = config['db_path']!;
           imagesPath = config['images_folder_path']!;
   tz.initializeTimeZones();
-
+  
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
 
@@ -66,6 +67,6 @@ class MyApp extends StatelessWidget {
         printIps();
         
         },
-        home: ModernLoginPage());
+        home: Licancecheker());
   }
 }
