@@ -10,7 +10,7 @@ class MyBinding extends Bindings{
     Get.put(Boxes());
     Get.put(ReportController());
     Get.put(navController());
-    Get.lazyPut(() => settingController(),);
+    Get.put( settingController(),);
     Get.put(ViedoSocket());
 
   }

@@ -40,53 +40,62 @@ class DbContant extends StatelessWidget {
             }
             final entries = snapshot.data!.reversed.toList();
 
-            if(Get.find<settingController>().alarm.value){
-              AudioPlayer audioPlayer=AudioPlayer();
-                   if (Get.find<Boxes>()
+            if (Get.find<settingController>().alarm.value) {
+              AudioPlayer audioPlayer = AudioPlayer();
+              if (Get.find<Boxes>()
                   .regBox
                   .where(
-                    (element) => element.plateNumber == entries.last.plateNum,
+                    (element) => element.plateNumber != entries.last.plateNum,
                   )
-                  .isNotEmpty){
-                  audioPlayer.play(AssetSource('assets/alarm.mp3'));
-                  }
+                  .isNotEmpty) {
+                audioPlayer.play(AssetSource('assets/alarm.mp3'));
+              }
+              Dio dio = Dio();
+              dio.post(
+                  'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/email?email=${Get.find<Boxes>().userbox.values.last.email}',
+                  data: {
+                    "plateNumber": entries.last.plateNum,
+                    "eDate": entries.last.eDate,
+                    "eTime": entries.last.eTime
+                  });
             }
 
             if (Get.find<Boxes>().settingbox.values.last.isRfid!) {
-              Dio dio=Dio();
+              Dio dio = Dio();
               if (Get.find<Boxes>()
                   .regBox
                   .where(
                     (element) => element.plateNumber == entries.last.plateNum,
                   )
                   .isNotEmpty) {
-
-                    if(Get.find<settingController>().rl1.value || Get.find<settingController>().rl2.value ){
-
-                    
-             
-                    dio.get('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=1').then((value) {
-                      if(value.statusCode==200) {
-                        dio.get('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=2');
+                if (Get.find<settingController>().rl1.value ||
+                    Get.find<settingController>().rl2.value) {
+                  dio
+                      .get(
+                          'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=1')
+                      .then(
+                    (value) {
+                      if (value.statusCode == 200) {
+                        dio.get(
+                            'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=2');
                       }
-                    },);
-
-
-                    }else if(Get.find<settingController>().rl1.value==true || Get.find<settingController>().rl2.value==false ){
-                      dio.get('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=1');
-                    }
-                    else if(Get.find<settingController>().rl1.value==false || Get.find<settingController>().rl2.value==true){
-                       dio.get('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=2');
-                    }
-                    else{
-                      Get.snackbar("", "مشکلی در رله پیش امده");
-
-                    }
-
-                  }else{
-                    //Alarm
-                    Get.snackbar("", "ورود غیر مجاز");
-                  }
+                    },
+                  );
+                } else if (Get.find<settingController>().rl1.value == true ||
+                    Get.find<settingController>().rl2.value == false) {
+                  dio.get(
+                      'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=1');
+                } else if (Get.find<settingController>().rl1.value == false ||
+                    Get.find<settingController>().rl2.value == true) {
+                  dio.get(
+                      'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=2');
+                } else {
+                  Get.snackbar("", "مشکلی در رله پیش امده");
+                }
+              } else {
+                //Alarm
+                Get.snackbar("", "ورود غیر مجاز");
+              }
             }
             return ListView.separated(
                 controller: ScrollController(
@@ -100,7 +109,7 @@ class DbContant extends StatelessWidget {
                       Get.find<tableController>().selectedIndex = index;
                       Get.find<tableController>().selectedmodel =
                           entries[index];
-                      print(entry.isarvand);
+           
                       Get.find<tableController>().update();
                     },
                     child: Visibility(

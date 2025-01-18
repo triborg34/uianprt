@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-
 import 'package:path_provider/path_provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
 import 'package:uianprt/controller/bindings.dart';
-
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/storagedb/cameras.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
@@ -56,6 +53,7 @@ class MyApp extends StatelessWidget {
         title: 'AmnAfarin',
         onReady: () async {
           printIps();
+
         },
         home: ModernLoginPage());
   }

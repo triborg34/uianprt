@@ -6,10 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-
 
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
@@ -24,7 +22,6 @@ class ReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Get.find<ReportController>().selectedItem = null;
     Get.find<ReportController>().firstime = null;
     Get.find<ReportController>().lastTime = null;
@@ -94,10 +91,13 @@ class ReportScreen extends StatelessWidget {
                                   rcontroller.selectedModel.length,
                                   (index) {
                                     return {
-                                      "Plate Number": convertToPersianString(
-                                          rcontroller
-                                              .selectedModel[index].plateNum!,
-                                          alphabetP2),
+                                      "Plate Number": rcontroller
+                                          .selectedModel[index].plateNum!
+                                      //  convertToPersianString(
+                                      //     rcontroller
+                                      //         .selectedModel[index].plateNum!,
+                                      //     alphabetP2),
+                                      ,
                                       "Name": Get.find<Boxes>()
                                               .regBox
                                               .where(
@@ -153,16 +153,45 @@ class ReportScreen extends StatelessWidget {
                                       "Char Percent": rcontroller
                                           .selectedModel[index].charPercent,
                                       "Date": rcontroller
-                                          .selectedModel[index].eDate!
-                                          .toPersianDate(),
+                                          .selectedModel[index].eDate!,
                                       "Time": rcontroller
-                                          .selectedModel[index].eTime!
-                                          .toPersianDigit(),
-                                      "Status": rcontroller.selectedModel[index]
-                                                  .status ==
-                                              "Active"
-                                          ? "White List"
-                                          : "Black List"
+                                          .selectedModel[index].eTime!,
+                                      "Status": Get.find<Boxes>()
+                                              .regBox
+                                              .where(
+                                                (element) =>
+                                                    element.plateNumber ==
+                                                    rcontroller
+                                                        .selectedModel[index]
+                                                        .plateNum,
+                                              )
+                                              .isEmpty
+                                          ? '-'
+                                          : Get.find<Boxes>()
+                                              .regBox[Get.find<Boxes>()
+                                                  .regBox
+                                                  .indexWhere(
+                                                    (element) =>
+                                                        element.plateNumber ==
+                                                        rcontroller
+                                                            .selectedModel[
+                                                                index]
+                                                            .plateNum,
+                                                  )]
+                                              .role!,
+                                              "Camera Name"
+                                              :    Get.find<Boxes>()
+                                                        .camerabox
+                                                        .values
+                                                        .firstWhere(
+                                                          (element) =>
+                                                              element.rtpath ==
+                                                              rcontroller
+                                                                  .selectedModel[
+                                                                      index]
+                                                                  .rtpath,
+                                                        )
+                                                        .nameCamera
                                     };
                                   },
                                 );
@@ -283,7 +312,6 @@ class ReportScreen extends StatelessWidget {
                                 rcontroller.lastdate =
                                     d.toDateTime().toString().split(' ')[0];
 
-                   
                                 rcontroller.update([1]);
                               },
                               child: Text(
@@ -312,7 +340,6 @@ class ReportScreen extends StatelessWidget {
                                 rcontroller.firstdate =
                                     d.toDateTime().toString().split(' ')[0];
 
-                        
                                 rcontroller.update([1]);
                               },
                               child: Text(
@@ -455,7 +482,12 @@ class ReportScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            child:Text("انتخاب",style: TextStyle(color: Colors.white,),)),
+                            child: Text(
+                              "انتخاب",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            )),
                         // rcontroller.platePicker == null
                         //     ? DropFunc(rcontroller)
                         Container(
@@ -603,11 +635,15 @@ class ReportScreen extends StatelessWidget {
                           itemCount: rcontroller.selectedModel.length, //todo
                           itemBuilder: (context, index) {
                             return Visibility(
-                              visible: convertToPersian(
-                                      rcontroller
-                                          .selectedModel[index].plateNum!,
-                                      alphabetP2)[0] !=
-                                  '-',
+                              visible:
+                                  rcontroller.selectedModel[index].isarvand ==
+                                          'arvand'
+                                      ? true
+                                      : convertToPersian(
+                                              rcontroller.selectedModel[index]
+                                                  .plateNum!,
+                                              alphabetP2)[0] !=
+                                          '-',
                               child: Container(
                                 width: Get.width,
                                 height: 50,
@@ -662,10 +698,21 @@ class ReportScreen extends StatelessWidget {
                                         width: 221,
                                         child: Center(
                                           child: Text(
-                                            rcontroller.selectedModel[index]
-                                                    .charPercent
-                                                    .toString() +
-                                                "%",
+                                            Get.find<Boxes>()
+                                                        .camerabox
+                                                        .values
+                                                        .firstWhere(
+                                                          (element) =>
+                                                              element.rtpath ==
+                                                              rcontroller
+                                                                  .selectedModel[
+                                                                      index]
+                                                                  .rtpath,
+                                                        )
+                                                        .gate ==
+                                                    "exit"
+                                                ? "دوربین خروجی"
+                                                : "دوربین ورودی",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 18),
@@ -778,7 +825,7 @@ class ReportScreen extends StatelessWidget {
                                             border: Border(
                                                 left: BorderSide(
                                                     color: purpule))),
-                                        width: 210,
+                                        width: 250,
                                         child: Center(
                                           child: InkWell(
                                               onTap: () {
@@ -801,7 +848,7 @@ class ReportScreen extends StatelessWidget {
                                     Container(
                                         padding: EdgeInsets.all(1.0),
                                         height: 50,
-                                        width: Get.width/9.03,
+                                        width: Get.width / 9.03,
                                         decoration: BoxDecoration(
                                             border: Border(
                                                 right:
@@ -809,9 +856,28 @@ class ReportScreen extends StatelessWidget {
                                                 left: BorderSide(
                                                     color: purpule))),
                                         child: Center(
-                                          child: LicanceNumber(
-                                              entry: rcontroller
-                                                  .selectedModel[index]),
+                                          child: rcontroller
+                                                      .selectedModel[index]
+                                                      .isarvand ==
+                                                  "arvand"
+                                              ? SizedBox(
+                                                  width: Get.width / 9.03,
+                                                  height: 50,
+                                                  child: Center(
+                                                    child: Text(
+                                                      rcontroller
+                                                          .selectedModel[index]
+                                                          .plateNum!
+                                                          .toPersianDigit(),
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 18),
+                                                    ),
+                                                  ),
+                                                )
+                                              : LicanceNumber(
+                                                  entry: rcontroller
+                                                      .selectedModel[index]),
                                         )),
                                   ],
                                 ),
@@ -990,7 +1056,6 @@ class ReportScreen extends StatelessWidget {
         rcontroller.firstdate == null &&
         rcontroller.firstime == null &&
         rcontroller.platePicker != null) {
-
       //plate picker is not null
 
       rcontroller.selectedModel = rcontroller.pModel.where(
@@ -1124,9 +1189,9 @@ Container header2() {
         headerOftable2(" نام و نام خانوادگی"),
         headerOftable2("نوع ماشین"),
         headerOftable2("درصد تشخیص پلاک"),
-        headerOftable2("درصد تشخیص حروف"),
+        headerOftable2("دوربین"),
         headerOftable2("تاریخ ورود"),
-        headerOftable2("ساعت ورود")
+        headerOftable2("ساعت ورود"),
       ],
     ),
   );
@@ -1163,7 +1228,7 @@ Container headerOftable2(String title) {
                   ? BorderSide(color: purpule)
                   : BorderSide.none)),
       height: 50,
-      width: Get.width/9.26,
+      width: Get.width / 9.26,
       child: Center(
           child: Text(
         title,
@@ -1227,8 +1292,6 @@ class ReportTextField extends StatelessWidget {
 //   }
 // }
 
-
-
 Future<void> saveToCsv(List<Map<String, dynamic>> data) async {
   if (data.isEmpty) return;
 
@@ -1251,14 +1314,13 @@ Future<void> saveToCsv(List<Map<String, dynamic>> data) async {
 
   // Write data
   for (final row in data) {
-    final values = headers.map((header) => row[header]?.toString() ?? '').toList();
+    final values =
+        headers.map((header) => row[header]?.toString() ?? '').toList();
     sink.writeln(values.join(','));
   }
 
   await sink.flush();
   await sink.close();
-
-
 }
 
 // Future<void> saveToExel(List<Map<String, dynamic>> data) async {

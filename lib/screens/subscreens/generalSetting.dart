@@ -20,6 +20,7 @@ class Generalsetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(Get.find<Boxes>().settingbox.values.last.plateConf!);
     Get.find<settingController>().psliderValue.value =
         Get.find<Boxes>().settingbox.values.last.plateConf!;
     Get.find<settingController>().csliderValue.value =

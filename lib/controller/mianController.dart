@@ -140,9 +140,9 @@ class settingController extends GetxController {
   
 
   @override
-  void onReady() {
+  void onReady()async {
     if (Get.find<Boxes>().settingbox.isEmpty) {
-      Get.find<Boxes>().settingbox.add(Setting(
+   await   Get.find<Boxes>().settingbox.add(Setting(
           charConf: csliderValue.value,
           clockType: clockType,
           plateConf: psliderValue.value,
@@ -159,6 +159,7 @@ class settingController extends GetxController {
           rfidport: rfidport,
           alarm: alarm.value
           ));
+          print("Box was empty");
     } else {
       print("box is not eampty");
     }
