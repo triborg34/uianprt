@@ -20,7 +20,7 @@ class Generalsetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Get.find<Boxes>().settingbox.values.last.plateConf!);
+
     Get.find<settingController>().psliderValue.value =
         Get.find<Boxes>().settingbox.values.last.plateConf!;
     Get.find<settingController>().csliderValue.value =
@@ -35,7 +35,7 @@ class Generalsetting extends StatelessWidget {
         Get.find<Boxes>().settingbox.values.last.timeZone!;
     Get.find<settingController>().clockType =
         Get.find<Boxes>().settingbox.values.last.clockType!;
-        print(  Get.find<Boxes>().settingbox.values.last.charConf!);
+
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -127,9 +127,7 @@ class Generalsetting extends StatelessWidget {
                                     Get.find<settingController>()
                                         .csliderValue
                                         .value = value;
-                                        print( Get.find<settingController>()
-                                        .csliderValue
-                                        .value);
+                     
                                   },
                                 ),
                               )),
@@ -564,7 +562,7 @@ class Generalsetting extends StatelessWidget {
                     children: [
                       FutursOfSystemRow(lable: "نسخه نرم افزار:"),
                       Text(
-                        "0.0.1",
+                        "1.0.0",
                         style:
                             TextStyle(color: Colors.white, fontFamily: 'aial'),
                       )
@@ -616,7 +614,7 @@ class Generalsetting extends StatelessWidget {
                     children: [
                       FutursOfSystemRow(lable: "تاریخ انتشار:"),
                       Text(
-                        "1403/08/15",
+                        "1403/10/29",
                         style:
                             TextStyle(color: Colors.white, fontFamily: 'aial'),
                       )

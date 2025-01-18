@@ -159,9 +159,9 @@ class settingController extends GetxController {
           rfidport: rfidport,
           alarm: alarm.value
           ));
-          print("Box was empty");
+
     } else {
-      print("box is not eampty");
+
     }
     super.onReady();
   }

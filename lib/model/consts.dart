@@ -328,7 +328,7 @@ late String rawAddress;
  Future printIps() async {
   try{
     for (var interface in await NetworkInterface.list()) {
-      print('== Interface: ${interface.name} ==');
+
       ethname=interface.name;
       for (var addr in interface.addresses) {
 

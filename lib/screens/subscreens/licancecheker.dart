@@ -91,7 +91,7 @@ class _LicancechekerState extends State<Licancecheker> {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  print(controller.text);
+             
                   Dio dio = Dio();
                   String url = 'https://sheetdb.io/api/v1/znsflyn60etgx';
                   var response = await dio.get(url,
@@ -114,7 +114,11 @@ class _LicancechekerState extends State<Licancecheker> {
                       }
                     }
                   } else {
-                    print("Wrong");
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                      "خطا در برقراری ارتباط با سرور",
+                      textDirection: TextDirection.rtl,
+                    )));
                   }
                 },
                 child: Text("ارسال به سرور"))

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:uianprt/model/consts.dart';
 
-import '../controller/mianController.dart';
 
 
 class Infoscreen extends StatelessWidget {
@@ -26,14 +24,14 @@ class Infoscreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-               KeyValueRow(keyString: "BuilDNumber", valueString: "SN/1403001002BETA"),Divider(color: purpule,),
-               KeyValueRow(keyString: "UpdateNo", valueString: "14030912"),Divider(color: purpule,),
+               KeyValueRow(keyString: "BuilDNumber", valueString: "SN/1403001002"),Divider(color: purpule,),
+               KeyValueRow(keyString: "UpdateNo", valueString: "14031029"),Divider(color: purpule,),
                KeyValueRow(keyString: "Last Update", valueString: "${DateTime.now().year.toString()}/${DateTime.now().month.toString()}/${DateTime.now().day.toString()}"),Divider(color: purpule),
                  KeyValueRow(keyString: "Train Model Serial", valueString: "YOLOV5M100100"),Divider(color: purpule,),
                SizedBox(height: 0,),
               
                SizedBox(height: 40,width: 200,child: ElevatedButton(onPressed: (){
-                print(Get.find<ReportController>().pModel.last.isarvand);
+
                }, child: Center(child: Text("Check For Upadte",style: TextStyle(fontSize: 14),)))),
               
 
