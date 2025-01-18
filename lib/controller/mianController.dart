@@ -122,8 +122,8 @@ class navController extends GetxController {
 }
 
 class settingController extends GetxController {
-  var psliderValue = 0.7.obs;
-  var csliderValue = 0.5.obs;
+  var psliderValue = 0.8.obs;
+  var csliderValue = 0.75.obs;
   var hardWareValue = 'cuda';
   var pathOfdb = '../engine/database/entrieses.db'.obs;
   var pathOfOutput = '../engine/'.obs;
