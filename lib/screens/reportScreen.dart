@@ -241,6 +241,7 @@ class ReportScreen extends StatelessWidget {
                                 var t = await showTimePicker(
                                   context: context,
                                   initialTime: TimeOfDay.now(),
+                                  helpText: "ساعت را وارد کنید",
                                   confirmText: "تایید",
                                   cancelText: "لغو",
                                   hourLabelText: "ساعت",
@@ -277,6 +278,7 @@ class ReportScreen extends StatelessWidget {
                               onPressed: () async {
                                 var t = await showTimePicker(
                                   context: context,
+                                  helpText: "ساعت را وارد کنید",
                                   confirmText: "تایید",
                                   cancelText: "لغو",
                                   hourLabelText: "ساعت",
