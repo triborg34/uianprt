@@ -1307,7 +1307,7 @@ Future<void> saveToCsv(List<Map<String, dynamic>> data) async {
   if (data.isEmpty) return;
 
   // Define the custom directory path
-  final directory = Directory('D:/Codes/uianprt/output/');
+  final directory = Directory('output/');
   if (!await directory.exists()) {
     await directory.create(recursive: true);
   }
