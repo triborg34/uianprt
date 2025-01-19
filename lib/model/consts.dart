@@ -311,8 +311,9 @@ String generateRandomString(int len) {
 
 Future<Map<String, String>> loadConfig() async {
   // For asset-based file
-  final configString = await rootBundle.loadString('assets/config.json');
-  final Map<String, dynamic> config = jsonDecode(configString);
+  final configString = await File('assets/config.json');
+  //  await rootBundle.loadString('assets/config.json');
+  final Map<String, dynamic> config = jsonDecode(configString.readAsStringSync());
   
   // Convert dynamic values to strings
   return config.map((key, value) => MapEntry(key, value.toString()));
