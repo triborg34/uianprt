@@ -241,10 +241,15 @@ class ReportScreen extends StatelessWidget {
                                 var t = await showTimePicker(
                                   context: context,
                                   initialTime: TimeOfDay.now(),
+                                  confirmText: "تایید",
+                                  cancelText: "لغو",
+                                  hourLabelText: "ساعت",
+                                  minuteLabelText: "دقیقه",
                                   initialEntryMode: TimePickerEntryMode.input,
                                   builder: (context, child) {
                                     return MediaQuery(
                                         data: MediaQuery.of(context).copyWith(
+                                          
                                             alwaysUse24HourFormat: true),
                                         child: child!);
                                   },
@@ -272,6 +277,10 @@ class ReportScreen extends StatelessWidget {
                               onPressed: () async {
                                 var t = await showTimePicker(
                                   context: context,
+                                  confirmText: "تایید",
+                                  cancelText: "لغو",
+                                  hourLabelText: "ساعت",
+                                  minuteLabelText: "دقیقه",
                                   initialTime: TimeOfDay.now(),
                                   initialEntryMode: TimePickerEntryMode.input,
                                   builder: (context, child) {

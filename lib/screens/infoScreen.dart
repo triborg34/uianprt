@@ -1,7 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:uianprt/model/consts.dart';
-
-
 
 class Infoscreen extends StatelessWidget {
   const Infoscreen({super.key});
@@ -12,29 +11,74 @@ class Infoscreen extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Column(
-      
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             padding: EdgeInsets.all(10),
             margin: EdgeInsets.all(15),
-            decoration: BoxDecoration(border: Border.all(color: purpule),borderRadius: BorderRadius.circular(10)),
-            child: Column(textDirection: TextDirection.rtl,
+            decoration: BoxDecoration(
+                border: Border.all(color: purpule),
+                borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              textDirection: TextDirection.rtl,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-               KeyValueRow(keyString: "BuilDNumber", valueString: "SN/1403001002"),Divider(color: purpule,),
-               KeyValueRow(keyString: "UpdateNo", valueString: "14031029"),Divider(color: purpule,),
-               KeyValueRow(keyString: "Last Update", valueString: "${DateTime.now().year.toString()}/${DateTime.now().month.toString()}/${DateTime.now().day.toString()}"),Divider(color: purpule),
-                 KeyValueRow(keyString: "Train Model Serial", valueString: "YOLOV5M100100"),Divider(color: purpule,),
-               SizedBox(height: 0,),
-              
-               SizedBox(height: 40,width: 200,child: ElevatedButton(onPressed: (){
-
-               }, child: Center(child: Text("Check For Upadte",style: TextStyle(fontSize: 14),)))),
-              
-
+                KeyValueRow(
+                    keyString: "BuilDNumber", valueString: "SN/1403001002"),
+                Divider(
+                  color: purpule,
+                ),
+                KeyValueRow(keyString: "UpdateNo", valueString: "14031029"),
+                Divider(
+                  color: purpule,
+                ),
+                KeyValueRow(
+                    keyString: "Last Update",
+                    valueString:
+                        "${DateTime.now().year.toString()}/${DateTime.now().month.toString()}/${DateTime.now().day.toString()}"),
+                Divider(color: purpule),
+                KeyValueRow(
+                    keyString: "Train Model Serial",
+                    valueString: "YOLOV5M100100"),
+                Divider(
+                  color: purpule,
+                ),
+                SizedBox(
+                  height: 0,
+                ),
+                SizedBox(
+                    height: 40,
+                    width: 200,
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          Dio dio = Dio();
+                          dio
+                              .get("https://sheetdb.io/api/v1/r2mdhso1s49lp")
+                              .then(
+                            (value) {
+                              if (value.statusCode == 200) {
+                                value.data[0]['no'] == "true"
+                                    ? ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                            content: Text(
+                                                "بروزرسانی در دسترس است با پشتیبانی تماس بگیرید")))
+                                    : ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                            content: Text(
+                                                "درحال استفاده از اخرین بروزرسانی هستید")));
+                              }else{
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("خطا در برقراری ارتباط")));
+                              }
+                            },
+                          );
+                        },
+                        child: Center(
+                            child: Text(
+                          "بروزرسانی",
+                          style: TextStyle(fontSize: 14),
+                        )))),
               ],
             ),
           ),
@@ -99,18 +143,21 @@ class KeyValueRow extends StatelessWidget {
           color: Colors.transparent,
           width: 150,
           child: Text(
-            keyString+" : ",
+            keyString + " : ",
             style: TextStyle(
-                color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold,fontFamily: 'arial'),
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'arial'),
           ),
         ),
-        
-
-    
         Text(
-          "  "+valueString,
+          "  " + valueString,
           style: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold,fontFamily: "arial"),
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              fontFamily: "arial"),
         )
       ],
     );

@@ -339,6 +339,7 @@ class PortSettings extends StatelessWidget {
                       value: Get.find<settingController>().alarm.value,
                       onChanged: (value) {
                         Get.find<settingController>().alarm.value = value;
+                        Get.snackbar("", "فعال شد",colorText: Colors.white);
                       },
                     )),
               ],
