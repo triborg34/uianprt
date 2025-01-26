@@ -13,6 +13,13 @@ import 'package:uianprt/screens/loginScreen.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
+
+  //TODO:Add Pdf
+  //TODO:Fix Setting🤓
+  //TODO:Fix try and expects🤓
+  //TODO:Licance Demo
+  //TODO:Button to remove Licance
+  //TODO:Maybe Reset
   WidgetsFlutterBinding.ensureInitialized();
   final config = await loadConfig();
 

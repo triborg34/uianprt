@@ -20,7 +20,7 @@ class Generalsetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    try{
     Get.find<settingController>().psliderValue.value =
         Get.find<Boxes>().settingbox.values.last.plateConf!;
     Get.find<settingController>().csliderValue.value =
@@ -35,8 +35,25 @@ class Generalsetting extends StatelessWidget {
         Get.find<Boxes>().settingbox.values.last.timeZone!;
     Get.find<settingController>().clockType =
         Get.find<Boxes>().settingbox.values.last.clockType!;
-
-
+         
+    }catch(e){
+         Get.find<settingController>().psliderValue= 0.8.obs;
+    Get.find<settingController>().csliderValue = 0.75.obs;
+    Get.find<settingController>().hardWareValue = 'cuda';
+    Get.find<settingController>().pathOfdb = '../../../../engine/database/entrieses.db'.obs;
+    Get.find<settingController>().pathOfOutput = '../engine/'.obs;
+    Get.find<settingController>().clockType = '24';
+    Get.find<settingController>().timezoneseleted = "Asia/Tehran";
+    Get.find<settingController>().port = 5000.toString();
+    Get.find<settingController>().connect = 8000.toString();
+    Get.find<settingController>().isRfid=false.obs;
+    Get.find<settingController>().rl1=false.obs;
+    Get.find<settingController>().rl2=false.obs;
+    Get.find<settingController>().rfidip='192.168.1.91';
+    Get.find<settingController>().rfidport=2000;
+    Get.find<settingController>().alarm=false.obs;
+   
+    }
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -89,7 +106,6 @@ class Generalsetting extends StatelessWidget {
                                     Get.find<settingController>()
                                         .psliderValue
                                         .value = value;
-                                   
                                   },
                                 ),
                               )),
@@ -127,7 +143,6 @@ class Generalsetting extends StatelessWidget {
                                     Get.find<settingController>()
                                         .csliderValue
                                         .value = value;
-                     
                                   },
                                 ),
                               )),
@@ -153,15 +168,24 @@ class Generalsetting extends StatelessWidget {
                           FutursOfSystemRow(lable: "مسیر دیتابیس"),
                           ElevatedButton(
                             onPressed: () {
-                              final file = OpenFilePicker()
-                                ..filterSpecification = {
-                                  'SQLite Database': '*.db',
-                                }
-                                ..initialDirectory = 'C:\\'
-                                ..defaultFilterIndex = 0
-                                ..defaultExtension = 'db';
-                              Get.find<settingController>().pathOfdb.value =
-                                  file.getFile()!.path;
+                              try {
+                                final file = OpenFilePicker()
+                                  ..filterSpecification = {
+                                    'SQLite Database': '*.db',
+                                  }
+                                  ..initialDirectory = 'C:\\'
+                                  ..defaultFilterIndex = 0
+                                  ..defaultExtension = 'db';
+                                Get.find<settingController>().pathOfdb.value =
+                                    file.getFile()!.path;
+                              } catch (e) {
+                                Get.find<settingController>().pathOfdb.value =
+                                    Get.find<Boxes>()
+                                        .settingbox
+                                        .values
+                                        .last
+                                        .dbPath!;
+                              }
                             },
                             child: Obx(
                               () => Text(
@@ -255,12 +279,13 @@ class Generalsetting extends StatelessWidget {
                           FutursOfSystemRow(lable: "مسیر تصاویر"),
                           ElevatedButton(
                             onPressed: () {
+                              try{
                               final file = DirectoryPicker();
                               Get.find<settingController>().pathOfOutput.value =
                                   file.getDirectory()!.path;
-                     
-                          
-                            },
+                            }catch(e){
+                                 Get.find<settingController>().pathOfOutput.value=Get.find<Boxes>().settingbox.values.last.outPutPath!;
+                            }},
                             child: Obx(
                               () => Text(
                                 Get.find<settingController>()
@@ -309,18 +334,45 @@ class Generalsetting extends StatelessWidget {
                             '/';
 
                     configFile.writeAsStringSync(json.encode(configContent));
-                 
-                    await Get.find<Boxes>().settingbox.add(
-                          Setting(
-                            alarm: Get.find<Boxes>().settingbox.values.last.alarm!,
-                            connect: Get.find<Boxes>().settingbox.values.last.connect!,
-                            isRfid:Get.find<Boxes>().settingbox.values.last.isRfid! ,
-                            port: Get.find<Boxes>().settingbox.values.last.port!,
-                            rl1: Get.find<Boxes>().settingbox.values.last.rl1!,
-                            rl2: Get.find<Boxes>().settingbox.values.last.rl2!,
-                            rfidip: Get.find<Boxes>().settingbox.values.last.rfidip!,
-                            rfidport: Get.find<Boxes>().settingbox.values.last.rfidport!,
 
+                    await Get.find<Boxes>()
+                        .settingbox
+                        .add(
+                          Setting(
+                              alarm: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .alarm!,
+                              connect: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .connect!,
+                              isRfid: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .isRfid!,
+                              port: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .port!,
+                              rl1:
+                                  Get.find<Boxes>().settingbox.values.last.rl1!,
+                              rl2:
+                                  Get.find<Boxes>().settingbox.values.last.rl2!,
+                              rfidip: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .rfidip!,
+                              rfidport: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .rfidport!,
                               plateConf: Get.find<settingController>()
                                   .psliderValue
                                   .value,
@@ -338,39 +390,46 @@ class Generalsetting extends StatelessWidget {
                                   Get.find<settingController>().timezoneseleted,
                               clockType:
                                   Get.find<settingController>().clockType),
-                        ).then((value) => Get.snackbar("ذخیره شد", "",colorText: Colors.white),);
-                        
-
-          
+                        )
+                        .then(
+                          (value) => Get.snackbar("ذخیره شد", "",
+                              colorText: Colors.white),
+                        );
 
                     Dio dio = Dio();
-                    var res =
-                        await dio.post('http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config', data: {
-                      "section": "DEFAULT",
-                      "key": "character_confidence",
-                      "value": Get.find<settingController>()
-                          .csliderValue
-                          .value
-                          .toStringAsFixed(2)
-                    });
+                    var res = await dio.post(
+                        'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config',
+                        data: {
+                          "section": "DEFAULT",
+                          "key": "character_confidence",
+                          "value": Get.find<settingController>()
+                              .csliderValue
+                              .value
+                              .toStringAsFixed(2)
+                        });
                     if (res.statusCode == 200) {
-                      await dio.post("http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config", data: {
-                        "section": "DEFAULT",
-                        "key": "plate_confidence",
-                        "value":
-                            (Get.find<settingController>().psliderValue.value *
+                      await dio.post(
+                          "http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config",
+                          data: {
+                            "section": "DEFAULT",
+                            "key": "plate_confidence",
+                            "value": (Get.find<settingController>()
+                                        .psliderValue
+                                        .value *
                                     100)
                                 .toInt()
                                 .toString()
-                      });
-                      await dio.post("http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config", data: {
-                        "section": "DEFAULT",
-                        "key": "device",
-                        "value": Get.find<settingController>()
-                            .hardWareValue
-                            .toString()
-                      });
-                    Get.snackbar("", "ذخیره شد");
+                          });
+                      await dio.post(
+                          "http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/config",
+                          data: {
+                            "section": "DEFAULT",
+                            "key": "device",
+                            "value": Get.find<settingController>()
+                                .hardWareValue
+                                .toString()
+                          });
+                      Get.snackbar("", "ذخیره شد");
                     }
                   },
                 ),
@@ -380,29 +439,37 @@ class Generalsetting extends StatelessWidget {
                 ElevatedButton(
                   child: Text("پیش فرض"),
                   onPressed: () async {
-                  await  Get.find<Boxes>().settingbox.clear();
-                    await Get.find<Boxes>().settingbox.add(
-                          Setting(
-
-                          alarm: Get.find<settingController>().alarm.value,
-                              plateConf: Get.find<settingController>().psliderValue.value,
-                              charConf: Get.find<settingController>().csliderValue.value,
-                              hardWare: Get.find<settingController>().hardWareValue,
-                              dbPath:Get.find<settingController>().pathOfdb.value, 
-                              outPutPath: Get.find<settingController>().pathOfOutput.value,
-                              timeZone: Get.find<settingController>().timezoneseleted,
-                              clockType: Get.find<settingController>().clockType,
-                              connect:  Get.find<settingController>().connect,
-                              isRfid: Get.find<settingController>().isRfid.value,
-                              port: Get.find<settingController>().port,
-                              rl1: Get.find<settingController>().rl1.value,
-                              rl2: Get.find<settingController>().rl2.value,
-                              rfidip: Get.find<settingController>().rfidip,
-                              rfidport: Get.find<settingController>().rfidport
-
-                              )
-
-                        ).then((value) => Get.snackbar("", "پیش فرض شد"),);
+                    await Get.find<Boxes>().settingbox.clear();
+                    await Get.find<Boxes>()
+                        .settingbox
+                        .add(Setting(
+                            alarm: Get.find<settingController>().alarm.value,
+                            plateConf: Get.find<settingController>()
+                                .psliderValue
+                                .value,
+                            charConf: Get.find<settingController>()
+                                .csliderValue
+                                .value,
+                            hardWare:
+                                Get.find<settingController>().hardWareValue,
+                            dbPath:
+                                Get.find<settingController>().pathOfdb.value,
+                            outPutPath: Get.find<settingController>()
+                                .pathOfOutput
+                                .value,
+                            timeZone:
+                                Get.find<settingController>().timezoneseleted,
+                            clockType: Get.find<settingController>().clockType,
+                            connect: Get.find<settingController>().connect,
+                            isRfid: Get.find<settingController>().isRfid.value,
+                            port: Get.find<settingController>().port,
+                            rl1: Get.find<settingController>().rl1.value,
+                            rl2: Get.find<settingController>().rl2.value,
+                            rfidip: Get.find<settingController>().rfidip,
+                            rfidport: Get.find<settingController>().rfidport))
+                        .then(
+                          (value) => Get.snackbar("", "پیش فرض شد"),
+                        );
                   },
                 ),
               ],
@@ -476,16 +543,44 @@ class Generalsetting extends StatelessWidget {
                 ElevatedButton(
                   child: Text("ذخیره"),
                   onPressed: () async {
-                    await Get.find<Boxes>().settingbox.add(
+                    await Get.find<Boxes>()
+                        .settingbox
+                        .add(
                           Setting(
-                            alarm: Get.find<Boxes>().settingbox.values.last.alarm!,
-                                                        connect: Get.find<Boxes>().settingbox.values.last.connect!,
-                            isRfid:Get.find<Boxes>().settingbox.values.last.isRfid! ,
-                            port: Get.find<Boxes>().settingbox.values.last.port!,
-                            rl1: Get.find<Boxes>().settingbox.values.last.rl1!,
-                            rl2: Get.find<Boxes>().settingbox.values.last.rl2!,
-                            rfidip: Get.find<Boxes>().settingbox.values.last.rfidip!,
-                            rfidport: Get.find<Boxes>().settingbox.values.last.rfidport!,
+                              alarm: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .alarm!,
+                              connect: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .connect!,
+                              isRfid: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .isRfid!,
+                              port: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .port!,
+                              rl1:
+                                  Get.find<Boxes>().settingbox.values.last.rl1!,
+                              rl2:
+                                  Get.find<Boxes>().settingbox.values.last.rl2!,
+                              rfidip: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .rfidip!,
+                              rfidport: Get.find<Boxes>()
+                                  .settingbox
+                                  .values
+                                  .last
+                                  .rfidport!,
                               plateConf: Get.find<settingController>()
                                   .psliderValue
                                   .value,
@@ -503,7 +598,11 @@ class Generalsetting extends StatelessWidget {
                                   Get.find<settingController>().timezoneseleted,
                               clockType:
                                   Get.find<settingController>().clockType),
-                        ).then((value) => Get.snackbar("ذخیره شد", "",colorText: Colors.white),);
+                        )
+                        .then(
+                          (value) => Get.snackbar("ذخیره شد", "",
+                              colorText: Colors.white),
+                        );
                   },
                 ),
                 SizedBox(
@@ -511,27 +610,38 @@ class Generalsetting extends StatelessWidget {
                 ),
                 ElevatedButton(
                   child: Text("پیش فرض"),
-                  onPressed: () async{
-                        await  Get.find<Boxes>().settingbox.clear();
-                    await Get.find<Boxes>().settingbox.add(
-                          Setting(
+                  onPressed: () async {
+                    await Get.find<Boxes>().settingbox.clear();
+                    await Get.find<Boxes>()
+                        .settingbox
+                        .add(Setting(
                             alarm: Get.find<settingController>().alarm.value,
-                              plateConf: Get.find<settingController>().psliderValue.value,
-                              charConf: Get.find<settingController>().csliderValue.value,
-                              hardWare: Get.find<settingController>().hardWareValue,
-                              dbPath: Get.find<settingController>().pathOfdb.value,
-                              outPutPath: Get.find<settingController>().pathOfOutput.value,
-                              timeZone: Get.find<settingController>().timezoneseleted,
-                              clockType: Get.find<settingController>().clockType,
-                              connect: Get.find<settingController>().connect,
-                              isRfid: Get.find<settingController>().isRfid.value,
-                              port: Get.find<settingController>().port,
-                              rl1: Get.find<settingController>().rl1.value,
-                              rl2: Get.find<settingController>().rl2.value,
-                              rfidip: Get.find<settingController>().rfidip,
-                              rfidport: Get.find<settingController>().rfidport
-                          )
-                        ).then((value) => Get.snackbar("", "پیش فرض شد"),);
+                            plateConf: Get.find<settingController>()
+                                .psliderValue
+                                .value,
+                            charConf: Get.find<settingController>()
+                                .csliderValue
+                                .value,
+                            hardWare:
+                                Get.find<settingController>().hardWareValue,
+                            dbPath:
+                                Get.find<settingController>().pathOfdb.value,
+                            outPutPath: Get.find<settingController>()
+                                .pathOfOutput
+                                .value,
+                            timeZone:
+                                Get.find<settingController>().timezoneseleted,
+                            clockType: Get.find<settingController>().clockType,
+                            connect: Get.find<settingController>().connect,
+                            isRfid: Get.find<settingController>().isRfid.value,
+                            port: Get.find<settingController>().port,
+                            rl1: Get.find<settingController>().rl1.value,
+                            rl2: Get.find<settingController>().rl2.value,
+                            rfidip: Get.find<settingController>().rfidip,
+                            rfidport: Get.find<settingController>().rfidport))
+                        .then(
+                          (value) => Get.snackbar("", "پیش فرض شد"),
+                        );
                   },
                 ),
               ],
