@@ -18,6 +18,7 @@ class _LicancechekerState extends State<Licancecheker> {
 
   int _intValue = 0;
   bool _boolValue = false;
+
   @override
   void initState() {
     _loadSavedValues();
@@ -29,9 +30,11 @@ class _LicancechekerState extends State<Licancecheker> {
     final prefs = await SharedPreferences.getInstance();
     _intValue = prefs.getInt('myIntValue') ?? 0;
     _boolValue = prefs.getBool('myBoolValue') ?? false;
+
     if (_boolValue) {
 
       Get.find<Boxes>().nol.value=_intValue;
+
      
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => SplashScreen()),
@@ -44,6 +47,7 @@ class _LicancechekerState extends State<Licancecheker> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('myIntValue', _intValue);
     await prefs.setBool('myBoolValue', _boolValue);
+
   }
 
   @override
@@ -103,6 +107,10 @@ class _LicancechekerState extends State<Licancecheker> {
                         nol = json['nol'];
                         _intValue = int.parse(nol);
                         _boolValue = true;
+                     
+                        if(json['sn'].contains("demo")){
+                            _boolValue=false;
+                        }
                         await _saveValues();
                         Get.to(() => MainView(path));
                       } else {

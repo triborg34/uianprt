@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 import 'package:uianprt/controller/bindings.dart';
+
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/storagedb/cameras.dart';
 import 'package:uianprt/model/storagedb/registredDb.dart';
@@ -17,9 +19,8 @@ void main() async {
   //TODO:Add Pdf
   //TODO:Fix Setting🤓
   //TODO:Fix try and expects🤓
-  //TODO:Licance Demo
-  //TODO:Button to remove Licance
-  //TODO:Maybe Reset
+  //TODO:Licance Demo🤓
+
   WidgetsFlutterBinding.ensureInitialized();
   final config = await loadConfig();
 
@@ -41,7 +42,6 @@ void main() async {
 
   //Clean Up Code Refactor all codes and remove duplicate code
 
-
   runApp(MyApp());
 }
 
@@ -60,7 +60,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'AmnAfarin',
         onReady: () async {
+          
           printIps();
+     
 
         },
         home: ModernLoginPage());
