@@ -40,7 +40,7 @@ class feildController extends GetxController {
 }
 
 class Boxes extends GetxController {
-    var nol=0.obs;
+    var nol=1.obs;
 
   //
   Box<RegistredDb> hivebox = Hive.box<RegistredDb>('regbox');

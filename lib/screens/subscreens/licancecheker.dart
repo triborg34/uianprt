@@ -104,16 +104,19 @@ class _LicancechekerState extends State<Licancecheker> {
                   if (response.statusCode == 200) {
                     for (var json in response.data) {
                       if (json['sn'] == controller.text) {
+                        
                         nol = json['nol'];
                         _intValue = int.parse(nol);
                         _boolValue = true;
                      
-                        if(json['sn'].contains("demo")){
-                            _boolValue=false;
-                        }
+                    
                         await _saveValues();
                         Get.to(() => MainView(path));
-                      } else {
+                        break;
+                        
+                      }
+                       else {
+                        
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(
                           "شناسه سریال اشتباه است",

@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+
 import 'package:uianprt/controller/bindings.dart';
 
 import 'package:uianprt/model/consts.dart';
@@ -27,6 +28,7 @@ void main() async {
   path = config['db_path']!;
   imagesPath = config['images_folder_path']!;
   tz.initializeTimeZones();
+
 
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
