@@ -43,7 +43,7 @@ void main() async {
   await Hive.openBox<Setting>('settingbox');
 
   //Clean Up Code Refactor all codes and remove duplicate code
-
+  
   runApp(MyApp());
 }
 

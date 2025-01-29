@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uianprt/controller/mianController.dart';
@@ -16,7 +14,7 @@ class EnhancedCarRegistrationDialog extends StatefulWidget {
   final bool isRegister;
   int index;
 
-   EnhancedCarRegistrationDialog(
+  EnhancedCarRegistrationDialog(
       {Key? key,
       required this.index,
       required this.entry,
@@ -35,40 +33,57 @@ class _EnhancedCarRegistrationDialogState
   final List<String> _roles = ['مجاز', 'غیر مجاز'];
   @override
   void initState() {
-    if(widget.isEditing){
-              Get.find<feildController>().Fname.text=Get.find<Boxes>().regBox[widget.index].name!.split(' ').toList()[1];
-    Get.find<feildController>().carName.text=Get.find<Boxes>().regBox[widget.index].carName!;
-    Get.find<feildController>().socialNumber.text=Get.find<Boxes>().regBox[widget.index].socialNumber!;
-    Get.find<feildController>().name.text=Get.find<Boxes>().regBox[widget.index].name!.split(' ').toList()[0];
-    _selectedRole=Get.find<Boxes>().regBox[widget.index].role;
+    if (widget.isEditing) {
+      Get.find<feildController>().Fname.text =
+          Get.find<Boxes>().regBox[widget.index].name!.split(' ').toList()[1];
+      Get.find<feildController>().carName.text =
+          Get.find<Boxes>().regBox[widget.index].carName!;
+      Get.find<feildController>().socialNumber.text =
+          Get.find<Boxes>().regBox[widget.index].socialNumber!;
+      Get.find<feildController>().name.text =
+          Get.find<Boxes>().regBox[widget.index].name!.split(' ').toList()[0];
+      _selectedRole = Get.find<Boxes>().regBox[widget.index].role;
 
+      //
 
-    //
+      var d = Get.find<Boxes>()
+          .regBox[widget.index]
+          .plateNumber!
+          .split(RegExp(r'[0-9]'))
+          .toList()[2]
+          .toString();
+      var ind = plateAlphabet.keys.toList().indexOf(d);
+      var f = plateAlphabet.values.elementAt(ind);
 
+      Get.find<ReportController>().persianalhpabet.value = f;
+      Get.find<ReportController>().engishalphabet = d;
+      Get.find<ReportController>().firtTwodigits.text = Get.find<Boxes>()
+          .regBox[widget.index]
+          .plateNumber!
+          .split(RegExp(r'[a-z,A-Z]'))
+          .toList()[0];
+      Get.find<ReportController>().lastTwoDigits.text = Get.find<Boxes>()
+          .regBox[widget.index]
+          .plateNumber!
+          .split(RegExp(r'[a-z,A-Z]'))
+          .toList()[1]
+          .substring(0, 3);
 
-    var d=Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[0-9]')).toList()[2].toString();
-    var ind=plateAlphabet.keys.toList().indexOf(d);
-    var f=plateAlphabet.values.elementAt(ind);
-
-                    Get.find<ReportController>().persianalhpabet.value = f;
-                    Get.find<ReportController>().engishalphabet =  d;
-                                  Get.find<ReportController>().firtTwodigits.text=Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[0];
-                                 Get.find<ReportController>().lastTwoDigits.text= Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[1].substring(0,3);
-                                 
-                                 Get.find<ReportController>().threedigits.text= Get.find<Boxes>().regBox[widget.index].plateNumber!.split(RegExp(r'[a-z,A-Z]')).toList()[1].substring(3,5);
-
-
-
-
-    }
-    else{
-        Get.find<feildController>().Fname.clear();
-    Get.find<feildController>().carName.clear();
-    Get.find<feildController>().socialNumber.clear();
-    Get.find<feildController>().name.clear();
+      Get.find<ReportController>().threedigits.text = Get.find<Boxes>()
+          .regBox[widget.index]
+          .plateNumber!
+          .split(RegExp(r'[a-z,A-Z]'))
+          .toList()[1]
+          .substring(3, 5);
+    } else {
+      Get.find<feildController>().Fname.clear();
+      Get.find<feildController>().carName.clear();
+      Get.find<feildController>().socialNumber.clear();
+      Get.find<feildController>().name.clear();
     }
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -94,7 +109,7 @@ class _EnhancedCarRegistrationDialogState
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-              widget.isEditing? "ویرایش اطلاعات خودرو":  "ثبت اطلاعات خودرو",
+                widget.isEditing ? "ویرایش اطلاعات خودرو" : "ثبت اطلاعات خودرو",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -109,21 +124,21 @@ class _EnhancedCarRegistrationDialogState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    widget.isEditing ?EditPlateNum(widget: widget) :
-                    widget.isRegister
-                        ? licanceField()
-                        :  Expanded(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 100),
-                              child: LicanceNumber(entry: widget.entry),
-                            ),
-                          ),
+                    widget.isEditing
+                        ? EditPlateNum(widget: widget)
+                        : widget.isRegister
+                            ? licanceField()
+                            : Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 100),
+                                  child: LicanceNumber(entry: widget.entry),
+                                ),
+                              ),
                   ],
                 ),
               ),
               const SizedBox(height: 15),
-
 
               // Name and Family Name Row
               Padding(
@@ -171,21 +186,25 @@ class _EnhancedCarRegistrationDialogState
               // Social Security Number (کد ملی)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                                         Expanded(
-                                           child: TextField(
-                                             controller: Get.find<feildController>().carName,
-                                             decoration: InputDecoration(
-                                               hintText: "نام خودرو",
-                                               filled: true,
-                                               fillColor: Colors.white,
-                                               border: OutlineInputBorder(
-                                                 borderRadius: BorderRadius.circular(10),
-                                               ),
-                                             ),
-                                           ),
-                                         ),SizedBox(width: 7,),
+                    Expanded(
+                      child: TextField(
+                        controller: Get.find<feildController>().carName,
+                        decoration: InputDecoration(
+                          hintText: "نام خودرو",
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 7,
+                    ),
                     Expanded(
                       child: TextField(
                         controller: Get.find<feildController>().socialNumber,
@@ -242,54 +261,55 @@ class _EnhancedCarRegistrationDialogState
               // Register Button
               ElevatedButton(
                 onPressed: () {
-                  Get.find<ReportController>().platePicker="${Get.find<ReportController>().firtTwodigits.text}${Get.find<ReportController>().engishalphabet == null ? '' : Get.find<ReportController>().engishalphabet}${Get.find<ReportController>().threedigits.text}${Get.find<ReportController>().lastTwoDigits.text}";
+                  Get.find<ReportController>().platePicker =
+                      "${Get.find<ReportController>().firtTwodigits.text}${Get.find<ReportController>().engishalphabet == null ? '' : Get.find<ReportController>().engishalphabet}${Get.find<ReportController>().threedigits.text}${Get.find<ReportController>().lastTwoDigits.text}";
 
                   // Create RegistredDb object with the new fields
- RegistredDb? registredDb;
-                  try{
-                   registredDb = RegistredDb(
-                    role: _selectedRole ?? '',
-                    socialNumber: Get.find<feildController>()
-                        .socialNumber
-                        .text, // Add the social security number here
-                    plateImagePath: widget.entry.imgpath,
-                    plateNumber: widget.entry.plateNum,
-                    rtpath: widget.entry.rtpath,
-                    carName: Get.find<feildController>().carName.text,
-                    name:
-                        "${Get.find<feildController>().Fname.text} ${Get.find<feildController>().name.text}",
-                    status: true,
-                    eDate: widget.entry.eDate,
-                    eTime: widget.entry.eTime,
-                    screenImg: widget.entry.scrnPath,
-                    isarvand: widget.entry.isarvand
-                  );
-                  }catch(e){
-                     registredDb = RegistredDb(
-                      isarvand: widget.entry.isarvand,
-                      rtpath: widget.entry.rtpath,
-                    role: _selectedRole ?? '',
-                    socialNumber: Get.find<feildController>()
-                        .socialNumber
-                        .text, // Add the social security number here
-                    plateImagePath: '',
-                    plateNumber: Get.find<ReportController>().platePicker,
-                    carName: Get.find<feildController>().carName.text,
-                    name:
-                        "${Get.find<feildController>().Fname.text} ${Get.find<feildController>().name.text}",
-                    status: true,
-                    eDate: DateTime.now().toString(),
-                    eTime: "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}",
-                    screenImg:'');
-                  };
-                  // Add to Hive and refresh
-                  if(widget.isEditing){
-                    Get.find<Boxes>().hivebox.putAt(widget.index, registredDb);
-                      Get.find<Boxes>().getregData();
+                  RegistredDb? registredDb;
+                  try {
+                    registredDb = RegistredDb(
+                        role: _selectedRole ?? '',
+                        socialNumber: Get.find<feildController>()
+                            .socialNumber
+                            .text, // Add the social security number here
+                        plateImagePath: widget.entry.imgpath,
+                        plateNumber: widget.entry.plateNum,
+                        rtpath: widget.entry.rtpath,
+                        carName: Get.find<feildController>().carName.text,
+                        name:
+                            "${Get.find<feildController>().Fname.text} ${Get.find<feildController>().name.text}",
+                        status: true,
+                        eDate: widget.entry.eDate,
+                        eTime: widget.entry.eTime,
+                        screenImg: widget.entry.scrnPath,
+                        isarvand: widget.entry.isarvand);
+                  } catch (e) {
+                    registredDb = RegistredDb(
+                        isarvand: widget.entry.isarvand,
+                        rtpath: widget.entry.rtpath,
+                        role: _selectedRole ?? '',
+                        socialNumber: Get.find<feildController>()
+                            .socialNumber
+                            .text, // Add the social security number here
+                        plateImagePath: '',
+                        plateNumber: Get.find<ReportController>().platePicker,
+                        carName: Get.find<feildController>().carName.text,
+                        name:
+                            "${Get.find<feildController>().Fname.text} ${Get.find<feildController>().name.text}",
+                        status: true,
+                        eDate: DateTime.now().toString(),
+                        eTime:
+                            "${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}",
+                        screenImg: '');
                   }
-                  else{
-                  Get.find<Boxes>().hivebox.add(registredDb);
-                  Get.find<Boxes>().getregData();
+                  ;
+                  // Add to Hive and refresh
+                  if (widget.isEditing) {
+                    Get.find<Boxes>().hivebox.putAt(widget.index, registredDb);
+                    Get.find<Boxes>().getregData();
+                  } else {
+                    Get.find<Boxes>().hivebox.add(registredDb);
+                    Get.find<Boxes>().getregData();
                   }
 
                   // Show success notification
@@ -341,59 +361,65 @@ class EditPlateNum extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(width: 50,height: 50,child: Center(
-          child: TextField(
-                controller:Get.find<ReportController>().firtTwodigits,
-                decoration: InputDecoration(
-            
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+        SizedBox(
+          width: 50,
+          height: 50,
+          child: Center(
+            child: TextField(
+              controller: Get.find<ReportController>().firtTwodigits,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
-        ),),SizedBox(width: 15,),
-            SizedBox(
-                height: 40,
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                      
-                        backgroundColor: Colors.white),
-                    onPressed: () async {
-                      await showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        builder: (context) => DraggableScrollableSheet(
-                          initialChildSize:
-                              0.47, // You can adjust the size of the bottom sheet
-                          minChildSize: 0.3,
-                          maxChildSize: 0.7,
-                          expand: false,
-                          builder: (context, scrollController) {
-                            return Alphabetselector(
-                              scrollController: scrollController,
-                            );
-                          },
-                        ),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        SizedBox(
+          height: 40,
+          child: TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.white),
+              onPressed: () async {
+                await showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => DraggableScrollableSheet(
+                    initialChildSize:
+                        0.47, // You can adjust the size of the bottom sheet
+                    minChildSize: 0.3,
+                    maxChildSize: 0.7,
+                    expand: false,
+                    builder: (context, scrollController) {
+                      return Alphabetselector(
+                        scrollController: scrollController,
                       );
                     },
-                    child: Obx(() => Text(
-                          Get.find<ReportController>().persianalhpabet.value ==
-                                  ''
-                              ? "انتخاب حرف"
-                              : Get.find<ReportController>()
-                                  .persianalhpabet
-                                  .value,
-                          style: TextStyle(color: Colors.black),
-                        ))),
-              ),SizedBox(width: 15,),
-                SizedBox(width: 70,height: 50,child: Center(
-          child: TextField(
-                controller:Get.find<ReportController>().threedigits,
+                  ),
+                );
+              },
+              child: Obx(() => Text(
+                    Get.find<ReportController>().persianalhpabet.value == ''
+                        ? "انتخاب حرف"
+                        : Get.find<ReportController>().persianalhpabet.value,
+                    style: TextStyle(color: Colors.black),
+                  ))),
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        SizedBox(
+            width: 70,
+            height: 50,
+            child: Center(
+              child: TextField(
+                controller: Get.find<ReportController>().threedigits,
                 decoration: InputDecoration(
-                 
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -401,12 +427,17 @@ class EditPlateNum extends StatelessWidget {
                   ),
                 ),
               ),
-        )),SizedBox(width: 15,),
-        SizedBox(width: 70,height: 50,child: Center(
-          child: TextField(
-                controller:Get.find<ReportController>().lastTwoDigits,
+            )),
+        SizedBox(
+          width: 15,
+        ),
+        SizedBox(
+            width: 70,
+            height: 50,
+            child: Center(
+              child: TextField(
+                controller: Get.find<ReportController>().lastTwoDigits,
                 decoration: InputDecoration(
-                 
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -414,7 +445,7 @@ class EditPlateNum extends StatelessWidget {
                   ),
                 ),
               ),
-        )),
+            )),
       ],
     );
   }
@@ -428,23 +459,19 @@ class licanceField extends StatefulWidget {
 }
 
 class _licanceFieldState extends State<licanceField> {
-
-
-@override
+  @override
   void initState() {
-    
-                                  Get.find<ReportController>().persianalhpabet.value = '';
-                                  Get.find<ReportController>().firtTwodigits.clear();
-                                 Get.find<ReportController>().lastTwoDigits.clear();
-                                 Get.find<ReportController>().engishalphabet = null;
-                                 Get.find<ReportController>().threedigits.clear();
+    Get.find<ReportController>().persianalhpabet.value = '';
+    Get.find<ReportController>().firtTwodigits.clear();
+    Get.find<ReportController>().lastTwoDigits.clear();
+    Get.find<ReportController>().engishalphabet = null;
+    Get.find<ReportController>().threedigits.clear();
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
         padding: EdgeInsets.all(12),
         width: 400,
@@ -459,7 +486,7 @@ class _licanceFieldState extends State<licanceField> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ReportTextField(
-                tcontroller:  Get.find<ReportController>().firtTwodigits,
+                tcontroller: Get.find<ReportController>().firtTwodigits,
                 width: 50,
               ),
               SizedBox(
@@ -503,7 +530,7 @@ class _licanceFieldState extends State<licanceField> {
                 width: 15,
               ),
               ReportTextField(
-                tcontroller:  Get.find<ReportController>().threedigits,
+                tcontroller: Get.find<ReportController>().threedigits,
                 width: 75,
               ),
               SizedBox(
@@ -517,7 +544,7 @@ class _licanceFieldState extends State<licanceField> {
                 width: 15,
               ),
               ReportTextField(
-                tcontroller:  Get.find<ReportController>().lastTwoDigits,
+                tcontroller: Get.find<ReportController>().lastTwoDigits,
                 width: 50,
               ),
             ],

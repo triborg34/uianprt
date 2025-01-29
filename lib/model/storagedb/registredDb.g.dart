@@ -27,7 +27,7 @@ class RegistredDbAdapter extends TypeAdapter<RegistredDb> {
       screenImg: fields[7] as String?,
       role: fields[8] as String?,
       socialNumber: fields[9] as String?,
-      isarvand: fields[10] as int?,
+      isarvand: fields[10] as String?,
       rtpath: fields[11] as String?,
     );
   }

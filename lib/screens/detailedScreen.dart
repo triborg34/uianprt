@@ -8,6 +8,7 @@ import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
 import 'package:uianprt/widgets/appbar.dart';
+import 'package:uianprt/widgets/arvand_pelak.dart';
 import 'package:uianprt/widgets/licancenumber.dart';
 
 class Detailedscreen extends StatelessWidget {
@@ -77,7 +78,7 @@ class Detailedscreen extends StatelessWidget {
                                 horizontal: 0, vertical: 5),
                             width: 200,
                             height: 48,
-                            child: LicanceNumber(entry: selectedModel)),
+                            child: selectedModel.isarvand=='arvand' ?ArvandPelak(entry: selectedModel): LicanceNumber(entry: selectedModel)),
 
                     Container(
                       decoration: BoxDecoration(

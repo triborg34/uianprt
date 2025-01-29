@@ -26,7 +26,7 @@ class RegistredDb extends HiveObject {
   @HiveField(9)
   String? socialNumber;
   @HiveField(10)
-  int? isarvand;
+  String? isarvand;
   @HiveField(11)
   String? rtpath;
 

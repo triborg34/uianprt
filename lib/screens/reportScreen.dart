@@ -14,6 +14,7 @@ import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
 import 'package:uianprt/screens/detailedScreen.dart';
 import 'package:uianprt/widgets/alphabetselector.dart';
+import 'package:uianprt/widgets/arvand_pelak.dart';
 import 'package:uianprt/widgets/licancenumber.dart';
 
 class ReportScreen extends StatelessWidget {
@@ -179,19 +180,16 @@ class ReportScreen extends StatelessWidget {
                                                             .plateNum,
                                                   )]
                                               .role!,
-                                              "Camera Name"
-                                              :    Get.find<Boxes>()
-                                                        .camerabox
-                                                        .values
-                                                        .firstWhere(
-                                                          (element) =>
-                                                              element.rtpath ==
-                                                              rcontroller
-                                                                  .selectedModel[
-                                                                      index]
-                                                                  .rtpath,
-                                                        )
-                                                        .nameCamera
+                                      "Camera Name": Get.find<Boxes>()
+                                          .camerabox
+                                          .values
+                                          .firstWhere(
+                                            (element) =>
+                                                element.rtpath ==
+                                                rcontroller.selectedModel[index]
+                                                    .rtpath,
+                                          )
+                                          .nameCamera
                                     };
                                   },
                                 );
@@ -250,7 +248,6 @@ class ReportScreen extends StatelessWidget {
                                   builder: (context, child) {
                                     return MediaQuery(
                                         data: MediaQuery.of(context).copyWith(
-                                          
                                             alwaysUse24HourFormat: true),
                                         child: child!);
                                   },
@@ -646,15 +643,27 @@ class ReportScreen extends StatelessWidget {
                           itemCount: rcontroller.selectedModel.length, //todo
                           itemBuilder: (context, index) {
                             return Visibility(
-                              visible:
-                                  rcontroller.selectedModel[index].isarvand ==
-                                          'arvand'
-                                      ? true
-                                      : convertToPersian(
-                                              rcontroller.selectedModel[index]
-                                                  .plateNum!,
-                                              alphabetP2)[0] !=
-                                          '-',
+                              visible: rcontroller
+                                          .selectedModel[index].isarvand ==
+                                      'arvand'
+                                  ? rcontroller.selectedModel[index].plateNum!
+                                          .contains(RegExp('[a-zA-Z]'))
+                                      ? false
+                                      : true
+                                  : convertToPersian(
+                                          rcontroller
+                                              .selectedModel[index].plateNum!,
+                                          alphabetP2)[0] !=
+                                      '-',
+
+                              // rcontroller.selectedModel[index].isarvand ==
+                              //         'arvand'
+                              //     ? true
+                              //     : convertToPersian(
+                              //             rcontroller.selectedModel[index]
+                              //                 .plateNum!,
+                              //             alphabetP2)[0] !=
+                              //         '-',
                               child: Container(
                                 width: Get.width,
                                 height: 50,
@@ -874,18 +883,10 @@ class ReportScreen extends StatelessWidget {
                                               ? SizedBox(
                                                   width: Get.width / 9.03,
                                                   height: 50,
-                                                  child: Center(
-                                                    child: Text(
-                                                      rcontroller
-                                                          .selectedModel[index]
-                                                          .plateNum!
-                                                          .toPersianDigit(),
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 18),
-                                                    ),
-                                                  ),
-                                                )
+                                                  child: ArvandPelak(
+                                                      entry: rcontroller
+                                                              .selectedModel[
+                                                          index]))
                                               : LicanceNumber(
                                                   entry: rcontroller
                                                       .selectedModel[index]),

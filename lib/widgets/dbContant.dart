@@ -4,13 +4,14 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:persian_number_utility/persian_number_utility.dart';
+
 import 'package:uianprt/controller/mianController.dart';
 import 'package:uianprt/model/consts.dart';
 import 'package:uianprt/model/model.dart';
 import 'package:uianprt/model/storagedb/db.dart';
 
 import 'package:uianprt/widgets/Register.dart';
+import 'package:uianprt/widgets/arvand_pelak.dart';
 
 import 'licancenumber.dart';
 
@@ -76,40 +77,54 @@ class DbContant extends StatelessWidget {
                       .then(
                     (value) {
                       if (value.statusCode == 200) {
-                        dio.get(
-                            'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=2').then((value) {
-                              Future.delayed(Duration(seconds: 20)).then((value) {
-                                dio
-                      .get(
-                          'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=false&relay=1');
-                          dio
-                      .get(
-                          'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=false&relay=2');
-                              },);
-                            },);
+                        dio
+                            .get(
+                                'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=2')
+                            .then(
+                          (value) {
+                            Future.delayed(Duration(seconds: 20)).then(
+                              (value) {
+                                dio.get(
+                                    'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=false&relay=1');
+                                dio.get(
+                                    'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=false&relay=2');
+                              },
+                            );
+                          },
+                        );
                       }
                     },
                   );
                 } else if (Get.find<settingController>().rl1.value == true ||
                     Get.find<settingController>().rl2.value == false) {
-                  dio.get(
-                      'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=1').then((value) {
-                        Future.delayed(Duration(seconds: 20)).then((value) {
-                          dio
+                  dio
                       .get(
-                          'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=false&relay=1');
-                        },);
-                      },);
+                          'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=1')
+                      .then(
+                    (value) {
+                      Future.delayed(Duration(seconds: 20)).then(
+                        (value) {
+                          dio.get(
+                              'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=false&relay=1');
+                        },
+                      );
+                    },
+                  );
                 } else if (Get.find<settingController>().rl1.value == false ||
                     Get.find<settingController>().rl2.value == true) {
-                  dio.get(
-                      'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=2').then((value) {
-                        Future.delayed(Duration(seconds: 20)).then((value) {
-                          dio
+                  dio
                       .get(
-                          'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=false&relay=2');
-                        },);
-                      },);
+                          'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=true&relay=2')
+                      .then(
+                    (value) {
+                      Future.delayed(Duration(seconds: 20)).then(
+                        (value) {
+                          dio.get(
+                              'http://127.0.0.1:${Get.find<Boxes>().settingbox.values.last.connect}/iprelay?onOff=false&relay=2');
+                        },
+                      );
+                    },
+                  );
                 } else {
                   Get.snackbar("", "مشکلی در رله پیش امده");
                 }
@@ -130,12 +145,14 @@ class DbContant extends StatelessWidget {
                       Get.find<tableController>().selectedIndex = index;
                       Get.find<tableController>().selectedmodel =
                           entries[index];
-           
+
                       Get.find<tableController>().update();
                     },
                     child: Visibility(
                       visible: entry.isarvand == 'arvand'
-                          ? true
+                          ? entry.plateNum!.contains(RegExp('[a-zA-Z]'))
+                              ? false
+                              : true
                           : convertToPersian(entry.plateNum!, alphabetP2)[0] !=
                               '-',
                       child: Container(
@@ -150,15 +167,7 @@ class DbContant extends StatelessWidget {
                             SizedBox(
                                 width: 210,
                                 child: entry.isarvand == 'arvand'
-                                    ? SizedBox(
-                                        child: Center(
-                                            child: Text(
-                                        entry.plateNum!.toPersianDigit(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
-                                      )))
+                                    ? ArvandPelak2(entry: entry)
                                     : LicanceNumber(entry: entry)),
                             VerticalDivider(
                               color: Colors.black,
