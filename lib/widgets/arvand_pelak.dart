@@ -70,7 +70,7 @@ class ArvandPelak2 extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Text(
-                   "${entry.plateNum!.toPersianDigit().substring(0,entry.plateNum!.length-2)} | ${entry.plateNum!.toPersianDigit().substring(entry.plateNum!.length-2)}",
+                   entry.plateNum!.length <=5 ? entry.plateNum!.toPersianDigit() : "${entry.plateNum!.toPersianDigit().substring(0,entry.plateNum!.length-2)} | ${entry.plateNum!.toPersianDigit().substring(entry.plateNum!.length-2)}",
                       style: TextStyle(color: Colors.black, fontSize: 18),
                       
                     ),
